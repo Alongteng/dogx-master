@@ -405,7 +405,7 @@ std::vector<unsigned char> FastRandomContext::randbytes(size_t len)
     return ret;
 }
 
-FastRandomContext::FastRandomContext(const uint256& seed) : requires_seed(false), bytebuf_size(0), bitbuf_size(0)
+FastRandomContext::FastRandomContext(const uint256& seed) : requires_seed(false), bytebuf_size(0), dogxbuf_size(0)
 {
     rng.SetKey(seed.begin(), 32);
 }
@@ -454,7 +454,7 @@ bool Random_SanityCheck()
     return true;
 }
 
-FastRandomContext::FastRandomContext(bool fDeterministic) : requires_seed(!fDeterministic), bytebuf_size(0), bitbuf_size(0)
+FastRandomContext::FastRandomContext(bool fDeterministic) : requires_seed(!fDeterministic), bytebuf_size(0), dogxbuf_size(0)
 {
     if (!fDeterministic) {
         return;

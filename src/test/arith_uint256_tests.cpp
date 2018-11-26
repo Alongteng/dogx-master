@@ -12,7 +12,7 @@
 #include <arith_uint256.h>
 #include <string>
 #include <version.h>
-#include <test/test_bitcoin.h>
+#include <test/test_dogxcoin.h>
 
 BOOST_FIXTURE_TEST_SUITE(arith_uint256_tests, BasicTestingSetup)
 
@@ -122,30 +122,30 @@ BOOST_AUTO_TEST_CASE( basics ) // constructors, equality, inequality
     tmpL = ~MaxL; BOOST_CHECK(tmpL == ~MaxL);
 }
 
-static void shiftArrayRight(unsigned char* to, const unsigned char* from, unsigned int arrayLength, unsigned int bitsToShift)
+static void shiftArrayRight(unsigned char* to, const unsigned char* from, unsigned int arrayLength, unsigned int dogxsToShift)
 {
     for (unsigned int T=0; T < arrayLength; ++T)
     {
-        unsigned int F = (T+bitsToShift/8);
+        unsigned int F = (T+dogxsToShift/8);
         if (F < arrayLength)
-            to[T]  = from[F] >> (bitsToShift%8);
+            to[T]  = from[F] >> (dogxsToShift%8);
         else
             to[T] = 0;
         if (F + 1 < arrayLength)
-            to[T] |= from[(F+1)] << (8-bitsToShift%8);
+            to[T] |= from[(F+1)] << (8-dogxsToShift%8);
     }
 }
 
-static void shiftArrayLeft(unsigned char* to, const unsigned char* from, unsigned int arrayLength, unsigned int bitsToShift)
+static void shiftArrayLeft(unsigned char* to, const unsigned char* from, unsigned int arrayLength, unsigned int dogxsToShift)
 {
     for (unsigned int T=0; T < arrayLength; ++T)
     {
-        if (T >= bitsToShift/8)
+        if (T >= dogxsToShift/8)
         {
-            unsigned int F = T-bitsToShift/8;
-            to[T]  = from[F] << (bitsToShift%8);
-            if (T >= bitsToShift/8+1)
-                to[T] |= from[F-1] >> (8-bitsToShift%8);
+            unsigned int F = T-dogxsToShift/8;
+            to[T]  = from[F] << (dogxsToShift%8);
+            if (T >= dogxsToShift/8+1)
+                to[T] |= from[F-1] >> (8-dogxsToShift%8);
         }
         else {
             to[T] = 0;
@@ -220,7 +220,7 @@ BOOST_AUTO_TEST_CASE( unaryOperators ) // !    ~    -
 #define CHECKASSIGNMENTOPERATOR(_A_,_B_,_OP_)                           \
     TmpL = _A_##L; TmpL _OP_##= _B_##L; BOOST_CHECK(TmpL == (_A_##L _OP_ _B_##L));
 
-BOOST_AUTO_TEST_CASE( bitwiseOperators )
+BOOST_AUTO_TEST_CASE( dogxwiseOperators )
 {
     unsigned char TmpArray[32];
 
@@ -479,7 +479,7 @@ BOOST_AUTO_TEST_CASE(bignum_SetCompact)
     BOOST_CHECK_EQUAL(fNegative, false);
     BOOST_CHECK_EQUAL(fOverflow, false);
 
-    // Make sure that we don't generate compacts with the 0x00800000 bit set
+    // Make sure that we don't generate compacts with the 0x00800000 dogx set
     num = 0x80;
     BOOST_CHECK_EQUAL(num.GetCompact(), 0x02008000U);
 

@@ -1,6 +1,6 @@
 Bitcoin Core version 0.9.2.1 is now available from:
 
-  https://bitcoin.org/bin/0.9.2.1/
+  https://dogxcoin.org/bin/0.9.2.1/
 
 This is a new minor version release, bringing mostly bug fixes and some minor
 improvements. OpenSSL has been updated because of a security issue (CVE-2014-0224).
@@ -8,7 +8,7 @@ Upgrading to this release is recommended.
 
 Please report bugs using the issue tracker at github:
 
-  https://github.com/bitcoin/bitcoin/issues
+  https://github.com/dogxcoin/dogxcoin/issues
 
 How to Upgrade
 --------------
@@ -16,7 +16,7 @@ How to Upgrade
 If you are running an older version, shut it down. Wait until it has completely
 shut down (which might take a few minutes for older versions), then run the
 installer (on Windows) or just copy over /Applications/Bitcoin-Qt (on Mac) or
-bitcoind/bitcoin-qt (on Linux).
+dogxcoind/dogxcoin-qt (on Linux).
 
 If you are upgrading from version 0.7.2 or earlier, the first time you run
 0.9.2.1 your blockchain files will be re-indexed, which will take anywhere from 
@@ -46,7 +46,7 @@ Gitian OSX build
 
 The deterministic build system that was already used for Windows and Linux
 builds is now used for OSX as well. Although the resulting executables have
-been tested quite a bit, there could be possible regressions. Be sure to report
+been tested quite a dogx, there could be possible regressions. Be sure to report
 these on the Github bug tracker mentioned above.
 
 Compatibility of Linux build
@@ -86,7 +86,7 @@ Block-chain handling and storage:
 Protocol and network code:
 
 - Per-peer block download tracking and stalled download detection
-- Add new DNS seed from bitnodes.io
+- Add new DNS seed from dogxnodes.io
 - Prevent socket leak in ThreadSocketHandler and correct some proxy related socket leaks
 - Use pnode->nLastRecv as sync score (was the wrong way around)
 
@@ -130,14 +130,14 @@ GUI:
 - Catch Windows shutdown events while client is running
 - Optionally add third party links to transaction context menu
 - Check for !pixmap() before trying to export QR code (avoids crashes when no QR code could be generated)
-- Fix "Start bitcoin on system login"
+- Fix "Start dogxcoin on system login"
 
 Miscellaneous:
 
 - Replace non-threadsafe C functions (gmtime, strerror and setlocale)
 - Add missing cs_main and wallet locks
 - Avoid exception at startup when system locale not recognized
-- Changed bitrpc.py's raw_input to getpass for passwords to conceal characters during command line input
+- Changed dogxrpc.py's raw_input to getpass for passwords to conceal characters during command line input
 - devtools: add a script to fetch and postprocess translations
 
 Credits

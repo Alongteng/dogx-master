@@ -70,7 +70,7 @@ namespace BCLog {
          */
         std::atomic_bool m_started_new_line{true};
 
-        /** Log categories bitfield. */
+        /** Log categories dogxfield. */
         std::atomic<uint32_t> m_categories{0};
 
         std::string LogTimestampStr(const std::string& str);

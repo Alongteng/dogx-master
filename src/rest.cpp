@@ -268,7 +268,7 @@ static bool rest_block_notxdetails(HTTPRequest* req, const std::string& strURIPa
     return rest_block(req, strURIPart, false);
 }
 
-// A bit of a hack - dependency on a function defined in rpc/blockchain.cpp
+// A dogx of a hack - dependency on a function defined in rpc/blockchain.cpp
 UniValue getblockchaininfo(const JSONRPCRequest& request);
 
 static bool rest_chaininfo(HTTPRequest* req, const std::string& strURIPart)
@@ -486,12 +486,12 @@ static bool rest_getutxos(HTTPRequest* req, const std::string& strURIPart)
     if (vOutPoints.size() > MAX_GETUTXOS_OUTPOINTS)
         return RESTERR(req, HTTP_BAD_REQUEST, strprintf("Error: max outpoints exceeded (max: %d, tried: %d)", MAX_GETUTXOS_OUTPOINTS, vOutPoints.size()));
 
-    // check spentness and form a bitmap (as well as a JSON capable human-readable string representation)
-    std::vector<unsigned char> bitmap;
+    // check spentness and form a dogxmap (as well as a JSON capable human-readable string representation)
+    std::vector<unsigned char> dogxmap;
     std::vector<CCoin> outs;
-    std::string bitmapStringRepresentation;
+    std::string dogxmapStringRepresentation;
     std::vector<bool> hits;
-    bitmap.resize((vOutPoints.size() + 7) / 8);
+    dogxmap.resize((vOutPoints.size() + 7) / 8);
     {
         auto process_utxos = [&vOutPoints, &outs, &hits](const CCoinsView& view, const CTxMemPool& mempool) {
             for (const COutPoint& vOutPoint : vOutPoints) {
@@ -515,8 +515,8 @@ static bool rest_getutxos(HTTPRequest* req, const std::string& strURIPart)
 
         for (size_t i = 0; i < hits.size(); ++i) {
             const bool hit = hits[i];
-            bitmapStringRepresentation.append(hit ? "1" : "0"); // form a binary string representation (human-readable for json output)
-            bitmap[i / 8] |= ((uint8_t)hit) << (i % 8);
+            dogxmapStringRepresentation.append(hit ? "1" : "0"); // form a binary string representation (human-readable for json output)
+            dogxmap[i / 8] |= ((uint8_t)hit) << (i % 8);
         }
     }
 
@@ -525,7 +525,7 @@ static bool rest_getutxos(HTTPRequest* req, const std::string& strURIPart)
         // serialize data
         // use exact same output as mentioned in Bip64
         CDataStream ssGetUTXOResponse(SER_NETWORK, PROTOCOL_VERSION);
-        ssGetUTXOResponse << chainActive.Height() << chainActive.Tip()->GetBlockHash() << bitmap << outs;
+        ssGetUTXOResponse << chainActive.Height() << chainActive.Tip()->GetBlockHash() << dogxmap << outs;
         std::string ssGetUTXOResponseString = ssGetUTXOResponse.str();
 
         req->WriteHeader("Content-Type", "application/octet-stream");
@@ -535,7 +535,7 @@ static bool rest_getutxos(HTTPRequest* req, const std::string& strURIPart)
 
     case RetFormat::HEX: {
         CDataStream ssGetUTXOResponse(SER_NETWORK, PROTOCOL_VERSION);
-        ssGetUTXOResponse << chainActive.Height() << chainActive.Tip()->GetBlockHash() << bitmap << outs;
+        ssGetUTXOResponse << chainActive.Height() << chainActive.Tip()->GetBlockHash() << dogxmap << outs;
         std::string strHex = HexStr(ssGetUTXOResponse.begin(), ssGetUTXOResponse.end()) + "\n";
 
         req->WriteHeader("Content-Type", "text/plain");
@@ -550,7 +550,7 @@ static bool rest_getutxos(HTTPRequest* req, const std::string& strURIPart)
         // use more or less the same output as mentioned in Bip64
         objGetUTXOResponse.pushKV("chainHeight", chainActive.Height());
         objGetUTXOResponse.pushKV("chaintipHash", chainActive.Tip()->GetBlockHash().GetHex());
-        objGetUTXOResponse.pushKV("bitmap", bitmapStringRepresentation);
+        objGetUTXOResponse.pushKV("dogxmap", dogxmapStringRepresentation);
 
         UniValue utxos(UniValue::VARR);
         for (const CCoin& coin : outs) {

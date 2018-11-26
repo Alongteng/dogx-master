@@ -61,25 +61,25 @@ def bech32_decode(bech):
     return (hrp, data[:-6])
 
 
-def convertbits(data, frombits, tobits, pad=True):
+def convertdogxs(data, fromdogxs, todogxs, pad=True):
     """General power-of-2 base conversion."""
     acc = 0
-    bits = 0
+    dogxs = 0
     ret = []
-    maxv = (1 << tobits) - 1
-    max_acc = (1 << (frombits + tobits - 1)) - 1
+    maxv = (1 << todogxs) - 1
+    max_acc = (1 << (fromdogxs + todogxs - 1)) - 1
     for value in data:
-        if value < 0 or (value >> frombits):
+        if value < 0 or (value >> fromdogxs):
             return None
-        acc = ((acc << frombits) | value) & max_acc
-        bits += frombits
-        while bits >= tobits:
-            bits -= tobits
-            ret.append((acc >> bits) & maxv)
+        acc = ((acc << fromdogxs) | value) & max_acc
+        dogxs += fromdogxs
+        while dogxs >= todogxs:
+            dogxs -= todogxs
+            ret.append((acc >> dogxs) & maxv)
     if pad:
-        if bits:
-            ret.append((acc << (tobits - bits)) & maxv)
-    elif bits >= frombits or ((acc << (tobits - bits)) & maxv):
+        if dogxs:
+            ret.append((acc << (todogxs - dogxs)) & maxv)
+    elif dogxs >= fromdogxs or ((acc << (todogxs - dogxs)) & maxv):
         return None
     return ret
 
@@ -89,7 +89,7 @@ def decode(hrp, addr):
     hrpgot, data = bech32_decode(addr)
     if hrpgot != hrp:
         return (None, None)
-    decoded = convertbits(data[1:], 5, 8, False)
+    decoded = convertdogxs(data[1:], 5, 8, False)
     if decoded is None or len(decoded) < 2 or len(decoded) > 40:
         return (None, None)
     if data[0] > 16:
@@ -101,7 +101,7 @@ def decode(hrp, addr):
 
 def encode(hrp, witver, witprog):
     """Encode a segwit address."""
-    ret = bech32_encode(hrp, [witver] + convertbits(witprog, 8, 5))
+    ret = bech32_encode(hrp, [witver] + convertdogxs(witprog, 8, 5))
     if decode(hrp, ret) == (None, None):
         return None
     return ret

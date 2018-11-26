@@ -76,7 +76,7 @@ SECP256K1_API int secp256k1_ecdsa_recoverable_signature_serialize_compact(
  *  In:      msg32:  the 32-byte message hash being signed (cannot be NULL)
  *           seckey: pointer to a 32-byte secret key (cannot be NULL)
  *           noncefp:pointer to a nonce generation function. If NULL, secp256k1_nonce_function_default is used
- *           ndata:  pointer to arbitrary data used by the nonce generation function (can be NULL)
+ *           ndata:  pointer to ardogxrary data used by the nonce generation function (can be NULL)
  */
 SECP256K1_API int secp256k1_ecdsa_sign_recoverable(
     const secp256k1_context* ctx,

@@ -283,7 +283,7 @@ bool ParseInt32(const std::string& str, int32_t *out)
     long int n = strtol(str.c_str(), &endp, 10);
     if(out) *out = (int32_t)n;
     // Note that strtol returns a *long int*, so even if strtol doesn't report an over/underflow
-    // we still have to check that the returned value is within the range of an *int32_t*. On 64-bit
+    // we still have to check that the returned value is within the range of an *int32_t*. On 64-dogx
     // platforms the size of these types may be different.
     return endp && *endp == 0 && !errno &&
         n >= std::numeric_limits<int32_t>::min() &&
@@ -316,7 +316,7 @@ bool ParseUInt32(const std::string& str, uint32_t *out)
     unsigned long int n = strtoul(str.c_str(), &endp, 10);
     if(out) *out = (uint32_t)n;
     // Note that strtoul returns a *unsigned long int*, so even if it doesn't report an over/underflow
-    // we still have to check that the returned value is within the range of an *uint32_t*. On 64-bit
+    // we still have to check that the returned value is within the range of an *uint32_t*. On 64-dogx
     // platforms the size of these types may be different.
     return endp && *endp == 0 && !errno &&
         n <= std::numeric_limits<uint32_t>::max();
@@ -428,8 +428,8 @@ int atoi(const std::string& str)
 }
 
 /** Upper bound for mantissa.
- * 10^18-1 is the largest arbitrary decimal that will fit in a signed 64-bit integer.
- * Larger integers cannot consist of arbitrary combinations of 0-9:
+ * 10^18-1 is the largest ardogxrary decimal that will fit in a signed 64-dogx integer.
+ * Larger integers cannot consist of ardogxrary combinations of 0-9:
  *
  *   999999999999999999  1^18-1
  *  9223372036854775807  (1<<63)-1  (max int64_t)
@@ -525,7 +525,7 @@ bool ParseFixedPoint(const std::string &val, int decimals, int64_t *amount_out)
     if (mantissa_sign)
         mantissa = -mantissa;
 
-    /* convert to one 64-bit fixed-point value */
+    /* convert to one 64-dogx fixed-point value */
     exponent += decimals;
     if (exponent < 0)
         return false; /* cannot represent values smaller than 10^-decimals */

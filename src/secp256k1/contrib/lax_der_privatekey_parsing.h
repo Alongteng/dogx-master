@@ -13,7 +13,7 @@
 
 /* This file contains code snippets that parse DER private keys with
  * various errors and violations.  This is not a part of the library
- * itself, because the allowed violations are chosen arbitrarily and
+ * itself, because the allowed violations are chosen ardogxrarily and
  * do not follow or establish any standard.
  *
  * It also contains code to serialize private keys in a compatible

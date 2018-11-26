@@ -25,7 +25,7 @@
 #include <util/system.h>
 #include <validation.h>
 #include <validationinterface.h>
-#include <versionbitsinfo.h>
+#include <versiondogxsinfo.h>
 #include <warnings.h>
 
 #include <memory>
@@ -172,14 +172,14 @@ static UniValue generatetoaddress(const JSONRPCRequest& request)
                 .ToString() +
             "\nArguments:\n"
             "1. nblocks      (numeric, required) How many blocks are generated immediately.\n"
-            "2. address      (string, required) The address to send the newly generated bitcoin to.\n"
+            "2. address      (string, required) The address to send the newly generated dogxcoin to.\n"
             "3. maxtries     (numeric, optional) How many iterations to try (default = 1000000).\n"
             "\nResult:\n"
             "[ blockhashes ]     (array) hashes of blocks generated\n"
             "\nExamples:\n"
             "\nGenerate 11 blocks to myaddress\n"
             + HelpExampleCli("generatetoaddress", "11 \"myaddress\"")
-            + "If you are running the bitcoin core wallet, you can get a new address to send the newly generated bitcoin to with:\n"
+            + "If you are running the dogxcoin core wallet, you can get a new address to send the newly generated dogxcoin to with:\n"
             + HelpExampleCli("getnewaddress", "")
         );
 
@@ -317,10 +317,10 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
                 "\nIf the request parameters include a 'mode' key, that is used to explicitly select between the default 'template' request or a 'proposal'.\n"
                 "It returns data needed to construct a block to work on.\n"
                 "For full specification, see BIPs 22, 23, 9, and 145:\n"
-                "    https://github.com/bitcoin/bips/blob/master/bip-0022.mediawiki\n"
-                "    https://github.com/bitcoin/bips/blob/master/bip-0023.mediawiki\n"
-                "    https://github.com/bitcoin/bips/blob/master/bip-0009.mediawiki#getblocktemplate_changes\n"
-                "    https://github.com/bitcoin/bips/blob/master/bip-0145.mediawiki\n",
+                "    https://github.com/dogxcoin/bips/blob/master/bip-0022.mediawiki\n"
+                "    https://github.com/dogxcoin/bips/blob/master/bip-0023.mediawiki\n"
+                "    https://github.com/dogxcoin/bips/blob/master/bip-0009.mediawiki#getblocktemplate_changes\n"
+                "    https://github.com/dogxcoin/bips/blob/master/bip-0145.mediawiki\n",
                 {
                     {"template_request", RPCArg::Type::OBJ,
                         {
@@ -358,11 +358,11 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
             "{\n"
             "  \"version\" : n,                    (numeric) The preferred block version\n"
             "  \"rules\" : [ \"rulename\", ... ],    (array of strings) specific block rules that are to be enforced\n"
-            "  \"vbavailable\" : {                 (json object) set of pending, supported versionbit (BIP 9) softfork deployments\n"
-            "      \"rulename\" : bitnumber          (numeric) identifies the bit number as indicating acceptance and readiness for the named softfork rule\n"
+            "  \"vbavailable\" : {                 (json object) set of pending, supported versiondogx (BIP 9) softfork deployments\n"
+            "      \"rulename\" : dogxnumber          (numeric) identifies the dogx number as indicating acceptance and readiness for the named softfork rule\n"
             "      ,...\n"
             "  },\n"
-            "  \"vbrequired\" : n,                 (numeric) bit mask of versionbits the server requires set in submissions\n"
+            "  \"vbrequired\" : n,                 (numeric) dogx mask of versiondogxs the server requires set in submissions\n"
             "  \"previousblockhash\" : \"xxxx\",     (string) The hash of current highest block\n"
             "  \"transactions\" : [                (array) contents of non-coinbase transactions that should be included in the next block\n"
             "      {\n"
@@ -395,7 +395,7 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
             "  \"sizelimit\" : n,                  (numeric) limit of block size\n"
             "  \"weightlimit\" : n,                (numeric) limit of block weight\n"
             "  \"curtime\" : ttt,                  (numeric) current timestamp in seconds since epoch (Jan 1 1970 GMT)\n"
-            "  \"bits\" : \"xxxxxxxx\",              (string) compressed target of next block\n"
+            "  \"dogxs\" : \"xxxxxxxx\",              (string) compressed target of next block\n"
             "  \"height\" : n                      (numeric) The height of the next block\n"
             "}\n"
 
@@ -460,7 +460,7 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
                 setClientRules.insert(v.get_str());
             }
         } else {
-            // NOTE: It is important that this NOT be read if versionbits is supported
+            // NOTE: It is important that this NOT be read if versiondogxs is supported
             const UniValue& uvMaxVersion = find_value(oparam, "maxversion");
             if (uvMaxVersion.isNum()) {
                 nMaxVersionPreVB = uvMaxVersion.get_int64();
@@ -572,7 +572,7 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
     pblock->nNonce = 0;
 
     // NOTE: If at some point we support pre-segwit miners post-segwit-activation, this needs to take segwit support into consideration
-    const bool fPreSegWit = (ThresholdState::ACTIVE != VersionBitsState(pindexPrev, consensusParams, Consensus::DEPLOYMENT_SEGWIT, versionbitscache));
+    const bool fPreSegWit = (ThresholdState::ACTIVE != VersionBitsState(pindexPrev, consensusParams, Consensus::DEPLOYMENT_SEGWIT, versiondogxscache));
 
     UniValue aCaps(UniValue::VARR); aCaps.push_back("proposal");
 
@@ -631,20 +631,20 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
     UniValue vbavailable(UniValue::VOBJ);
     for (int j = 0; j < (int)Consensus::MAX_VERSION_BITS_DEPLOYMENTS; ++j) {
         Consensus::DeploymentPos pos = Consensus::DeploymentPos(j);
-        ThresholdState state = VersionBitsState(pindexPrev, consensusParams, pos, versionbitscache);
+        ThresholdState state = VersionBitsState(pindexPrev, consensusParams, pos, versiondogxscache);
         switch (state) {
             case ThresholdState::DEFINED:
             case ThresholdState::FAILED:
                 // Not exposed to GBT at all
                 break;
             case ThresholdState::LOCKED_IN:
-                // Ensure bit is set in block version
+                // Ensure dogx is set in block version
                 pblock->nVersion |= VersionBitsMask(consensusParams, pos);
                 // FALL THROUGH to get vbavailable set...
             case ThresholdState::STARTED:
             {
                 const struct VBDeploymentInfo& vbinfo = VersionBitsDeploymentInfo[pos];
-                vbavailable.pushKV(gbt_vb_name(pos), consensusParams.vDeployments[pos].bit);
+                vbavailable.pushKV(gbt_vb_name(pos), consensusParams.vDeployments[pos].dogx);
                 if (setClientRules.find(vbinfo.name) == setClientRules.end()) {
                     if (!vbinfo.gbt_force) {
                         // If the client doesn't support this, don't indicate it in the [default] version
@@ -705,7 +705,7 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
         result.pushKV("weightlimit", (int64_t)MAX_BLOCK_WEIGHT);
     }
     result.pushKV("curtime", pblock->GetBlockTime());
-    result.pushKV("bits", strprintf("%08x", pblock->nBits));
+    result.pushKV("dogxs", strprintf("%08x", pblock->nBits));
     result.pushKV("height", (int64_t)(pindexPrev->nHeight+1));
 
     if (!pblocktemplate->vchCoinbaseCommitment.empty() && fSupportsSegwit) {
@@ -740,7 +740,7 @@ static UniValue submitblock(const JSONRPCRequest& request)
         throw std::runtime_error(
             RPCHelpMan{"submitblock",
                 "\nAttempts to submit new block to network.\n"
-                "See https://en.bitcoin.it/wiki/BIP_0022 for full specification.\n",
+                "See https://en.dogxcoin.it/wiki/BIP_0022 for full specification.\n",
                 {
                     {"hexdata", RPCArg::Type::STR_HEX, false},
                     {"dummy", RPCArg::Type::STR, true},

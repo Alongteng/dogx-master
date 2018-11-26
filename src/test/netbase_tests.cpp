@@ -3,7 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <netbase.h>
-#include <test/test_bitcoin.h>
+#include <test/test_dogxcoin.h>
 #include <util/strencodings.h>
 
 #include <string>
@@ -82,10 +82,10 @@ bool static TestSplitHost(std::string test, std::string host, int port)
 
 BOOST_AUTO_TEST_CASE(netbase_splithost)
 {
-    BOOST_CHECK(TestSplitHost("www.bitcoincore.org", "www.bitcoincore.org", -1));
-    BOOST_CHECK(TestSplitHost("[www.bitcoincore.org]", "www.bitcoincore.org", -1));
-    BOOST_CHECK(TestSplitHost("www.bitcoincore.org:80", "www.bitcoincore.org", 80));
-    BOOST_CHECK(TestSplitHost("[www.bitcoincore.org]:80", "www.bitcoincore.org", 80));
+    BOOST_CHECK(TestSplitHost("www.dogxcoincore.org", "www.dogxcoincore.org", -1));
+    BOOST_CHECK(TestSplitHost("[www.dogxcoincore.org]", "www.dogxcoincore.org", -1));
+    BOOST_CHECK(TestSplitHost("www.dogxcoincore.org:80", "www.dogxcoincore.org", 80));
+    BOOST_CHECK(TestSplitHost("[www.dogxcoincore.org]:80", "www.dogxcoincore.org", 80));
     BOOST_CHECK(TestSplitHost("127.0.0.1", "127.0.0.1", -1));
     BOOST_CHECK(TestSplitHost("127.0.0.1:8333", "127.0.0.1", 8333));
     BOOST_CHECK(TestSplitHost("[127.0.0.1]", "127.0.0.1", -1));
@@ -154,7 +154,7 @@ BOOST_AUTO_TEST_CASE(subnet_test)
     BOOST_CHECK(ResolveSubNet("1.2.2.1/24").Match(ResolveIP("1.2.2.4")));
     BOOST_CHECK(ResolveSubNet("1.2.2.110/31").Match(ResolveIP("1.2.2.111")));
     BOOST_CHECK(ResolveSubNet("1.2.2.20/26").Match(ResolveIP("1.2.2.63")));
-    // All-Matching IPv6 Matches arbitrary IPv4 and IPv6
+    // All-Matching IPv6 Matches ardogxrary IPv4 and IPv6
     BOOST_CHECK(ResolveSubNet("::/0").Match(ResolveIP("1:2:3:4:5:6:7:1234")));
     BOOST_CHECK(ResolveSubNet("::/0").Match(ResolveIP("1.2.3.4")));
     // All-Matching IPv4 does not Match IPv6

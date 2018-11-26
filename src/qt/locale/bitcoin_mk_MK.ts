@@ -292,7 +292,7 @@
         <translation>верзија</translation>
     </message>
     <message>
-        <source>(%1-bit)</source>
+        <source>(%1-dogx)</source>
         <translation>(%1-бит)</translation>
     </message>
     </context>
@@ -588,7 +588,7 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>dogxcoin-core</name>
     <message>
         <source>Bitcoin Core</source>
         <translation>Биткоин Core</translation>

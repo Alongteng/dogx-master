@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <qt/bitcoinunits.h>
+#include <qt/dogxcoinunits.h>
 
 #include <primitives/transaction.h>
 
@@ -44,7 +44,7 @@ QString BitcoinUnits::longName(int unit)
     {
     case BTC: return QString("BTC");
     case mBTC: return QString("mBTC");
-    case uBTC: return QString::fromUtf8("µBTC (bits)");
+    case uBTC: return QString::fromUtf8("µBTC (dogxs)");
     case SAT: return QString("Satoshi (sat)");
     default: return QString("???");
     }
@@ -54,7 +54,7 @@ QString BitcoinUnits::shortName(int unit)
 {
     switch(unit)
     {
-    case uBTC: return QString::fromUtf8("bits");
+    case uBTC: return QString::fromUtf8("dogxs");
     case SAT: return QString("sat");
     default: return longName(unit);
     }
@@ -66,7 +66,7 @@ QString BitcoinUnits::description(int unit)
     {
     case BTC: return QString("Bitcoins");
     case mBTC: return QString("Milli-Bitcoins (1 / 1" THIN_SP_UTF8 "000)");
-    case uBTC: return QString("Micro-Bitcoins (bits) (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case uBTC: return QString("Micro-Bitcoins (dogxs) (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
     case SAT: return QString("Satoshi (sat) (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
     default: return QString("???");
     }
@@ -182,7 +182,7 @@ bool BitcoinUnits::parse(int unit, const QString &value, CAmount *val_out)
 
     if(str.size() > 18)
     {
-        return false; // Longer numbers will exceed 63 bits
+        return false; // Longer numbers will exceed 63 dogxs
     }
     CAmount retvalue(str.toLongLong(&ok));
     if(val_out)

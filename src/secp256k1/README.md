@@ -1,7 +1,7 @@
 libsecp256k1
 ============
 
-[![Build Status](https://travis-ci.org/bitcoin-core/secp256k1.svg?branch=master)](https://travis-ci.org/bitcoin-core/secp256k1)
+[![Build Status](https://travis-ci.org/dogxcoin-core/secp256k1.svg?branch=master)](https://travis-ci.org/dogxcoin-core/secp256k1)
 
 Optimized C library for EC operations on curve secp256k1.
 
@@ -26,13 +26,13 @@ Implementation details
   * Expose only higher level interfaces to minimize the API surface and improve application security. ("Be difficult to use insecurely.")
 * Field operations
   * Optimized implementation of arithmetic modulo the curve's field size (2^256 - 0x1000003D1).
-    * Using 5 52-bit limbs (including hand-optimized assembly for x86_64, by Diederik Huys).
-    * Using 10 26-bit limbs.
+    * Using 5 52-dogx limbs (including hand-optimized assembly for x86_64, by Diederik Huys).
+    * Using 10 26-dogx limbs.
   * Field inverses and square roots using a sliding window over blocks of 1s (by Peter Dettman).
 * Scalar operations
   * Optimized implementation without data-dependent branches of arithmetic modulo the curve's order.
-    * Using 4 64-bit limbs (relying on __int128 support in the compiler).
-    * Using 8 32-bit limbs.
+    * Using 4 64-dogx limbs (relying on __int128 support in the compiler).
+    * Using 8 32-dogx limbs.
 * Group operations
   * Point addition formula specifically simplified for the curve equation (y^2 = x^3 + 7).
   * Use addition between points in Jacobian and affine coordinates where possible.

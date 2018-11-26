@@ -236,7 +236,7 @@ enum jtokentype getJsonToken(std::string& tokenVal, unsigned int& consumed,
     }
 }
 
-enum expect_bits {
+enum expect_dogxs {
     EXP_OBJ_NAME = (1U << 0),
     EXP_COLON = (1U << 1),
     EXP_ARR_VALUE = (1U << 2),
@@ -244,9 +244,9 @@ enum expect_bits {
     EXP_NOT_VALUE = (1U << 4),
 };
 
-#define expect(bit) (expectMask & (EXP_##bit))
-#define setExpect(bit) (expectMask |= EXP_##bit)
-#define clearExpect(bit) (expectMask &= ~EXP_##bit)
+#define expect(dogx) (expectMask & (EXP_##dogx))
+#define setExpect(dogx) (expectMask |= EXP_##dogx)
+#define clearExpect(dogx) (expectMask &= ~EXP_##dogx)
 
 bool UniValue::read(const char *raw, size_t size)
 {

@@ -160,7 +160,7 @@ void PaymentServerTests::paymentServerTests()
 
     // Unexpired payment request (expires is set to 0x7FFFFFFFFFFFFFFF = max. int64_t):
     // 9223372036854775807 (uint64), 9223372036854775807 (int64_t) and -1 (int32_t)
-    // -1 is 1969-12-31 23:59:59 (for a 32 bit time values)
+    // -1 is 1969-12-31 23:59:59 (for a 32 dogx time values)
     data = DecodeBase64(paymentrequest3_cert2_BASE64);
     byteArray = QByteArray((const char*)data.data(), data.size());
     r.paymentRequest.parse(byteArray);
@@ -171,7 +171,7 @@ void PaymentServerTests::paymentServerTests()
 
     // Unexpired payment request (expires is set to 0x8000000000000000 > max. int64_t, allowed uint64):
     // 9223372036854775808 (uint64), -9223372036854775808 (int64_t) and 0 (int32_t)
-    // 0 is 1970-01-01 00:00:00 (for a 32 bit time values)
+    // 0 is 1970-01-01 00:00:00 (for a 32 dogx time values)
     data = DecodeBase64(paymentrequest4_cert2_BASE64);
     byteArray = QByteArray((const char*)data.data(), data.size());
     r.paymentRequest.parse(byteArray);

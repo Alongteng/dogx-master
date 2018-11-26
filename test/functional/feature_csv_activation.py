@@ -2,7 +2,7 @@
 # Copyright (c) 2015-2018 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test activation of the first version bits soft fork.
+"""Test activation of the first version dogxs soft fork.
 
 This soft fork will activate the following BIPS:
 BIP 68  - nSequence relative lock times
@@ -33,7 +33,7 @@ BIP 113:
 bip113tx - modify the nLocktime variable
 
 BIP 68:
-bip68txs - 16 txs with nSequence relative locktime of 10 with various bits set as per the relative_locktimes below
+bip68txs - 16 txs with nSequence relative locktime of 10 with various dogxs set as per the relative_locktimes below
 
 BIP 112:
 bip112txs_vary_nSequence - 16 txs with nSequence relative_locktimes of 10 evaluated against 10 OP_CSV OP_DROP
@@ -69,7 +69,7 @@ SEQ_TYPE_FLAG = 1 << 22
 SEQ_RANDOM_LOW_BIT = 1 << 18
 
 def relative_locktime(sdf, srhb, stf, srlb):
-    """Returns a locktime with certain bits set."""
+    """Returns a locktime with certain dogxs set."""
 
     locktime = BASE_RELATIVE_LOCKTIME
     if sdf:
@@ -104,7 +104,7 @@ def send_generic_input_tx(node, coinbases, address):
     return node.sendrawtransaction(ToHex(sign_transaction(node, create_transaction(node, node.getblock(coinbases.pop())['tx'][0], address, amount=Decimal("49.99")))))
 
 def create_bip68txs(node, bip68inputs, txversion, address, locktime_delta=0):
-    """Returns a list of bip68 transactions with different bits set."""
+    """Returns a list of bip68 transactions with different dogxs set."""
     txs = []
     assert(len(bip68inputs) >= 16)
     for i, (sdf, srhb, stf, srlb) in enumerate(product(*[[True, False]] * 4)):
@@ -119,7 +119,7 @@ def create_bip68txs(node, bip68inputs, txversion, address, locktime_delta=0):
     return txs
 
 def create_bip112txs(node, bip112inputs, varyOP_CSV, txversion, address, locktime_delta=0):
-    """Returns a list of bip68 transactions with different bits set."""
+    """Returns a list of bip68 transactions with different dogxs set."""
     txs = []
     assert(len(bip112inputs) >= 16)
     for i, (sdf, srhb, stf, srlb) in enumerate(product(*[[True, False]] * 4)):
@@ -196,7 +196,7 @@ class BIP68_112_113Test(BitcoinTestFramework):
         assert_equal(get_bip9_status(self.nodes[0], 'csv')['status'], 'started')
 
         self.log.info("Fail to achieve LOCKED_IN")
-        # 100 out of 144 signal bit 0. Use a variety of bits to simulate multiple parallel softforks
+        # 100 out of 144 signal dogx 0. Use a variety of dogxs to simulate multiple parallel softforks
 
         test_blocks = self.generate_blocks(50, 536870913)  # 0x20000001 (signalling ready)
         test_blocks = self.generate_blocks(20, 4, test_blocks)  # 0x00000004 (signalling not)
@@ -208,8 +208,8 @@ class BIP68_112_113Test(BitcoinTestFramework):
         assert_equal(get_bip9_status(self.nodes[0], 'csv')['status'], 'started')
 
         self.log.info("Generate blocks to achieve LOCK-IN")
-        # 108 out of 144 signal bit 0 to achieve lock-in
-        # using a variety of bits to simulate multiple parallel softforks
+        # 108 out of 144 signal dogx 0 to achieve lock-in
+        # using a variety of dogxs to simulate multiple parallel softforks
         test_blocks = self.generate_blocks(58, 536870913)  # 0x20000001 (signalling ready)
         test_blocks = self.generate_blocks(26, 4, test_blocks)  # 0x00000004 (signalling not)
         test_blocks = self.generate_blocks(50, 536871169, test_blocks)  # 0x20000101 (signalling ready)

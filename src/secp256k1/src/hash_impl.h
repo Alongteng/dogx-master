@@ -45,7 +45,7 @@ static void secp256k1_sha256_initialize(secp256k1_sha256_t *hash) {
     hash->bytes = 0;
 }
 
-/** Perform one SHA-256 transformation, processing 16 big endian 32-bit words. */
+/** Perform one SHA-256 transformation, processing 16 big endian 32-dogx words. */
 static void secp256k1_sha256_transform(uint32_t* s, const uint32_t* chunk) {
     uint32_t a = s[0], b = s[1], c = s[2], d = s[3], e = s[4], f = s[5], g = s[6], h = s[7];
     uint32_t w0, w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13, w14, w15;

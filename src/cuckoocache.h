@@ -18,7 +18,7 @@
  *
  * Summary:
  *
- * 1) bit_packed_atomic_flags is bit-packed atomic flags for garbage collection
+ * 1) dogx_packed_atomic_flags is dogx-packed atomic flags for garbage collection
  *
  * 2) cache is a cache which is performant in memory usage and lookup speed. It
  * is lockfree for erase operations. Elements are lazily erased on the next
@@ -26,39 +26,39 @@
  */
 namespace CuckooCache
 {
-/** bit_packed_atomic_flags implements a container for garbage collection flags
- * that is only thread unsafe on calls to setup. This class bit-packs collection
+/** dogx_packed_atomic_flags implements a container for garbage collection flags
+ * that is only thread unsafe on calls to setup. This class dogx-packs collection
  * flags for memory efficiency.
  *
  * All operations are std::memory_order_relaxed so external mechanisms must
  * ensure that writes and reads are properly synchronized.
  *
- * On setup(n), all bits up to n are marked as collected.
+ * On setup(n), all dogxs up to n are marked as collected.
  *
- * Under the hood, because it is an 8-bit type, it makes sense to use a multiple
+ * Under the hood, because it is an 8-dogx type, it makes sense to use a multiple
  * of 8 for setup, but it will be safe if that is not the case as well.
  *
  */
-class bit_packed_atomic_flags
+class dogx_packed_atomic_flags
 {
     std::unique_ptr<std::atomic<uint8_t>[]> mem;
 
 public:
     /** No default constructor as there must be some size */
-    bit_packed_atomic_flags() = delete;
+    dogx_packed_atomic_flags() = delete;
 
     /**
-     * bit_packed_atomic_flags constructor creates memory to sufficiently
+     * dogx_packed_atomic_flags constructor creates memory to sufficiently
      * keep track of garbage collection information for size entries.
      *
      * @param size the number of elements to allocate space for
      *
-     * @post bit_set, bit_unset, and bit_is_set function properly forall x. x <
+     * @post dogx_set, dogx_unset, and dogx_is_set function properly forall x. x <
      * size
-     * @post All calls to bit_is_set (without subsequent bit_unset) will return
+     * @post All calls to dogx_is_set (without subsequent dogx_unset) will return
      * true.
      */
-    explicit bit_packed_atomic_flags(uint32_t size)
+    explicit dogx_packed_atomic_flags(uint32_t size)
     {
         // pad out the size if needed
         size = (size + 7) / 8;
@@ -67,50 +67,50 @@ public:
             mem[i].store(0xFF);
     };
 
-    /** setup marks all entries and ensures that bit_packed_atomic_flags can store
+    /** setup marks all entries and ensures that dogx_packed_atomic_flags can store
      * at least size entries
      *
      * @param b the number of elements to allocate space for
-     * @post bit_set, bit_unset, and bit_is_set function properly forall x. x <
+     * @post dogx_set, dogx_unset, and dogx_is_set function properly forall x. x <
      * b
-     * @post All calls to bit_is_set (without subsequent bit_unset) will return
+     * @post All calls to dogx_is_set (without subsequent dogx_unset) will return
      * true.
      */
     inline void setup(uint32_t b)
     {
-        bit_packed_atomic_flags d(b);
+        dogx_packed_atomic_flags d(b);
         std::swap(mem, d.mem);
     }
 
-    /** bit_set sets an entry as discardable.
+    /** dogx_set sets an entry as discardable.
      *
-     * @param s the index of the entry to bit_set.
+     * @param s the index of the entry to dogx_set.
      * @post immediately subsequent call (assuming proper external memory
-     * ordering) to bit_is_set(s) == true.
+     * ordering) to dogx_is_set(s) == true.
      *
      */
-    inline void bit_set(uint32_t s)
+    inline void dogx_set(uint32_t s)
     {
         mem[s >> 3].fetch_or(1 << (s & 7), std::memory_order_relaxed);
     }
 
-    /**  bit_unset marks an entry as something that should not be overwritten
+    /**  dogx_unset marks an entry as something that should not be overwritten
      *
-     * @param s the index of the entry to bit_unset.
+     * @param s the index of the entry to dogx_unset.
      * @post immediately subsequent call (assuming proper external memory
-     * ordering) to bit_is_set(s) == false.
+     * ordering) to dogx_is_set(s) == false.
      */
-    inline void bit_unset(uint32_t s)
+    inline void dogx_unset(uint32_t s)
     {
         mem[s >> 3].fetch_and(~(1 << (s & 7)), std::memory_order_relaxed);
     }
 
-    /** bit_is_set queries the table for discardability at s
+    /** dogx_is_set queries the table for discardability at s
      *
      * @param s the index of the entry to read.
-     * @returns if the bit at index s was set.
+     * @returns if the dogx at index s was set.
      * */
-    inline bool bit_is_set(uint32_t s) const
+    inline bool dogx_is_set(uint32_t s) const
     {
         return (1 << (s & 7)) & mem[s >> 3].load(std::memory_order_relaxed);
     }
@@ -166,9 +166,9 @@ private:
     /** size stores the total available slots in the hash table */
     uint32_t size;
 
-    /** The bit_packed_atomic_flags array is marked mutable because we want
+    /** The dogx_packed_atomic_flags array is marked mutable because we want
      * garbage collection to be allowed to occur from const methods */
-    mutable bit_packed_atomic_flags collection_flags;
+    mutable dogx_packed_atomic_flags collection_flags;
 
     /** epoch_flags tracks how recently an element was inserted into
      * the cache. true denotes recent, false denotes not-recent. See insert()
@@ -206,9 +206,9 @@ private:
     /** compute_hashes is convenience for not having to write out this
      * expression everywhere we use the hash values of an Element.
      *
-     * We need to map the 32-bit input hash onto a hash bucket in a range [0, size) in a
+     * We need to map the 32-dogx input hash onto a hash bucket in a range [0, size) in a
      *  manner which preserves as much of the hash's uniformity as possible.  Ideally
-     *  this would be done by bitmasking but the size is usually not a power of two.
+     *  this would be done by dogxmasking but the size is usually not a power of two.
      *
      * The naive approach would be to use a mod -- which isn't perfectly uniform but so
      *  long as the hash is much larger than size it is not that bad.  Unfortunately,
@@ -218,13 +218,13 @@ private:
      *  but size is a run-time value so the compiler can't do that here.
      *
      * One option would be to implement the same trick the compiler uses and compute the
-     *  constants for exact division based on the size, as described in "{N}-bit Unsigned
-     *  Division via {N}-bit Multiply-Add" by Arch D. Robison in 2005. But that code is
+     *  constants for exact division based on the size, as described in "{N}-dogx Unsigned
+     *  Division via {N}-dogx Multiply-Add" by Arch D. Robison in 2005. But that code is
      *  somewhat complicated and the result is still slower than other options:
      *
-     * Instead we treat the 32-bit random number as a Q32 fixed-point number in the range
+     * Instead we treat the 32-dogx random number as a Q32 fixed-point number in the range
      *  [0,1) and simply multiply it by the size.  Then we just shift the result down by
-     *  32-bits to get our bucket number.  The result has non-uniformity the same as a
+     *  32-dogxs to get our bucket number.  The result has non-uniformity the same as a
      *  mod, but it is much faster to compute. More about this technique can be found at
      *  http://lemire.me/blog/2016/06/27/a-fast-alternative-to-the-modulo-reduction/
      *
@@ -233,9 +233,9 @@ private:
      *  one way or the other for a cuckoo table.
      *
      * The primary disadvantage of this approach is increased intermediate precision is
-     *  required but for a 32-bit random number we only need the high 32 bits of a
+     *  required but for a 32-dogx random number we only need the high 32 dogxs of a
      *  32*32->64 multiply, which means the operation is reasonably fast even on a
-     *  typical 32-bit processor.
+     *  typical 32-dogx processor.
      *
      * @param e the element whose hashes will be returned
      * @returns std::array<uint32_t, 8> of deterministic hashes derived from e
@@ -265,7 +265,7 @@ private:
      */
     inline void allow_erase(uint32_t n) const
     {
-        collection_flags.bit_set(n);
+        collection_flags.dogx_set(n);
     }
 
     /** please_keep marks the element at index n as an entry that should be kept.
@@ -274,7 +274,7 @@ private:
      */
     inline void please_keep(uint32_t n) const
     {
-        collection_flags.bit_unset(n);
+        collection_flags.dogx_unset(n);
     }
 
     /** epoch_check handles the changing of epochs for elements stored in the
@@ -297,7 +297,7 @@ private:
         uint32_t epoch_unused_count = 0;
         for (uint32_t i = 0; i < size; ++i)
             epoch_unused_count += epoch_flags[i] &&
-                                  !collection_flags.bit_is_set(i);
+                                  !collection_flags.dogx_is_set(i);
         // If there are more non-deleted entries in the current epoch than the
         // epoch size, then allow_erase on all elements in the old epoch (marked
         // false) and move all elements in the current epoch to the old epoch
@@ -356,7 +356,7 @@ public:
      * usage when deciding how many elements to store. It isn't perfect because
      * it doesn't account for any overhead (struct size, MallocUsage, collection
      * and epoch flags). This was done to simplify selecting a power of two
-     * size. In the expected use case, an extra two bits per entry should be
+     * size. In the expected use case, an extra two dogxs per entry should be
      * negligible compared to the size of the elements.
      *
      * @param bytes the approximate number of bytes to use for this data
@@ -406,7 +406,7 @@ public:
         for (uint8_t depth = 0; depth < depth_limit; ++depth) {
             // First try to insert to an empty slot, if one exists
             for (const uint32_t loc : locs) {
-                if (!collection_flags.bit_is_set(loc))
+                if (!collection_flags.dogx_is_set(loc))
                     continue;
                 table[loc] = std::move(e);
                 please_keep(loc);

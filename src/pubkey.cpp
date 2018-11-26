@@ -15,7 +15,7 @@ secp256k1_context* secp256k1_context_verify = nullptr;
 } // namespace
 
 /** This function is taken from the libsecp256k1 distribution and implements
- *  DER parsing for ECDSA signatures, while supporting an arbitrary subset of
+ *  DER parsing for ECDSA signatures, while supporting an ardogxrary subset of
  *  format violations.
  *
  *  Supported violations include negative integers, excessive padding, garbage

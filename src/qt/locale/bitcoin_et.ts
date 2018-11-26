@@ -370,12 +370,12 @@
         <translation>Vahelehe tööriistariba</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and bitcoin: URIs)</source>
-        <translation>Loo maksepäring (genereerib QR koodid ja bitcoini: URId)</translation>
+        <source>Request payments (generates QR codes and dogxcoin: URIs)</source>
+        <translation>Loo maksepäring (genereerib QR koodid ja dogxcoini: URId)</translation>
     </message>
     <message>
-        <source>Open a bitcoin: URI or payment request</source>
-        <translation>Ava bitcoini: URI või maksepäring</translation>
+        <source>Open a dogxcoin: URI or payment request</source>
+        <translation>Ava dogxcoini: URI või maksepäring</translation>
     </message>
     <message>
         <source>&amp;Command-line options</source>
@@ -1622,7 +1622,7 @@
         <translation>pole vastu võetud</translation>
     </message>
     <message>
-        <source>Debit</source>
+        <source>Dedogx</source>
         <translation>Deebet</translation>
     </message>
     <message>
@@ -1916,7 +1916,7 @@
     </message>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>dogxcoin-core</name>
     <message>
         <source>Bitcoin Core</source>
         <translation>Bitcoini tuumik</translation>

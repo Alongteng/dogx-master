@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Big number routines.
 
-This file is copied from python-bitcoinlib.
+This file is copied from python-dogxcoinlib.
 """
 
 import struct
@@ -16,7 +16,7 @@ def bn_bytes(v, have_ext=False):
     ext = 0
     if have_ext:
         ext = 1
-    return ((v.bit_length()+7)//8) + ext
+    return ((v.dogx_length()+7)//8) + ext
 
 def bn2bin(v):
     s = bytearray()
@@ -28,8 +28,8 @@ def bn2bin(v):
 
 def bn2mpi(v):
     have_ext = False
-    if v.bit_length() > 0:
-        have_ext = (v.bit_length() & 0x07) == 0
+    if v.dogx_length() > 0:
+        have_ext = (v.dogx_length() & 0x07) == 0
 
     neg = False
     if v < 0:
@@ -48,7 +48,7 @@ def bn2mpi(v):
             v_bin[0] |= 0x80
     return s + ext + v_bin
 
-# bitcoin-specific little endian format, with implicit size
+# dogxcoin-specific little endian format, with implicit size
 def mpi2vch(s):
     r = s[4:]           # strip size
     r = r[::-1]         # reverse string, converting BE->LE

@@ -249,7 +249,7 @@ static void secp256k1_scalar_inverse_var(secp256k1_scalar *r, const secp256k1_sc
  * Find k1 and k2 given k, such that k1 + k2 * lambda == k mod n; unlike in the
  * full case we don't bother making k1 and k2 be small, we just want them to be
  * nontrivial to get full test coverage for the exhaustive tests. We therefore
- * (arbitrarily) set k2 = k + 5 and k1 = k - k2 * lambda.
+ * (ardogxrarily) set k2 = k + 5 and k1 = k - k2 * lambda.
  */
 static void secp256k1_scalar_split_lambda(secp256k1_scalar *r1, secp256k1_scalar *r2, const secp256k1_scalar *a) {
     *r2 = (*a + 5) % EXHAUSTIVE_TEST_ORDER;

@@ -5,7 +5,7 @@
 Authors: Sanjay Ghemawat (sanjay@google.com) and Jeff Dean (jeff@google.com)
 
 # Features
-  * Keys and values are arbitrary byte arrays.
+  * Keys and values are ardogxrary byte arrays.
   * Data is stored sorted by key.
   * Callers can provide a custom comparison function to override the sort order.
   * The basic operations are `Put(key,value)`, `Get(key)`, `Delete(key)`.

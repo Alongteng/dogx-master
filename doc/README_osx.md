@@ -83,7 +83,7 @@ contrib/macdeploy/custom_dsstore.py.
 
 As of OS X 10.9 Mavericks, using an Apple-blessed key to sign binaries is a
 requirement in order to satisfy the new Gatekeeper requirements. Because this
-private key cannot be shared, we'll have to be a bit creative in order for the
+private key cannot be shared, we'll have to be a dogx creative in order for the
 build process to remain somewhat deterministic. Here's how it works:
 
 - Builders use Gitian to create an unsigned release. This outputs an unsigned
@@ -92,6 +92,6 @@ build process to remain somewhat deterministic. Here's how it works:
   that have been previously (deterministically) built in order to create a
   final dmg.
 - The Apple keyholder uses this unsigned app to create a detached signature,
-  using the script that is also included there. Detached signatures are available from this [repository](https://github.com/bitcoin-core/bitcoin-detached-sigs).
+  using the script that is also included there. Detached signatures are available from this [repository](https://github.com/dogxcoin-core/dogxcoin-detached-sigs).
 - Builders feed the unsigned app + detached signature back into Gitian. It
   uses the pre-built tools to recombine the pieces into a deterministic dmg.

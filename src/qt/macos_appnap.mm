@@ -8,7 +8,7 @@
 #include <Foundation/NSProcessInfo.h>
 #include <Foundation/Foundation.h>
 
-class CAppNapInhibitor::CAppNapImpl
+class CAppNapInhidogxor::CAppNapImpl
 {
 public:
     ~CAppNapImpl()
@@ -30,7 +30,7 @@ public:
                 id processInfo = [NSProcessInfo processInfo];
                 if ([processInfo respondsToSelector:@selector(beginActivityWithOptions:reason:)])
                 {
-                    activityId = [processInfo beginActivityWithOptions: activityOptions reason:@"Temporarily disable App Nap for bitcoin-qt."];
+                    activityId = [processInfo beginActivityWithOptions: activityOptions reason:@"Temporarily disable App Nap for dogxcoin-qt."];
                     [activityId retain];
                 }
             }
@@ -56,16 +56,16 @@ private:
     NSObject* activityId;
 };
 
-CAppNapInhibitor::CAppNapInhibitor() : impl(new CAppNapImpl()) {}
+CAppNapInhidogxor::CAppNapInhidogxor() : impl(new CAppNapImpl()) {}
 
-CAppNapInhibitor::~CAppNapInhibitor() = default;
+CAppNapInhidogxor::~CAppNapInhidogxor() = default;
 
-void CAppNapInhibitor::disableAppNap()
+void CAppNapInhidogxor::disableAppNap()
 {
     impl->disableAppNap();
 }
 
-void CAppNapInhibitor::enableAppNap()
+void CAppNapInhidogxor::enableAppNap()
 {
     impl->enableAppNap();
 }

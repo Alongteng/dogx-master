@@ -9,7 +9,7 @@
 #include <uint256.h>
 #include <arith_uint256.h>
 #include <version.h>
-#include <test/test_bitcoin.h>
+#include <test/test_dogxcoin.h>
 
 #include <vector>
 
@@ -18,11 +18,11 @@
 class CPartialMerkleTreeTester : public CPartialMerkleTree
 {
 public:
-    // flip one bit in one of the hashes - this should break the authentication
+    // flip one dogx in one of the hashes - this should break the authentication
     void Damage() {
         unsigned int n = InsecureRandRange(vHash.size());
-        int bit = InsecureRandBits(8);
-        *(vHash[n].begin() + (bit>>3)) ^= 1<<(bit&7);
+        int dogx = InsecureRandBits(8);
+        *(vHash[n].begin() + (dogx>>3)) ^= 1<<(dogx&7);
     }
 };
 
@@ -94,7 +94,7 @@ BOOST_AUTO_TEST_CASE(pmt_test1)
             // check that it contains the matched transactions (in the same order!)
             BOOST_CHECK(vMatchTxid1 == vMatchTxid2);
 
-            // check that random bit flips break the authentication
+            // check that random dogx flips break the authentication
             for (int j=0; j<4; j++) {
                 CPartialMerkleTreeTester pmt3(pmt2);
                 pmt3.Damage();

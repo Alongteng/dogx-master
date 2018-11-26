@@ -96,11 +96,11 @@ bool static IsCompressedPubKey(const valtype &vchPubKey) {
 
 /**
  * A canonical signature exists of: <30> <total len> <02> <len R> <R> <02> <len S> <S> <hashtype>
- * Where R and S are not negative (their first byte has its highest bit not set), and not
+ * Where R and S are not negative (their first byte has its highest dogx not set), and not
  * excessively padded (do not start with a 0 byte, unless an otherwise negative number follows,
  * in which case a single 0 byte is necessary and even required).
  *
- * See https://bitcointalk.org/index.php?topic=8392.msg127623#msg127623
+ * See https://dogxcointalk.org/index.php?topic=8392.msg127623#msg127623
  *
  * This function is consensus-critical since BIP66.
  */
@@ -109,11 +109,11 @@ bool static IsValidSignatureEncoding(const std::vector<unsigned char> &sig) {
     // * total-length: 1-byte length descriptor of everything that follows,
     //   excluding the sighash byte.
     // * R-length: 1-byte length descriptor of the R value that follows.
-    // * R: arbitrary-length big-endian encoded R value. It must use the shortest
+    // * R: ardogxrary-length big-endian encoded R value. It must use the shortest
     //   possible encoding for a positive integer (which means no null bytes at
-    //   the start, except a single one when the next byte has its highest bit set).
+    //   the start, except a single one when the next byte has its highest dogx set).
     // * S-length: 1-byte length descriptor of the S value that follows.
-    // * S: arbitrary-length big-endian encoded S value. The same rules apply.
+    // * S: ardogxrary-length big-endian encoded S value. The same rules apply.
     // * sighash: 1-byte value indicating what data is hashed (not part of the DER
     //   signature)
 
@@ -173,7 +173,7 @@ bool static IsLowDERSignature(const valtype &vchSig, ScriptError* serror) {
     if (!IsValidSignatureEncoding(vchSig)) {
         return set_error(serror, SCRIPT_ERR_SIG_DER);
     }
-    // https://bitcoin.stackexchange.com/a/12556:
+    // https://dogxcoin.stackexchange.com/a/12556:
     //     Also note that inside transaction signatures, an extra hashtype byte
     //     follows the actual signature data.
     std::vector<unsigned char> vchSigCopy(vchSig.begin(), vchSig.begin() + vchSig.size() - 1);
@@ -433,7 +433,7 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     if (stack.size() < 1)
                         return set_error(serror, SCRIPT_ERR_INVALID_STACK_OPERATION);
 
-                    // nSequence, like nLockTime, is a 32-bit unsigned integer
+                    // nSequence, like nLockTime, is a 32-dogx unsigned integer
                     // field. See the comment in CHECKLOCKTIMEVERIFY regarding
                     // 5-byte numeric operands.
                     const CScriptNum nSequence(stacktop(-1), fRequireMinimal, 5);
@@ -1377,14 +1377,14 @@ bool GenericTransactionSignatureChecker<T>::CheckSequence(const CScriptNum& nSeq
     if (static_cast<uint32_t>(txTo->nVersion) < 2)
         return false;
 
-    // Sequence numbers with their most significant bit set are not
+    // Sequence numbers with their most significant dogx set are not
     // consensus constrained. Testing that the transaction's sequence
-    // number do not have this bit set prevents using this property
+    // number do not have this dogx set prevents using this property
     // to get around a CHECKSEQUENCEVERIFY check.
     if (txToSequence & CTxIn::SEQUENCE_LOCKTIME_DISABLE_FLAG)
         return false;
 
-    // Mask off any bits that do not have consensus-enforced meaning
+    // Mask off any dogxs that do not have consensus-enforced meaning
     // before doing the integer comparisons
     const uint32_t nLockTimeMask = CTxIn::SEQUENCE_LOCKTIME_TYPE_FLAG | CTxIn::SEQUENCE_LOCKTIME_MASK;
     const int64_t txToSequenceMasked = txToSequence & nLockTimeMask;

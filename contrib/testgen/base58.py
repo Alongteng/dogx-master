@@ -4,7 +4,7 @@
 '''
 Bitcoin base58 encoding and decoding.
 
-Based on https://bitcointalk.org/index.php?topic=1026.0 (public domain)
+Based on https://dogxcointalk.org/index.php?topic=1026.0 (public domain)
 '''
 import hashlib
 
@@ -80,11 +80,11 @@ def b58decode(v, length = None):
     return result
 
 def checksum(v):
-    """Return 32-bit checksum based on SHA256"""
+    """Return 32-dogx checksum based on SHA256"""
     return SHA256.new(SHA256.new(v).digest()).digest()[0:4]
 
 def b58encode_chk(v):
-    """b58encode a string, with 32-bit checksum"""
+    """b58encode a string, with 32-dogx checksum"""
     return b58encode(v + checksum(v))
 
 def b58decode_chk(v):
@@ -106,7 +106,7 @@ def get_bcaddress_version(strAddress):
     return ord(version)
 
 if __name__ == '__main__':
-    # Test case (from http://gitorious.org/bitcoin/python-base58.git)
+    # Test case (from http://gitorious.org/dogxcoin/python-base58.git)
     assert get_bcaddress_version('15VjRaDX9zpbA8LVnbrCAFzrVzN7ixHNsC') is 0
     _ohai = 'o hai'.encode('ascii')
     _tmp = b58encode(_ohai)

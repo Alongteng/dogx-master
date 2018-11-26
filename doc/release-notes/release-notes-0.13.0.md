@@ -1,28 +1,28 @@
 Bitcoin Core version 0.13.0 is now available from:
 
-  <https://bitcoin.org/bin/bitcoin-core-0.13.0/>
+  <https://dogxcoin.org/bin/dogxcoin-core-0.13.0/>
 
 This is a new major version release, including new features, various bugfixes
 and performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at github:
 
-  <https://github.com/bitcoin/bitcoin/issues>
+  <https://github.com/dogxcoin/dogxcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://bitcoincore.org/en/list/announcements/join/>
+  <https://dogxcoincore.org/en/list/announcements/join/>
 
 Compatibility
 ==============
 
 Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsoft.com/en-us/WindowsForBusiness/end-of-xp-support),
 an OS initially released in 2001. This means that not even critical security
-updates will be released anymore. Without security updates, using a bitcoin
+updates will be released anymore. Without security updates, using a dogxcoin
 wallet on a XP machine is irresponsible at least.
 
 In addition to that, with 0.12.x there have been varied reports of Bitcoin Core
-randomly crashing on Windows XP. It is [not clear](https://github.com/bitcoin/bitcoin/issues/7681#issuecomment-217439891)
+randomly crashing on Windows XP. It is [not clear](https://github.com/dogxcoin/dogxcoin/issues/7681#issuecomment-217439891)
 what the source of these crashes is, but it is likely that upstream
 libraries such as Qt are no longer being tested on XP.
 
@@ -48,21 +48,21 @@ For this reason the default was changed to 300 MiB in this release.
 For nodes on low-memory systems, the database cache can be changed back to
 100 MiB (or to another value) by either:
 
-- Adding `dbcache=100` in bitcoin.conf
+- Adding `dbcache=100` in dogxcoin.conf
 - Changing it in the GUI under `Options → Size of database cache`
 
 Note that the database cache setting has the most performance impact
 during initial sync of a node, and when catching up after downtime.
 
 
-bitcoin-cli: arguments privacy
+dogxcoin-cli: arguments privacy
 ------------------------------
 
 The RPC command line client gained a new argument, `-stdin`
 to read extra arguments from standard input, one per line until EOF/Ctrl-D.
 For example:
 
-    $ src/bitcoin-cli -stdin walletpassphrase
+    $ src/dogxcoin-cli -stdin walletpassphrase
     mysecretcode
     120
     ..... press Ctrl-D here to end input
@@ -95,17 +95,17 @@ executables.
 
 The following extra files can be found in the download directory or torrent:
 
-- `bitcoin-${VERSION}-arm-linux-gnueabihf.tar.gz`: Linux binaries targeting
-  the 32-bit ARMv7-A architecture.
-- `bitcoin-${VERSION}-aarch64-linux-gnu.tar.gz`: Linux binaries targeting
-  the 64-bit ARMv8-A architecture.
+- `dogxcoin-${VERSION}-arm-linux-gnueabihf.tar.gz`: Linux binaries targeting
+  the 32-dogx ARMv7-A architecture.
+- `dogxcoin-${VERSION}-aarch64-linux-gnu.tar.gz`: Linux binaries targeting
+  the 64-dogx ARMv8-A architecture.
 
 ARM builds are still experimental. If you have problems on a certain device or
 Linux distribution combination please report them on the bug tracker, it may be
 possible to resolve them. Note that the device you use must be (backward)
 compatible with the architecture targeted by the binary that you use.
-For example, a Raspberry Pi 2 Model B or Raspberry Pi 3 Model B (in its 32-bit
-execution state) device, can run the 32-bit ARMv7-A targeted binary. However,
+For example, a Raspberry Pi 2 Model B or Raspberry Pi 3 Model B (in its 32-dogx
+execution state) device, can run the 32-dogx ARMv7-A targeted binary. However,
 no model of Raspberry Pi 1 device can run either binary because they are all
 ARMv6 architecture devices that are not compatible with ARMv7-A or ARMv8-A.
 
@@ -122,7 +122,7 @@ in PR 8068.
 The primary goal is reducing the bandwidth spikes at relay time, though in many
 cases it also reduces propagation delay. It is automatically enabled between
 compatible peers.
-[BIP 152](https://github.com/bitcoin/bips/blob/master/bip-0152.mediawiki)
+[BIP 152](https://github.com/dogxcoin/bips/blob/master/bip-0152.mediawiki)
 
 As a side-effect, ordinary non-mining nodes will download and upload blocks
 faster if those blocks were produced by miners using similar transaction
@@ -158,17 +158,17 @@ There is no distinction between internal (change) and external keys.
 
 HD wallets are incompatible with older versions of Bitcoin Core.
 
-[Pull request](https://github.com/bitcoin/bitcoin/pull/8035/files), [BIP 32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki)
+[Pull request](https://github.com/dogxcoin/dogxcoin/pull/8035/files), [BIP 32](https://github.com/dogxcoin/bips/blob/master/bip-0032.mediawiki)
 
 
 Segregated Witness
 ------------------
 
 The code preparations for Segregated Witness ("segwit"), as described in [BIP
-141](https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki), [BIP
-143](https://github.com/bitcoin/bips/blob/master/bip-0143.mediawiki), [BIP
-144](https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki), and [BIP
-145](https://github.com/bitcoin/bips/blob/master/bip-0145.mediawiki) are
+141](https://github.com/dogxcoin/bips/blob/master/bip-0141.mediawiki), [BIP
+143](https://github.com/dogxcoin/bips/blob/master/bip-0143.mediawiki), [BIP
+144](https://github.com/dogxcoin/bips/blob/master/bip-0144.mediawiki), and [BIP
+145](https://github.com/dogxcoin/bips/blob/master/bip-0145.mediawiki) are
 finished and included in this release.  However, BIP 141 does not yet specify
 activation parameters on mainnet, and so this release does not support segwit
 use on mainnet.  Testnet use is supported, and after BIP 141 is updated with
@@ -199,7 +199,7 @@ The command line option `-blockmaxsize` remains an option to specify the
 maximum number of serialized bytes in a generated block.  In addition, the new
 command line option `-blockmaxweight` has been added, which specifies the
 maximum "block weight" of a generated block, as defined by [BIP 141 (Segregated
-Witness)] (https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki).
+Witness)] (https://github.com/dogxcoin/bips/blob/master/bip-0141.mediawiki).
 
 In preparation for Segregated Witness, the mining algorithm has been modified
 to optimize transaction selection for a given block weight, rather than a given
@@ -216,7 +216,7 @@ support `-blockmaxsize` performs additional computation to ensure that
 constraint is met.  (Note that for mainnet, in this release, the equivalent
 parameter for `-blockmaxweight` would be four times the desired
 `-blockmaxsize`.  See [BIP 141]
-(https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki) for additional
+(https://github.com/dogxcoin/bips/blob/master/bip-0141.mediawiki) for additional
 details.)
 
 In the future, the `-blockmaxsize` option may be removed, as block creation is
@@ -277,7 +277,7 @@ Low-level P2P changes
 - The optional new p2p message "feefilter" is implemented and the protocol
   version is bumped to 70013. Upon receiving a feefilter message from a peer,
   a node will not send invs for any transactions which do not meet the filter
-  feerate. [BIP 133](https://github.com/bitcoin/bips/blob/master/bip-0133.mediawiki)
+  feerate. [BIP 133](https://github.com/dogxcoin/bips/blob/master/bip-0133.mediawiki)
 
 - The P2P alert system has been removed in PR #7692 and the `alert` P2P message
   is no longer supported.
@@ -315,7 +315,7 @@ Low-level RPC changes
   transaction: see `getmempoolentry`, `getmempoolancestors`, `getmempooldescendants`.
 
 - `gettxoutsetinfo` UTXO hash (`hash_serialized`) has changed. There was a divergence between
-  32-bit and 64-bit platforms, and the txids were missing in the hashed data. This has been
+  32-dogx and 64-dogx platforms, and the txids were missing in the hashed data. This has been
   fixed, but this means that the output will be different than from previous versions.
 
 - Full UTF-8 support in the RPC API. Non-ASCII characters in, for example,
@@ -326,10 +326,10 @@ Low-level RPC changes
 - Asm script outputs replacements for OP_NOP2 and OP_NOP3
 
   - OP_NOP2 has been renamed to OP_CHECKLOCKTIMEVERIFY by [BIP 
-65](https://github.com/bitcoin/bips/blob/master/bip-0065.mediawiki)
+65](https://github.com/dogxcoin/bips/blob/master/bip-0065.mediawiki)
 
   - OP_NOP3 has been renamed to OP_CHECKSEQUENCEVERIFY by [BIP 
-112](https://github.com/bitcoin/bips/blob/master/bip-0112.mediawiki)
+112](https://github.com/dogxcoin/bips/blob/master/bip-0112.mediawiki)
 
   - The following outputs are affected by this change:
 
@@ -338,7 +338,7 @@ Low-level RPC changes
     - RPC `decodescript`
     - REST `/rest/tx/` (JSON format)
     - REST `/rest/block/` (JSON format when including extended tx details)
-    - `bitcoin-tx -json`
+    - `dogxcoin-tx -json`
 
 - The sorting of the output of the `getrawmempool` output has changed.
 
@@ -358,7 +358,7 @@ Low-level ZMQ changes
   listeners to detect lost notifications.
   The sequence number is always the last element in a multi-part ZMQ notification and
   therefore backward compatible. Each message type has its own counter.
-  PR [#7762](https://github.com/bitcoin/bitcoin/pull/7762).
+  PR [#7762](https://github.com/dogxcoin/dogxcoin/pull/7762).
 
 
 0.13.0 Change log
@@ -375,7 +375,7 @@ git merge commit are mentioned.
 - #7326 `2cd004b` Fix typo, wrong information in gettxout help text (paveljanik)
 - #7222 `82429d0` Indicate which transactions are signaling opt-in RBF (sdaftuar)
 - #7480 `b49a623` Changed getnetworkhps value to double to avoid overflow (instagibbs)
-- #7550 `8b958ab` Input-from-stdin mode for bitcoin-cli (laanwj)
+- #7550 `8b958ab` Input-from-stdin mode for dogxcoin-cli (laanwj)
 - #7670 `c9a1265` Use cached block hash in blockToJSON() (rat4)
 - #7726 `9af69fa` Correct importaddress help reference to importpubkey (CypherGrue)
 - #7766 `16555b6` Register calls where they are defined (laanwj)
@@ -385,7 +385,7 @@ git merge commit are mentioned.
 - #7842 `d97101e` Do not print minping time in getpeerinfo when no ping received yet (paveljanik)
 - #7518 `be14ca5` Add multiple options to fundrawtransaction (promag)
 - #7756 `9e47fce` Add cursor to iterate over utxo set, use this in `gettxoutsetinfo` (laanwj)
-- #7848 `88616d2` Divergence between 32- and 64-bit when hashing >4GB affects `gettxoutsetinfo` (laanwj)
+- #7848 `88616d2` Divergence between 32- and 64-dogx when hashing >4GB affects `gettxoutsetinfo` (laanwj)
 - #7827 `4205ad7` Speed up `getchaintips` (mrbandrews)
 - #7762 `a1eb344` Append a message sequence number to every ZMQ notification (jonasschnelli)
 - #7688 `46880ed` List solvability in listunspent output and improve help (sipa)
@@ -460,7 +460,7 @@ git merge commit are mentioned.
 - #8078 `2156fa2` Disable the mempool P2P command when bloom filters disabled (petertodd)
 - #8065 `67c91f8` Addrman offline attempts (gmaxwell)
 - #7703 `761cddb` Tor: Change auth order to only use password auth if -torpassword (laanwj)
-- #8083 `cd0c513` Add support for dnsseeds with option to filter by servicebits (jonasschnelli)
+- #8083 `cd0c513` Add support for dnsseeds with option to filter by servicedogxs (jonasschnelli)
 - #8173 `4286f43` Use SipHash for node eviction (sipa)
 - #8154 `1445835` Drop vAddrToSend after sending big addr message (kazcw)
 - #7749 `be9711e` Enforce expected outbound services (sipa)
@@ -540,7 +540,7 @@ git merge commit are mentioned.
 - #7604 `354b03d` build: Remove spurious dollar sign. Fixes #7189 (dooglus)
 - #7605 `7f001bd` Remove openssl info from init/log and from Qt debug window (jonasschnelli)
 - #7628 `87d6562` Add 'copy full transaction details' option (ericshawlinux)
-- #7613 `3798e5d` Add autocomplete to bitcoin-qt's console window (GamerSg)
+- #7613 `3798e5d` Add autocomplete to dogxcoin-qt's console window (GamerSg)
 - #7668 `b24266c` Fix history deletion bug after font size change (achow101)
 - #7680 `41d2dfa` Remove reflection from `about` icon (laanwj)
 - #7686 `f034bce` Remove 0-fee from send dialog (MarcoFalke)
@@ -557,10 +557,10 @@ git merge commit are mentioned.
 - #8014 `77b49ac` Sort transactions by date (Tyler-Hardin)
 - #8073 `eb2f6f7` askpassphrasedialog: Clear pass fields on accept (rat4)
 - #8129 `ee1533e` Fix RPC console auto completer (UdjinM6)
-- #7636 `fb0ac48` Add bitcoin address label to request payment QR code (makevoid)
+- #7636 `fb0ac48` Add dogxcoin address label to request payment QR code (makevoid)
 - #8231 `760a6c7` Fix a bug where the SplashScreen will not be hidden during startup (jonasschnelli)
-- #8256 `af2421c` BUG: bitcoin-qt crash (fsb4000)
-- #8257 `ff03c50` Do not ask a UI question from bitcoind (sipa)
+- #8256 `af2421c` BUG: dogxcoin-qt crash (fsb4000)
+- #8257 `ff03c50` Do not ask a UI question from dogxcoind (sipa)
 - #8288 `91abb77` Network-specific example address (laanwj)
 - #7707 `a914968` UI support for abandoned transactions (jonasschnelli)
 - #8207 `f7a403b` Add a link to the Bitcoin-Core repository and website to the About Dialog (MarcoFalke)
@@ -627,7 +627,7 @@ git merge commit are mentioned.
 - #7801 `70ac71b` Remove misleading "errorString syntax" (MarcoFalke)
 - #7803 `401c65c` maxblocksinflight: Actually enable test (MarcoFalke)
 - #7802 `3bc71e1` httpbasics: Actually test second connection (MarcoFalke)
-- #7849 `ab8586e` tests: add varints_bitpatterns test (laanwj)
+- #7849 `ab8586e` tests: add varints_dogxpatterns test (laanwj)
 - #7846 `491171f` Clean up lockorder data of destroyed mutexes (sipa)
 - #7853 `6ef5e00` py2: Unfiddle strings into bytes explicitly (MarcoFalke)
 - #7878 `53adc83` [test] bctest.py: Revert faa41ee (MarcoFalke)
@@ -650,7 +650,7 @@ git merge commit are mentioned.
 - #8038 `e2bf830` Various minor fixes (MarcoFalke)
 - #8072 `1b87e5b` Travis: 'make check' in parallel and verbose (theuni)
 - #8056 `8844ef1` Remove hardcoded "4 nodes" from test_framework (MarcoFalke)
-- #8047 `37f9a1f` Test_framework: Set wait-timeout for bitcoind procs (MarcoFalke)
+- #8047 `37f9a1f` Test_framework: Set wait-timeout for dogxcoind procs (MarcoFalke)
 - #8095 `6700cc9` Test framework: only cleanup on successful test runs (sdaftuar)
 - #8098 `06bd4f6` Test_framework: Append portseed to tmpdir (MarcoFalke)
 - #8104 `6ff2c8d` Add timeout to sync_blocks() and sync_mempools() (sdaftuar)
@@ -660,7 +660,7 @@ git merge commit are mentioned.
 - #8090 `a2df115` Adding P2SH(p2pkh) script test case (Christewart)
 - #7992 `ec45cc5` Extend #7956 with one more test (TheBlueMatt)
 - #8139 `ae5575b` Fix interrupted HTTP RPC connection workaround for Python 3.5+ (sipa)
-- #8164 `0f24eaf` [Bitcoin-Tx] fix missing test fixtures, fix 32bit atoi issue (jonasschnelli)
+- #8164 `0f24eaf` [Bitcoin-Tx] fix missing test fixtures, fix 32dogx atoi issue (jonasschnelli)
 - #8166 `0b5279f` Src/test: Do not shadow local variables (paveljanik)
 - #8141 `44c1b1c` Continuing port of java comparison tool (mrbandrews)
 - #8201 `36b7400` fundrawtransaction: Fix race, assert amounts (MarcoFalke)
@@ -670,7 +670,7 @@ git merge commit are mentioned.
 - #8216 `0d41d70` Assert 'changePosition out of bounds'  (MarcoFalke)
 - #8222 `961893f` Enable mempool consistency checks in unit tests (sipa)
 - #7751 `84370d5` test_framework: python3.4 authproxy compat (laanwj)
-- #7744 `d8e862a` test_framework: detect failure of bitcoind startup (laanwj)
+- #7744 `d8e862a` test_framework: detect failure of dogxcoind startup (laanwj)
 - #8280 `115735d` Increase sync_blocks() timeouts in pruning.py (MarcoFalke)
 - #8340 `af9b7a9` Solve trivial merge conflict in p2p-segwit.py (MarcoFalke)
 - #8067 `3e4cf8f` Travis: use slim generic image, and some fixups (theuni)
@@ -684,7 +684,7 @@ git merge commit are mentioned.
 - #7507 `11c7699` Remove internal miner (Leviathn)
 - #7663 `c87f51e` Make the generate RPC call function for non-regtest (sipa)
 - #7671 `e2ebd25` Add generatetoaddress RPC to mine to an address (achow101)
-- #7935 `66ed450` Versionbits: GBT support (luke-jr)
+- #7935 `66ed450` Versiondogxs: GBT support (luke-jr)
 - #7600 `66db2d6` Select transactions using feerate-with-ancestors (sdaftuar)
 - #8295 `f5660d3` Mining-related fixups for 0.13.0 (sdaftuar)
 - #7796 `536b75e` Add support for negative fee rates, fixes `prioritizetransaction` (MarcoFalke)
@@ -707,7 +707,7 @@ git merge commit are mentioned.
 - #7791 `e30a5b0` Change Precise to Trusty in gitian-building.md (JeremyRand)
 - #7838 `8bb5d3d` Update gitian build guide to debian 8.4.0 (fanquake)
 - #7855 `b778e59` Replace precise with trusty (MarcoFalke)
-- #7975 `fc23fee` Update bitcoin-core GitHub links (MarcoFalke)
+- #7975 `fc23fee` Update dogxcoin-core GitHub links (MarcoFalke)
 - #8034 `e3a8207` Add basic git squash workflow (fanquake)
 - #7813 `214ec0b` Update port in tor.md (MarcoFalke)
 - #8193 `37c9830` Use Debian 8.5 in the gitian-build guide (fanquake)
@@ -865,4 +865,4 @@ Thanks to everyone who directly contributed to this release:
 - Wladimir J. van der Laan
 - Yuri Zhykin
 
-As well as everyone that helped translating on [Transifex](https://www.transifex.com/projects/p/bitcoin/).
+As well as everyone that helped translating on [Transifex](https://www.transifex.com/projects/p/dogxcoin/).

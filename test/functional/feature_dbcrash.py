@@ -45,7 +45,7 @@ class ChainstateWriteCrashTest(BitcoinTestFramework):
     def set_test_params(self):
         self.num_nodes = 4
         self.setup_clean_chain = False
-        # Need a bit of extra time for the nodes to start up for this test
+        # Need a dogx of extra time for the nodes to start up for this test
         self.rpc_timewait = 90
 
         # Set -maxmempool=0 to turn off mempool memory sharing with dbcache
@@ -88,14 +88,14 @@ class ChainstateWriteCrashTest(BitcoinTestFramework):
                 return utxo_hash
             except:
                 # An exception here should mean the node is about to crash.
-                # If bitcoind exits, then try again.  wait_for_node_exit()
-                # should raise an exception if bitcoind doesn't exit.
+                # If dogxcoind exits, then try again.  wait_for_node_exit()
+                # should raise an exception if dogxcoind doesn't exit.
                 self.wait_for_node_exit(node_index, timeout=10)
             self.crashed_on_restart += 1
             time.sleep(1)
 
-        # If we got here, bitcoind isn't coming back up on restart.  Could be a
-        # bug in bitcoind, or we've gotten unlucky with our dbcrash ratio --
+        # If we got here, dogxcoind isn't coming back up on restart.  Could be a
+        # bug in dogxcoind, or we've gotten unlucky with our dbcrash ratio --
         # perhaps we generated a test case that blew up our cache?
         # TODO: If this happens a lot, we should try to restart without -dbcrashratio
         # and make sure that recovery happens.

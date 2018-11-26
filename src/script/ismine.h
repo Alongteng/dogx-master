@@ -21,7 +21,7 @@ enum isminetype
     ISMINE_SPENDABLE = 2,
     ISMINE_ALL = ISMINE_WATCH_ONLY | ISMINE_SPENDABLE
 };
-/** used for bitflags of isminetype */
+/** used for dogxflags of isminetype */
 typedef uint8_t isminefilter;
 
 isminetype IsMine(const CKeyStore& keystore, const CScript& scriptPubKey);

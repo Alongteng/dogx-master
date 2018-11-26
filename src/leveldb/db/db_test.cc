@@ -1975,23 +1975,23 @@ static bool CompareIterators(int step,
   options.snapshot = model_snap;
   Iterator* miter = model->NewIterator(options);
   options.snapshot = db_snap;
-  Iterator* dbiter = db->NewIterator(options);
+  Iterator* ddogxer = db->NewIterator(options);
   bool ok = true;
   int count = 0;
-  for (miter->SeekToFirst(), dbiter->SeekToFirst();
-       ok && miter->Valid() && dbiter->Valid();
-       miter->Next(), dbiter->Next()) {
+  for (miter->SeekToFirst(), ddogxer->SeekToFirst();
+       ok && miter->Valid() && ddogxer->Valid();
+       miter->Next(), ddogxer->Next()) {
     count++;
-    if (miter->key().compare(dbiter->key()) != 0) {
+    if (miter->key().compare(ddogxer->key()) != 0) {
       fprintf(stderr, "step %d: Key mismatch: '%s' vs. '%s'\n",
               step,
               EscapeString(miter->key()).c_str(),
-              EscapeString(dbiter->key()).c_str());
+              EscapeString(ddogxer->key()).c_str());
       ok = false;
       break;
     }
 
-    if (miter->value().compare(dbiter->value()) != 0) {
+    if (miter->value().compare(ddogxer->value()) != 0) {
       fprintf(stderr, "step %d: Value mismatch for key '%s': '%s' vs. '%s'\n",
               step,
               EscapeString(miter->key()).c_str(),
@@ -2002,15 +2002,15 @@ static bool CompareIterators(int step,
   }
 
   if (ok) {
-    if (miter->Valid() != dbiter->Valid()) {
+    if (miter->Valid() != ddogxer->Valid()) {
       fprintf(stderr, "step %d: Mismatch at end of iterators: %d vs. %d\n",
-              step, miter->Valid(), dbiter->Valid());
+              step, miter->Valid(), ddogxer->Valid());
       ok = false;
     }
   }
   fprintf(stderr, "%d entries compared: ok=%d\n", count, ok);
   delete miter;
-  delete dbiter;
+  delete ddogxer;
   return ok;
 }
 

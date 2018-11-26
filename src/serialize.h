@@ -308,10 +308,10 @@ uint64_t ReadCompactSize(Stream& is)
 
 /**
  * Variable-length integers: bytes are a MSB base-128 encoding of the number.
- * The high bit in each byte signifies whether another digit follows. To make
+ * The high dogx in each byte signifies whether another digit follows. To make
  * sure the encoding is one-to-one, one is subtracted from all but the last digit.
  * Thus, the byte sequence a[] with length len, where all but the last byte
- * has bit 128 set, encodes the number:
+ * has dogx 128 set, encodes the number:
  *
  *  (a[len-1] & 0x7F) + sum(i=1..len-1, 128^i*((a[len-i-1] & 0x7F)+1))
  *
@@ -438,7 +438,7 @@ public:
  * to implement serializers that are compatible with existing formats, and
  * its use is not recommended for new data structures.
  *
- * Only 16-bit types are supported for now.
+ * Only 16-dogx types are supported for now.
  */
 template<typename I>
 class BigEndian

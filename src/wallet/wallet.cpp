@@ -214,7 +214,7 @@ CPubKey CWallet::GenerateNewKey(WalletBatch &batch, bool internal)
 void CWallet::DeriveNewChildKey(WalletBatch &batch, CKeyMetadata& metadata, CKey& secret, bool internal)
 {
     // for now we use a fixed keypath scheme of m/0'/0'/k
-    CKey seed;                     //seed (256bit)
+    CKey seed;                     //seed (256dogx)
     CExtKey masterKey;             //hd master key
     CExtKey accountKey;            //key at m/0'
     CExtKey chainChildKey;         //key at m/0'/0' (external) or m/0'/1' (internal)
@@ -719,10 +719,10 @@ bool CWallet::EncryptWallet(const SecureString& strWalletPassphrase)
         Lock();
 
         // Need to completely rewrite the wallet file; if we don't, bdb might keep
-        // bits of the unencrypted private key in slack space in the database file.
+        // dogxs of the unencrypted private key in slack space in the database file.
         database->Rewrite();
 
-        // BDB seems to have a bad habit of writing old data into
+        // BDB seems to have a bad hadogx of writing old data into
         // slack space in .dat files; that is bad if the old data is
         // unencrypted private keys. So:
         database->ReloadDbEnv();
@@ -905,7 +905,7 @@ bool CWallet::AddToWallet(const CWalletTx& wtxIn, bool fFlushOnClose)
         if (!batch.WriteTx(wtx))
             return false;
 
-    // Break debit/credit balance caches:
+    // Break dedogx/credit balance caches:
     wtx.MarkDirty();
 
     // Notify UI of new or updated transaction
@@ -1238,7 +1238,7 @@ isminetype CWallet::IsMine(const CTxIn &txin) const
 
 // Note that this function doesn't distinguish between a 0-valued input,
 // and a not-"is mine" (according to the filter) input.
-CAmount CWallet::GetDebit(const CTxIn &txin, const isminefilter& filter) const
+CAmount CWallet::GetDedogx(const CTxIn &txin, const isminefilter& filter) const
 {
     {
         LOCK(cs_wallet);
@@ -1310,19 +1310,19 @@ bool CWallet::IsMine(const CTransaction& tx) const
 
 bool CWallet::IsFromMe(const CTransaction& tx) const
 {
-    return (GetDebit(tx, ISMINE_ALL) > 0);
+    return (GetDedogx(tx, ISMINE_ALL) > 0);
 }
 
-CAmount CWallet::GetDebit(const CTransaction& tx, const isminefilter& filter) const
+CAmount CWallet::GetDedogx(const CTransaction& tx, const isminefilter& filter) const
 {
-    CAmount nDebit = 0;
+    CAmount nDedogx = 0;
     for (const CTxIn& txin : tx.vin)
     {
-        nDebit += GetDebit(txin, filter);
-        if (!MoneyRange(nDebit))
+        nDedogx += GetDedogx(txin, filter);
+        if (!MoneyRange(nDedogx))
             throw std::runtime_error(std::string(__func__) + ": value out of range");
     }
-    return nDebit;
+    return nDedogx;
 }
 
 bool CWallet::IsAllFromMe(const CTransaction& tx, const isminefilter& filter) const
@@ -1545,11 +1545,11 @@ void CWalletTx::GetAmounts(std::list<COutputEntry>& listReceived,
     listSent.clear();
 
     // Compute fee:
-    CAmount nDebit = GetDebit(filter);
-    if (nDebit > 0) // debit>0 means we signed/sent this transaction
+    CAmount nDedogx = GetDedogx(filter);
+    if (nDedogx > 0) // dedogx>0 means we signed/sent this transaction
     {
         CAmount nValueOut = tx->GetValueOut();
-        nFee = nDebit - nValueOut;
+        nFee = nDedogx - nValueOut;
     }
 
     // Sent/received.
@@ -1558,9 +1558,9 @@ void CWalletTx::GetAmounts(std::list<COutputEntry>& listReceived,
         const CTxOut& txout = tx->vout[i];
         isminetype fIsMine = pwallet->IsMine(txout);
         // Only need to handle txouts if AT LEAST one of these is true:
-        //   1) they debit from us (sent)
+        //   1) they dedogx from us (sent)
         //   2) the output is to us (received)
-        if (nDebit > 0)
+        if (nDedogx > 0)
         {
             // Don't report 'change' txouts
             if (pwallet->IsChange(txout))
@@ -1581,8 +1581,8 @@ void CWalletTx::GetAmounts(std::list<COutputEntry>& listReceived,
 
         COutputEntry output = {address, txout.nValue, (int)i};
 
-        // If we are debited by the transaction, add the output as a "sent" entry
-        if (nDebit > 0)
+        // If we are dedogxed by the transaction, add the output as a "sent" entry
+        if (nDedogx > 0)
             listSent.push_back(output);
 
         // If we are receiving the output, add it as a "received" entry
@@ -1784,35 +1784,35 @@ std::set<uint256> CWalletTx::GetConflicts() const
     return result;
 }
 
-CAmount CWalletTx::GetDebit(const isminefilter& filter) const
+CAmount CWalletTx::GetDedogx(const isminefilter& filter) const
 {
     if (tx->vin.empty())
         return 0;
 
-    CAmount debit = 0;
+    CAmount dedogx = 0;
     if(filter & ISMINE_SPENDABLE)
     {
-        if (fDebitCached)
-            debit += nDebitCached;
+        if (fDedogxCached)
+            dedogx += nDedogxCached;
         else
         {
-            nDebitCached = pwallet->GetDebit(*tx, ISMINE_SPENDABLE);
-            fDebitCached = true;
-            debit += nDebitCached;
+            nDedogxCached = pwallet->GetDedogx(*tx, ISMINE_SPENDABLE);
+            fDedogxCached = true;
+            dedogx += nDedogxCached;
         }
     }
     if(filter & ISMINE_WATCH_ONLY)
     {
-        if(fWatchDebitCached)
-            debit += nWatchDebitCached;
+        if(fWatchDedogxCached)
+            dedogx += nWatchDedogxCached;
         else
         {
-            nWatchDebitCached = pwallet->GetDebit(*tx, ISMINE_WATCH_ONLY);
-            fWatchDebitCached = true;
-            debit += nWatchDebitCached;
+            nWatchDedogxCached = pwallet->GetDedogx(*tx, ISMINE_WATCH_ONLY);
+            fWatchDedogxCached = true;
+            dedogx += nWatchDedogxCached;
         }
     }
-    return debit;
+    return dedogx;
 }
 
 CAmount CWalletTx::GetCredit(interfaces::Chain::Lock& locked_chain, const isminefilter& filter) const
@@ -1945,7 +1945,7 @@ bool CWalletTx::IsTrusted(interfaces::Chain::Lock& locked_chain) const
         return true;
     if (nDepth < 0)
         return false;
-    if (!pwallet->m_spend_zero_conf_change || !IsFromMe(ISMINE_ALL)) // using wtx's cached debit
+    if (!pwallet->m_spend_zero_conf_change || !IsFromMe(ISMINE_ALL)) // using wtx's cached dedogx
         return false;
 
     // Don't trust unconfirmed transactions from us unless they are in the mempool.
@@ -2136,20 +2136,20 @@ CAmount CWallet::GetLegacyBalance(const isminefilter& filter, int minDepth) cons
         }
 
         // Loop through tx outputs and add incoming payments. For outgoing txs,
-        // treat change outputs specially, as part of the amount debited.
-        CAmount debit = wtx.GetDebit(filter);
-        const bool outgoing = debit > 0;
+        // treat change outputs specially, as part of the amount dedogxed.
+        CAmount dedogx = wtx.GetDedogx(filter);
+        const bool outgoing = dedogx > 0;
         for (const CTxOut& out : wtx.tx->vout) {
             if (outgoing && IsChange(out)) {
-                debit -= out.nValue;
+                dedogx -= out.nValue;
             } else if (IsMine(out) & filter && depth >= minDepth) {
                 balance += out.nValue;
             }
         }
 
-        // For outgoing txs, subtract amount debited.
+        // For outgoing txs, subtract amount dedogxed.
         if (outgoing) {
-            balance -= debit;
+            balance -= dedogx;
         }
     }
 
@@ -2654,7 +2654,7 @@ bool CWallet::CreateTransaction(interfaces::Chain::Lock& locked_chain, const std
 
             // Create change script that will be used if we need change
             // TODO: pass in scriptChange instead of reservekey so
-            // change transaction isn't always pay-to-bitcoin-address
+            // change transaction isn't always pay-to-dogxcoin-address
             CScript scriptChange;
 
             // coin control: send change to custom address
@@ -3738,8 +3738,8 @@ void CWallet::GetKeyBirthTimes(interfaces::Chain::Lock& locked_chain, std::map<C
  *   the block time.
  *
  * For more information see CWalletTx::nTimeSmart,
- * https://bitcointalk.org/?topic=54527, or
- * https://github.com/bitcoin/bitcoin/pull/1393.
+ * https://dogxcointalk.org/?topic=54527, or
+ * https://github.com/dogxcoin/dogxcoin/pull/1393.
  */
 unsigned int CWallet::ComputeTimeSmart(const CWalletTx& wtx) const
 {

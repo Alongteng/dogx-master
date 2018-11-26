@@ -410,7 +410,7 @@
         <translation>Раздели</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and bitcoin: URIs)</source>
+        <source>Request payments (generates QR codes and dogxcoin: URIs)</source>
         <translation>Изискване на плащания(генерира QR кодове и биткойн: URIs)</translation>
     </message>
     <message>
@@ -422,7 +422,7 @@
         <translation>Покажи списък с използваните адреси и имена.</translation>
     </message>
     <message>
-        <source>Open a bitcoin: URI or payment request</source>
+        <source>Open a dogxcoin: URI or payment request</source>
         <translation>Отворете биткойн: URI  или заявка за плащане</translation>
     </message>
     <message>
@@ -752,7 +752,7 @@
         <translation>версия</translation>
     </message>
     <message>
-        <source>(%1-bit)</source>
+        <source>(%1-dogx)</source>
         <translation>(%1-битов)</translation>
     </message>
     <message>
@@ -1054,7 +1054,7 @@
         <translation>Възникна грешка по време назаявката за плащане</translation>
     </message>
     <message>
-        <source>Cannot start bitcoin: click-to-pay handler</source>
+        <source>Cannot start dogxcoin: click-to-pay handler</source>
         <translation>Биткойн не можe да се стартира: click-to-pay handler</translation>
     </message>
     <message>
@@ -1950,11 +1950,11 @@
         <translation>не е приет</translation>
     </message>
     <message>
-        <source>Debit</source>
+        <source>Dedogx</source>
         <translation>Дебит</translation>
     </message>
     <message>
-        <source>Total debit</source>
+        <source>Total dedogx</source>
         <translation>Общ дълг</translation>
     </message>
     <message>
@@ -2296,7 +2296,7 @@
     </message>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>dogxcoin-core</name>
     <message>
         <source>Bitcoin Core</source>
         <translation>Биткойн ядро</translation>

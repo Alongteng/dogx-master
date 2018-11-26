@@ -892,7 +892,7 @@
     </message>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>dogxcoin-core</name>
     <message>
         <source>Bitcoin Core</source>
         <translation>Биткойн ядро</translation>

@@ -147,7 +147,7 @@ def main():
     ips = [ip for ip in ips if ip['ip'] not in SUSPICIOUS_HOSTS]
     # Enforce minimal number of blocks.
     ips = [ip for ip in ips if ip['blocks'] >= MIN_BLOCKS]
-    # Require service bit 1.
+    # Require service dogx 1.
     ips = [ip for ip in ips if (ip['service'] & 1) == 1]
     # Require at least 50% 30-day uptime.
     ips = [ip for ip in ips if ip['uptime'] > 50]
@@ -155,7 +155,7 @@ def main():
     ips = [ip for ip in ips if PATTERN_AGENT.match(ip['agent'])]
     # Sort by availability (and use last success as tie breaker)
     ips.sort(key=lambda x: (x['uptime'], x['lastsuccess'], x['ip']), reverse=True)
-    # Filter out hosts with multiple bitcoin ports, these are likely abusive
+    # Filter out hosts with multiple dogxcoin ports, these are likely abusive
     ips = filtermultiport(ips)
     # Look up ASNs and limit results, both per ASN and globally.
     ips = filterbyasn(ips, MAX_SEEDS_PER_ASN, NSEEDS)

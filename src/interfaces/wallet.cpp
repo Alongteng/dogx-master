@@ -88,7 +88,7 @@ WalletTx MakeWalletTx(interfaces::Chain::Lock& locked_chain, CWallet& wallet, co
                                                       ISMINE_NO);
     }
     result.credit = wtx.GetCredit(locked_chain, ISMINE_ALL);
-    result.debit = wtx.GetDebit(ISMINE_ALL);
+    result.dedogx = wtx.GetDedogx(ISMINE_ALL);
     result.change = wtx.GetChange();
     result.time = wtx.GetTxTime();
     result.value_map = wtx.mapValue;
@@ -397,11 +397,11 @@ public:
         LOCK(m_wallet.cs_wallet);
         return m_wallet.IsMine(txout);
     }
-    CAmount getDebit(const CTxIn& txin, isminefilter filter) override
+    CAmount getDedogx(const CTxIn& txin, isminefilter filter) override
     {
         auto locked_chain = m_wallet.chain().lock();
         LOCK(m_wallet.cs_wallet);
-        return m_wallet.GetDebit(txin, filter);
+        return m_wallet.GetDedogx(txin, filter);
     }
     CAmount getCredit(const CTxOut& txout, isminefilter filter) override
     {

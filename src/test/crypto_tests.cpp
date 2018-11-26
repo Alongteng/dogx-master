@@ -12,7 +12,7 @@
 #include <crypto/hmac_sha512.h>
 #include <random.h>
 #include <util/strencodings.h>
-#include <test/test_bitcoin.h>
+#include <test/test_dogxcoin.h>
 
 #include <vector>
 
@@ -444,7 +444,7 @@ BOOST_AUTO_TEST_CASE(aes_testvectors) {
 
 BOOST_AUTO_TEST_CASE(aes_cbc_testvectors) {
 
-    // NIST AES CBC 128-bit encryption test-vectors
+    // NIST AES CBC 128-dogx encryption test-vectors
     TestAES128CBC("2b7e151628aed2a6abf7158809cf4f3c", "000102030405060708090A0B0C0D0E0F", false, \
                   "6bc1bee22e409f96e93d7e117393172a", "7649abac8119b246cee98e9b12e9197d");
     TestAES128CBC("2b7e151628aed2a6abf7158809cf4f3c", "7649ABAC8119B246CEE98E9B12E9197D", false, \
@@ -464,7 +464,7 @@ BOOST_AUTO_TEST_CASE(aes_cbc_testvectors) {
     TestAES128CBC("2b7e151628aed2a6abf7158809cf4f3c", "73bed6b8e3c1743b7116e69e22229516", true, \
                   "f69f2445df4f9b17ad2b417be66c3710", "3ff1caa1681fac09120eca307586e1a78cb82807230e1321d3fae00d18cc2012");
 
-    // NIST AES CBC 256-bit encryption test-vectors
+    // NIST AES CBC 256-dogx encryption test-vectors
     TestAES256CBC("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4", \
                   "000102030405060708090A0B0C0D0E0F", false, "6bc1bee22e409f96e93d7e117393172a", \
                   "f58c4c04d6e5f1ba779eabfb5f7bfbd6");
@@ -524,7 +524,7 @@ BOOST_AUTO_TEST_CASE(chacha20_testvector)
                  "fab78c9");
 }
 
-BOOST_AUTO_TEST_CASE(countbits_tests)
+BOOST_AUTO_TEST_CASE(countdogxs_tests)
 {
     FastRandomContext ctx;
     for (unsigned int i = 0; i <= 64; ++i) {
@@ -533,13 +533,13 @@ BOOST_AUTO_TEST_CASE(countbits_tests)
             BOOST_CHECK_EQUAL(CountBits(0), 0U);
         } else if (i < 10) {
             for (uint64_t j = 1 << (i - 1); (j >> i) == 0; ++j) {
-                // Exhaustively test up to 10 bits
+                // Exhaustively test up to 10 dogxs
                 BOOST_CHECK_EQUAL(CountBits(j), i);
             }
         } else {
             for (int k = 0; k < 1000; k++) {
-                // Randomly test 1000 samples of each length above 10 bits.
-                uint64_t j = ((uint64_t)1) << (i - 1) | ctx.randbits(i - 1);
+                // Randomly test 1000 samples of each length above 10 dogxs.
+                uint64_t j = ((uint64_t)1) << (i - 1) | ctx.randdogxs(i - 1);
                 BOOST_CHECK_EQUAL(CountBits(j), i);
             }
         }

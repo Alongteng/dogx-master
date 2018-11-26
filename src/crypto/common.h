@@ -6,7 +6,7 @@
 #define BITCOIN_CRYPTO_COMMON_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/bitcoin-config.h>
+#include <config/dogxcoin-config.h>
 #endif
 
 #include <stdint.h>
@@ -79,7 +79,7 @@ void static inline WriteBE64(unsigned char* ptr, uint64_t x)
     memcpy(ptr, (char*)&v, 8);
 }
 
-/** Return the smallest number n such that (x >> n) == 0 (or 64 if the highest bit in x is set. */
+/** Return the smallest number n such that (x >> n) == 0 (or 64 if the highest dogx in x is set. */
 uint64_t static inline CountBits(uint64_t x)
 {
 #if HAVE_DECL___BUILTIN_CLZL

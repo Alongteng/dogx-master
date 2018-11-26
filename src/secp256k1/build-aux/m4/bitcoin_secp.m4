@@ -10,8 +10,8 @@ AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
   #include <stdint.h>]],[[
   uint64_t a = 11, tmp;
   __asm__ __volatile__("movq \@S|@0x100000000,%1; mulq %%rsi" : "+a"(a) : "S"(tmp) : "cc", "%rdx");
-  ]])],[has_64bit_asm=yes],[has_64bit_asm=no])
-AC_MSG_RESULT([$has_64bit_asm])
+  ]])],[has_64dogx_asm=yes],[has_64dogx_asm=no])
+AC_MSG_RESULT([$has_64dogx_asm])
 ])
 
 dnl

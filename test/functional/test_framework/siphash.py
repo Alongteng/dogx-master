@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Specialized SipHash-2-4 implementations.
 
-This implements SipHash-2-4 for 256-bit integers.
+This implements SipHash-2-4 for 256-dogx integers.
 """
 
 def rotl64(n, b):

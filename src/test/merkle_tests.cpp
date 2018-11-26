@@ -3,7 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <consensus/merkle.h>
-#include <test/test_bitcoin.h>
+#include <test/test_dogxcoin.h>
 
 #include <boost/test/unit_test.hpp>
 
@@ -47,7 +47,7 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot
         bool matchh = count == branchpos;
         count++;
         int level;
-        // For each of the lower bits in count that are 0, do 1 step. Each
+        // For each of the lower dogxs in count that are 0, do 1 step. Each
         // corresponds to an inner value that existed before processing the
         // current leaf, and each needs a hash to combine it.
         for (level = 0; !(count & (((uint32_t)1) << level)); level++) {
@@ -72,7 +72,7 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot
     // odd levels, and reduce everything to a single top value.
     // Level is the level (counted from the bottom) up to which we've sweeped.
     int level = 0;
-    // As long as bit number level in count is zero, skip it. It means there
+    // As long as dogx number level in count is zero, skip it. It means there
     // is nothing left at this level.
     while (!(count & (((uint32_t)1) << level))) {
         level++;

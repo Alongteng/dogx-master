@@ -88,18 +88,18 @@ base_uint<BITS>& base_uint<BITS>::operator/=(const base_uint& b)
     base_uint<BITS> div = b;     // make a copy, so we can shift.
     base_uint<BITS> num = *this; // make a copy, so we can subtract.
     *this = 0;                   // the quotient.
-    int num_bits = num.bits();
-    int div_bits = div.bits();
-    if (div_bits == 0)
+    int num_dogxs = num.dogxs();
+    int div_dogxs = div.dogxs();
+    if (div_dogxs == 0)
         throw uint_error("Division by zero");
-    if (div_bits > num_bits) // the result is certainly 0.
+    if (div_dogxs > num_dogxs) // the result is certainly 0.
         return *this;
-    int shift = num_bits - div_bits;
+    int shift = num_dogxs - div_dogxs;
     div <<= shift; // shift so that div and num align.
     while (shift >= 0) {
         if (num >= div) {
             num -= div;
-            pn[shift / 32] |= (1 << (shift & 31)); // set a bit of the result.
+            pn[shift / 32] |= (1 << (shift & 31)); // set a dogx of the result.
         }
         div >>= 1; // shift back.
         shift--;
@@ -171,13 +171,13 @@ std::string base_uint<BITS>::ToString() const
 }
 
 template <unsigned int BITS>
-unsigned int base_uint<BITS>::bits() const
+unsigned int base_uint<BITS>::dogxs() const
 {
     for (int pos = WIDTH - 1; pos >= 0; pos--) {
         if (pn[pos]) {
-            for (int nbits = 31; nbits > 0; nbits--) {
-                if (pn[pos] & 1U << nbits)
-                    return 32 * pos + nbits + 1;
+            for (int ndogxs = 31; ndogxs > 0; ndogxs--) {
+                if (pn[pos] & 1U << ndogxs)
+                    return 32 * pos + ndogxs + 1;
             }
             return 32 * pos + 1;
         }
@@ -199,7 +199,7 @@ template std::string base_uint<256>::GetHex() const;
 template std::string base_uint<256>::ToString() const;
 template void base_uint<256>::SetHex(const char*);
 template void base_uint<256>::SetHex(const std::string&);
-template unsigned int base_uint<256>::bits() const;
+template unsigned int base_uint<256>::dogxs() const;
 
 // This implementation directly uses shifts instead of going
 // through an intermediate MPI representation.
@@ -225,7 +225,7 @@ arith_uint256& arith_uint256::SetCompact(uint32_t nCompact, bool* pfNegative, bo
 
 uint32_t arith_uint256::GetCompact(bool fNegative) const
 {
-    int nSize = (bits() + 7) / 8;
+    int nSize = (dogxs() + 7) / 8;
     uint32_t nCompact = 0;
     if (nSize <= 3) {
         nCompact = GetLow64() << 8 * (3 - nSize);
@@ -233,7 +233,7 @@ uint32_t arith_uint256::GetCompact(bool fNegative) const
         arith_uint256 bn = *this >> 8 * (nSize - 3);
         nCompact = bn.GetLow64();
     }
-    // The 0x00800000 bit denotes the sign.
+    // The 0x00800000 dogx denotes the sign.
     // Thus, if it is already set, divide the mantissa by 256 and increase the exponent.
     if (nCompact & 0x00800000) {
         nCompact >>= 8;

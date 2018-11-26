@@ -205,8 +205,8 @@ public:
     //! Return whether transaction output belongs to wallet.
     virtual isminetype txoutIsMine(const CTxOut& txout) = 0;
 
-    //! Return debit amount if transaction input belongs to wallet.
-    virtual CAmount getDebit(const CTxIn& txin, isminefilter filter) = 0;
+    //! Return dedogx amount if transaction input belongs to wallet.
+    virtual CAmount getDedogx(const CTxIn& txin, isminefilter filter) = 0;
 
     //! Return credit amount if transaction input belongs to wallet.
     virtual CAmount getCredit(const CTxOut& txout, isminefilter filter) = 0;
@@ -333,7 +333,7 @@ struct WalletTx
     std::vector<CTxDestination> txout_address;
     std::vector<isminetype> txout_address_is_mine;
     CAmount credit;
-    CAmount debit;
+    CAmount dedogx;
     CAmount change;
     int64_t time;
     std::map<std::string, std::string> value_map;

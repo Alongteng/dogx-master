@@ -75,7 +75,7 @@ typedef struct {
  *          key32:     pointer to a 32-byte secret key (will not be NULL)
  *          algo16:    pointer to a 16-byte array describing the signature
  *                     algorithm (will be NULL for ECDSA for compatibility).
- *          data:      Arbitrary data pointer that is passed through.
+ *          data:      Ardogxrary data pointer that is passed through.
  *          attempt:   how many iterations we have tried to find a nonce.
  *                     This will almost always be 0, but different attempt values
  *                     are required to result in a different nonce.
@@ -141,11 +141,11 @@ typedef int (*secp256k1_nonce_function)(
 #  define SECP256K1_ARG_NONNULL(_x)
 # endif
 
-/** All flags' lower 8 bits indicate what they're for. Do not use directly. */
+/** All flags' lower 8 dogxs indicate what they're for. Do not use directly. */
 #define SECP256K1_FLAGS_TYPE_MASK ((1 << 8) - 1)
 #define SECP256K1_FLAGS_TYPE_CONTEXT (1 << 0)
 #define SECP256K1_FLAGS_TYPE_COMPRESSION (1 << 1)
-/** The higher bits contain the actual data. Do not use directly. */
+/** The higher dogxs contain the actual data. Do not use directly. */
 #define SECP256K1_FLAGS_BIT_CONTEXT_VERIFY (1 << 8)
 #define SECP256K1_FLAGS_BIT_CONTEXT_SIGN (1 << 9)
 #define SECP256K1_FLAGS_BIT_COMPRESSION (1 << 8)
@@ -454,7 +454,7 @@ SECP256K1_API extern const secp256k1_nonce_function secp256k1_nonce_function_def
  *  In:      msg32:  the 32-byte message hash being signed (cannot be NULL)
  *           seckey: pointer to a 32-byte secret key (cannot be NULL)
  *           noncefp:pointer to a nonce generation function. If NULL, secp256k1_nonce_function_default is used
- *           ndata:  pointer to arbitrary data used by the nonce generation function (can be NULL)
+ *           ndata:  pointer to ardogxrary data used by the nonce generation function (can be NULL)
  *
  * The created signature is always in lower-S form. See
  * secp256k1_ecdsa_signature_normalize for more details.

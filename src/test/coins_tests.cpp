@@ -6,7 +6,7 @@
 #include <coins.h>
 #include <consensus/validation.h>
 #include <script/standard.h>
-#include <test/test_bitcoin.h>
+#include <test/test_dogxcoin.h>
 #include <uint256.h>
 #include <undo.h>
 #include <util/strencodings.h>
@@ -104,7 +104,7 @@ static const unsigned int NUM_SIMULATION_ITERATIONS = 40000;
 // stack of caches on top of CCoinsViewTest.
 //
 // It will randomly create/update/delete Coin entries to a tip of caches, with
-// txids picked from a limited list of random 256-bit hashes. Occasionally, a
+// txids picked from a limited list of random 256-dogx hashes. Occasionally, a
 // new tip is added to the stack of caches, or the tip is flushed and removed.
 //
 // During the process, booleans are kept to make sure that the randomized

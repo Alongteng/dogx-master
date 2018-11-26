@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <versionbits.h>
+#include <versiondogxs.h>
 #include <consensus/params.h>
 
 ThresholdState AbstractThresholdConditionChecker::GetStateFor(const CBlockIndex* pindexPrev, const Consensus::Params& params, ThresholdConditionCache& cache) const
@@ -162,7 +162,7 @@ int AbstractThresholdConditionChecker::GetStateSinceHeightFor(const CBlockIndex*
 namespace
 {
 /**
- * Class to implement versionbits logic.
+ * Class to implement versiondogxs logic.
  */
 class VersionBitsConditionChecker : public AbstractThresholdConditionChecker {
 private:
@@ -181,7 +181,7 @@ protected:
 
 public:
     explicit VersionBitsConditionChecker(Consensus::DeploymentPos id_) : id(id_) {}
-    uint32_t Mask(const Consensus::Params& params) const { return ((uint32_t)1) << params.vDeployments[id].bit; }
+    uint32_t Mask(const Consensus::Params& params) const { return ((uint32_t)1) << params.vDeployments[id].dogx; }
 };
 
 } // namespace

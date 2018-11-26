@@ -139,13 +139,13 @@ AC_ARG_ENABLE(jni,
     [use_jni=$enableval],
     [use_jni=auto])
 
-AC_ARG_WITH([field], [AS_HELP_STRING([--with-field=64bit|32bit|auto],
+AC_ARG_WITH([field], [AS_HELP_STRING([--with-field=64dogx|32dogx|auto],
 [Specify Field Implementation. Default is auto])],[req_field=$withval], [req_field=auto])
 
 AC_ARG_WITH([bignum], [AS_HELP_STRING([--with-bignum=gmp|no|auto],
 [Specify Bignum Implementation. Default is auto])],[req_bignum=$withval], [req_bignum=auto])
 
-AC_ARG_WITH([scalar], [AS_HELP_STRING([--with-scalar=64bit|32bit|auto],
+AC_ARG_WITH([scalar], [AS_HELP_STRING([--with-scalar=64dogx|32dogx|auto],
 [Specify scalar implementation. Default is auto])],[req_scalar=$withval], [req_scalar=auto])
 
 AC_ARG_WITH([asm], [AS_HELP_STRING([--with-asm=x86_64|arm|no|auto]
@@ -197,7 +197,7 @@ fi
 
 if test x"$req_asm" = x"auto"; then
   SECP_64BIT_ASM_CHECK
-  if test x"$has_64bit_asm" = x"yes"; then
+  if test x"$has_64dogx_asm" = x"yes"; then
     set_asm=x86_64
   fi
   if test x"$set_asm" = x; then
@@ -208,7 +208,7 @@ else
   case $set_asm in
   x86_64)
     SECP_64BIT_ASM_CHECK
-    if test x"$has_64bit_asm" != x"yes"; then
+    if test x"$has_64dogx_asm" != x"yes"; then
       AC_MSG_ERROR([x86_64 assembly optimization requested but not available])
     fi
     ;;
@@ -224,29 +224,29 @@ fi
 
 if test x"$req_field" = x"auto"; then
   if test x"set_asm" = x"x86_64"; then
-    set_field=64bit
+    set_field=64dogx
   fi
   if test x"$set_field" = x; then
     SECP_INT128_CHECK
     if test x"$has_int128" = x"yes"; then
-      set_field=64bit
+      set_field=64dogx
     fi
   fi
   if test x"$set_field" = x; then
-    set_field=32bit
+    set_field=32dogx
   fi
 else
   set_field=$req_field
   case $set_field in
-  64bit)
+  64dogx)
     if test x"$set_asm" != x"x86_64"; then
       SECP_INT128_CHECK
       if test x"$has_int128" != x"yes"; then
-        AC_MSG_ERROR([64bit field explicitly requested but neither __int128 support or x86_64 assembly available])
+        AC_MSG_ERROR([64dogx field explicitly requested but neither __int128 support or x86_64 assembly available])
       fi
     fi
     ;;
-  32bit)
+  32dogx)
     ;;
   *)
     AC_MSG_ERROR([invalid field implementation selection])
@@ -257,21 +257,21 @@ fi
 if test x"$req_scalar" = x"auto"; then
   SECP_INT128_CHECK
   if test x"$has_int128" = x"yes"; then
-    set_scalar=64bit
+    set_scalar=64dogx
   fi
   if test x"$set_scalar" = x; then
-    set_scalar=32bit
+    set_scalar=32dogx
   fi
 else
   set_scalar=$req_scalar
   case $set_scalar in
-  64bit)
+  64dogx)
     SECP_INT128_CHECK
     if test x"$has_int128" != x"yes"; then
-      AC_MSG_ERROR([64bit scalar explicitly requested but __int128 support not available])
+      AC_MSG_ERROR([64dogx scalar explicitly requested but __int128 support not available])
     fi
     ;;
-  32bit)
+  32dogx)
     ;;
   *)
     AC_MSG_ERROR([invalid scalar implementation selected])
@@ -324,10 +324,10 @@ esac
 
 # select field implementation
 case $set_field in
-64bit)
+64dogx)
   AC_DEFINE(USE_FIELD_5X52, 1, [Define this symbol to use the FIELD_5X52 implementation])
   ;;
-32bit)
+32dogx)
   AC_DEFINE(USE_FIELD_10X26, 1, [Define this symbol to use the FIELD_10X26 implementation])
   ;;
 *)
@@ -355,10 +355,10 @@ esac
 
 #select scalar implementation
 case $set_scalar in
-64bit)
+64dogx)
   AC_DEFINE(USE_SCALAR_4X64, 1, [Define this symbol to use the 4x64 scalar implementation])
   ;;
-32bit)
+32dogx)
   AC_DEFINE(USE_SCALAR_8X32, 1, [Define this symbol to use the 8x32 scalar implementation])
   ;;
 *)

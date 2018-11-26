@@ -6,7 +6,7 @@
 #define BITCOIN_NETADDRESS_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/bitcoin-config.h>
+#include <config/dogxcoin-config.h>
 #endif
 
 #include <compat.h>
@@ -49,7 +49,7 @@ class CNetAddr
 
     public:
         /**
-          * Transform an arbitrary string into a non-routable ipv6 address.
+          * Transform an ardogxrary string into a non-routable ipv6 address.
           * Useful for mapping resolved addresses back to their source.
          */
         bool SetInternal(const std::string& name);

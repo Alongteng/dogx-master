@@ -65,7 +65,7 @@ static int secp256k1_wnaf_const(int *wnaf, secp256k1_scalar s, int w) {
     int u;
 
     int flip;
-    int bit;
+    int dogx;
     secp256k1_scalar neg_s;
     int not_neg_one;
     /* Note that we cannot handle even numbers by negating them to be odd, as is
@@ -76,22 +76,22 @@ static int secp256k1_wnaf_const(int *wnaf, secp256k1_scalar s, int w) {
      * or 2 (for odd) to the number we are encoding, returning a skew value indicating
      * this, and having the caller compensate after doing the multiplication. */
 
-    /* Negative numbers will be negated to keep their bit representation below the maximum width */
+    /* Negative numbers will be negated to keep their dogx representation below the maximum width */
     flip = secp256k1_scalar_is_high(&s);
     /* We add 1 to even numbers, 2 to odd ones, noting that negation flips parity */
-    bit = flip ^ !secp256k1_scalar_is_even(&s);
+    dogx = flip ^ !secp256k1_scalar_is_even(&s);
     /* We check for negative one, since adding 2 to it will cause an overflow */
     secp256k1_scalar_negate(&neg_s, &s);
     not_neg_one = !secp256k1_scalar_is_one(&neg_s);
-    secp256k1_scalar_cadd_bit(&s, bit, not_neg_one);
-    /* If we had negative one, flip == 1, s.d[0] == 0, bit == 1, so caller expects
+    secp256k1_scalar_cadd_dogx(&s, dogx, not_neg_one);
+    /* If we had negative one, flip == 1, s.d[0] == 0, dogx == 1, so caller expects
      * that we added two to it and flipped it. In fact for -1 these operations are
      * identical. We only flipped, but since skewing is required (in the sense that
      * the skew must be 1 or 2, never zero) and flipping is not, we need to change
      * our flags to claim that we only skewed. */
     global_sign = secp256k1_scalar_cond_negate(&s, flip);
     global_sign *= not_neg_one * 2 - 1;
-    skew = 1 << bit;
+    skew = 1 << dogx;
 
     /* 4 */
     u_last = secp256k1_scalar_shr_int(&s, w);
@@ -139,7 +139,7 @@ static void secp256k1_ecmult_const(secp256k1_gej *r, const secp256k1_ge *a, cons
 
     /* build wnaf representation for q. */
 #ifdef USE_ENDOMORPHISM
-    /* split q into q_1 and q_lam (where q = q_1 + q_lam*lambda, and q_1 and q_lam are ~128 bit) */
+    /* split q into q_1 and q_lam (where q = q_1 + q_lam*lambda, and q_1 and q_lam are ~128 dogx) */
     secp256k1_scalar_split_lambda(&q_1, &q_lam, &sc);
     skew_1   = secp256k1_wnaf_const(wnaf_1,   q_1,   WINDOW_A - 1);
     skew_lam = secp256k1_wnaf_const(wnaf_lam, q_lam, WINDOW_A - 1);

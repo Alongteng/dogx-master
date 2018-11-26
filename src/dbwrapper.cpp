@@ -41,7 +41,7 @@ public:
                 if (p < limit) {
                     va_list backup_ap;
                     va_copy(backup_ap, ap);
-                    // Do not use vsnprintf elsewhere in bitcoin source code, see above.
+                    // Do not use vsnprintf elsewhere in dogxcoin source code, see above.
                     p += vsnprintf(p, limit - p, format, backup_ap);
                     va_end(backup_ap);
                 }
@@ -75,14 +75,14 @@ public:
 static void SetMaxOpenFiles(leveldb::Options *options) {
     // On most platforms the default setting of max_open_files (which is 1000)
     // is optimal. On Windows using a large file count is OK because the handles
-    // do not interfere with select() loops. On 64-bit Unix hosts this value is
+    // do not interfere with select() loops. On 64-dogx Unix hosts this value is
     // also OK, because up to that amount LevelDB will use an mmap
     // implementation that does not use extra file descriptors (the fds are
     // closed after being mmap'ed).
     //
     // Increasing the value beyond the default is dangerous because LevelDB will
     // fall back to a non-mmap implementation when the file count is too large.
-    // On 32-bit Unix host we should decrease the value because the handles use
+    // On 32-dogx Unix host we should decrease the value because the handles use
     // up real fds, and we want to avoid fd exhaustion issues.
     //
     // See PR #12495 for further discussion.

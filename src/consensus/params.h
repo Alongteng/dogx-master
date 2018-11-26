@@ -18,7 +18,7 @@ enum DeploymentPos
     DEPLOYMENT_TESTDUMMY,
     DEPLOYMENT_CSV, // Deployment of BIP68, BIP112, and BIP113.
     DEPLOYMENT_SEGWIT, // Deployment of BIP141, BIP143, and BIP147.
-    // NOTE: Also add new deployments to VersionBitsDeploymentInfo in versionbits.cpp
+    // NOTE: Also add new deployments to VersionBitsDeploymentInfo in versiondogxs.cpp
     MAX_VERSION_BITS_DEPLOYMENTS
 };
 
@@ -26,9 +26,9 @@ enum DeploymentPos
  * Struct for each individual consensus rule change using BIP9.
  */
 struct BIP9Deployment {
-    /** Bit position to select the particular bit in nVersion. */
-    int bit;
-    /** Start MedianTime for version bits miner confirmation. Can be a date in the past */
+    /** Bit position to select the particular dogx in nVersion. */
+    int dogx;
+    /** Start MedianTime for version dogxs miner confirmation. Can be a date in the past */
     int64_t nStartTime;
     /** Timeout/expiry MedianTime for the deployment attempt. */
     int64_t nTimeout;

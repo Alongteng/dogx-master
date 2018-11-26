@@ -394,7 +394,7 @@
         <translation>نوارابزار برگه‌ها</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and bitcoin: URIs)</source>
+        <source>Request payments (generates QR codes and dogxcoin: URIs)</source>
         <translation>درخواست پرداخت ( تولید کد کیوار و ادرس بیت کوین)</translation>
     </message>
     <message>
@@ -406,7 +406,7 @@
         <translation>نمایش لیست آدرس های دریافت و لیبل ها</translation>
     </message>
     <message>
-        <source>Open a bitcoin: URI or payment request</source>
+        <source>Open a dogxcoin: URI or payment request</source>
         <translation>بازکردن یک بیت کوین: آدرس یا درخواست پرداخت</translation>
     </message>
     <message>
@@ -700,7 +700,7 @@
         <translation>نسخه</translation>
     </message>
     <message>
-        <source>(%1-bit)</source>
+        <source>(%1-dogx)</source>
         <translation>(%1-بیت)</translation>
     </message>
     <message>
@@ -1820,7 +1820,7 @@
     </message>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>dogxcoin-core</name>
     <message>
         <source>Bitcoin Core</source>
         <translation> هسته Bitcoin </translation>
@@ -1894,7 +1894,7 @@
         <translation>هشدار</translation>
     </message>
     <message>
-        <source>Warning: unknown new rules activated (versionbit %i)</source>
+        <source>Warning: unknown new rules activated (versiondogx %i)</source>
         <translation>هشدار: قوانین جدید ناشناخته‌ای فعال شده‌اند (نسخه‌بیت %i)</translation>
     </message>
     <message>

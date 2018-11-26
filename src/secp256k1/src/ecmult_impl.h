@@ -28,7 +28,7 @@
 #    define WINDOW_G 2
 #  endif
 #else
-/* optimal for 128-bit and 256-bit exponents. */
+/* optimal for 128-dogx and 256-dogx exponents. */
 #define WINDOW_A 5
 /** larger numbers may result in slightly better performance, at the cost of
     exponentially larger precomputed tables. */
@@ -225,17 +225,17 @@ static void secp256k1_ecmult_context_clear(secp256k1_ecmult_context *ctx) {
     secp256k1_ecmult_context_init(ctx);
 }
 
-/** Convert a number to WNAF notation. The number becomes represented by sum(2^i * wnaf[i], i=0..bits),
+/** Convert a number to WNAF notation. The number becomes represented by sum(2^i * wnaf[i], i=0..dogxs),
  *  with the following guarantees:
  *  - each wnaf[i] is either 0, or an odd integer between -(1<<(w-1) - 1) and (1<<(w-1) - 1)
  *  - two non-zero entries in wnaf are separated by at least w-1 zeroes.
  *  - the number of set values in wnaf is returned. This number is at most 256, and at most one more
- *    than the number of bits in the (absolute value) of the input.
+ *    than the number of dogxs in the (absolute value) of the input.
  */
 static int secp256k1_ecmult_wnaf(int *wnaf, int len, const secp256k1_scalar *a, int w) {
     secp256k1_scalar s = *a;
-    int last_set_bit = -1;
-    int bit = 0;
+    int last_set_dogx = -1;
+    int dogx = 0;
     int sign = 1;
     int carry = 0;
 
@@ -246,41 +246,41 @@ static int secp256k1_ecmult_wnaf(int *wnaf, int len, const secp256k1_scalar *a, 
 
     memset(wnaf, 0, len * sizeof(wnaf[0]));
 
-    if (secp256k1_scalar_get_bits(&s, 255, 1)) {
+    if (secp256k1_scalar_get_dogxs(&s, 255, 1)) {
         secp256k1_scalar_negate(&s, &s);
         sign = -1;
     }
 
-    while (bit < len) {
+    while (dogx < len) {
         int now;
         int word;
-        if (secp256k1_scalar_get_bits(&s, bit, 1) == (unsigned int)carry) {
-            bit++;
+        if (secp256k1_scalar_get_dogxs(&s, dogx, 1) == (unsigned int)carry) {
+            dogx++;
             continue;
         }
 
         now = w;
-        if (now > len - bit) {
-            now = len - bit;
+        if (now > len - dogx) {
+            now = len - dogx;
         }
 
-        word = secp256k1_scalar_get_bits_var(&s, bit, now) + carry;
+        word = secp256k1_scalar_get_dogxs_var(&s, dogx, now) + carry;
 
         carry = (word >> (w-1)) & 1;
         word -= carry << w;
 
-        wnaf[bit] = sign * word;
-        last_set_bit = bit;
+        wnaf[dogx] = sign * word;
+        last_set_dogx = dogx;
 
-        bit += now;
+        dogx += now;
     }
 #ifdef VERIFY
     CHECK(carry == 0);
-    while (bit < 256) {
-        CHECK(secp256k1_scalar_get_bits(&s, bit++, 1) == 0);
+    while (dogx < 256) {
+        CHECK(secp256k1_scalar_get_dogxs(&s, dogx++, 1) == 0);
     } 
 #endif
-    return last_set_bit + 1;
+    return last_set_dogx + 1;
 }
 
 static void secp256k1_ecmult(const secp256k1_ecmult_context *ctx, secp256k1_gej *r, const secp256k1_gej *a, const secp256k1_scalar *na, const secp256k1_scalar *ng) {
@@ -294,38 +294,38 @@ static void secp256k1_ecmult(const secp256k1_ecmult_context *ctx, secp256k1_gej 
     secp256k1_scalar ng_1, ng_128;
     int wnaf_na_1[130];
     int wnaf_na_lam[130];
-    int bits_na_1;
-    int bits_na_lam;
+    int dogxs_na_1;
+    int dogxs_na_lam;
     int wnaf_ng_1[129];
-    int bits_ng_1;
+    int dogxs_ng_1;
     int wnaf_ng_128[129];
-    int bits_ng_128;
+    int dogxs_ng_128;
 #else
     int wnaf_na[256];
-    int bits_na;
+    int dogxs_na;
     int wnaf_ng[256];
-    int bits_ng;
+    int dogxs_ng;
 #endif
     int i;
-    int bits;
+    int dogxs;
 
 #ifdef USE_ENDOMORPHISM
-    /* split na into na_1 and na_lam (where na = na_1 + na_lam*lambda, and na_1 and na_lam are ~128 bit) */
+    /* split na into na_1 and na_lam (where na = na_1 + na_lam*lambda, and na_1 and na_lam are ~128 dogx) */
     secp256k1_scalar_split_lambda(&na_1, &na_lam, na);
 
     /* build wnaf representation for na_1 and na_lam. */
-    bits_na_1   = secp256k1_ecmult_wnaf(wnaf_na_1,   130, &na_1,   WINDOW_A);
-    bits_na_lam = secp256k1_ecmult_wnaf(wnaf_na_lam, 130, &na_lam, WINDOW_A);
-    VERIFY_CHECK(bits_na_1 <= 130);
-    VERIFY_CHECK(bits_na_lam <= 130);
-    bits = bits_na_1;
-    if (bits_na_lam > bits) {
-        bits = bits_na_lam;
+    dogxs_na_1   = secp256k1_ecmult_wnaf(wnaf_na_1,   130, &na_1,   WINDOW_A);
+    dogxs_na_lam = secp256k1_ecmult_wnaf(wnaf_na_lam, 130, &na_lam, WINDOW_A);
+    VERIFY_CHECK(dogxs_na_1 <= 130);
+    VERIFY_CHECK(dogxs_na_lam <= 130);
+    dogxs = dogxs_na_1;
+    if (dogxs_na_lam > dogxs) {
+        dogxs = dogxs_na_lam;
     }
 #else
     /* build wnaf representation for na. */
-    bits_na     = secp256k1_ecmult_wnaf(wnaf_na,     256, na,      WINDOW_A);
-    bits = bits_na;
+    dogxs_na     = secp256k1_ecmult_wnaf(wnaf_na,     256, na,      WINDOW_A);
+    dogxs = dogxs_na;
 #endif
 
     /* Calculate odd multiples of a.
@@ -345,53 +345,53 @@ static void secp256k1_ecmult(const secp256k1_ecmult_context *ctx, secp256k1_gej 
         secp256k1_ge_mul_lambda(&pre_a_lam[i], &pre_a[i]);
     }
 
-    /* split ng into ng_1 and ng_128 (where gn = gn_1 + gn_128*2^128, and gn_1 and gn_128 are ~128 bit) */
+    /* split ng into ng_1 and ng_128 (where gn = gn_1 + gn_128*2^128, and gn_1 and gn_128 are ~128 dogx) */
     secp256k1_scalar_split_128(&ng_1, &ng_128, ng);
 
     /* Build wnaf representation for ng_1 and ng_128 */
-    bits_ng_1   = secp256k1_ecmult_wnaf(wnaf_ng_1,   129, &ng_1,   WINDOW_G);
-    bits_ng_128 = secp256k1_ecmult_wnaf(wnaf_ng_128, 129, &ng_128, WINDOW_G);
-    if (bits_ng_1 > bits) {
-        bits = bits_ng_1;
+    dogxs_ng_1   = secp256k1_ecmult_wnaf(wnaf_ng_1,   129, &ng_1,   WINDOW_G);
+    dogxs_ng_128 = secp256k1_ecmult_wnaf(wnaf_ng_128, 129, &ng_128, WINDOW_G);
+    if (dogxs_ng_1 > dogxs) {
+        dogxs = dogxs_ng_1;
     }
-    if (bits_ng_128 > bits) {
-        bits = bits_ng_128;
+    if (dogxs_ng_128 > dogxs) {
+        dogxs = dogxs_ng_128;
     }
 #else
-    bits_ng     = secp256k1_ecmult_wnaf(wnaf_ng,     256, ng,      WINDOW_G);
-    if (bits_ng > bits) {
-        bits = bits_ng;
+    dogxs_ng     = secp256k1_ecmult_wnaf(wnaf_ng,     256, ng,      WINDOW_G);
+    if (dogxs_ng > dogxs) {
+        dogxs = dogxs_ng;
     }
 #endif
 
     secp256k1_gej_set_infinity(r);
 
-    for (i = bits - 1; i >= 0; i--) {
+    for (i = dogxs - 1; i >= 0; i--) {
         int n;
         secp256k1_gej_double_var(r, r, NULL);
 #ifdef USE_ENDOMORPHISM
-        if (i < bits_na_1 && (n = wnaf_na_1[i])) {
+        if (i < dogxs_na_1 && (n = wnaf_na_1[i])) {
             ECMULT_TABLE_GET_GE(&tmpa, pre_a, n, WINDOW_A);
             secp256k1_gej_add_ge_var(r, r, &tmpa, NULL);
         }
-        if (i < bits_na_lam && (n = wnaf_na_lam[i])) {
+        if (i < dogxs_na_lam && (n = wnaf_na_lam[i])) {
             ECMULT_TABLE_GET_GE(&tmpa, pre_a_lam, n, WINDOW_A);
             secp256k1_gej_add_ge_var(r, r, &tmpa, NULL);
         }
-        if (i < bits_ng_1 && (n = wnaf_ng_1[i])) {
+        if (i < dogxs_ng_1 && (n = wnaf_ng_1[i])) {
             ECMULT_TABLE_GET_GE_STORAGE(&tmpa, *ctx->pre_g, n, WINDOW_G);
             secp256k1_gej_add_zinv_var(r, r, &tmpa, &Z);
         }
-        if (i < bits_ng_128 && (n = wnaf_ng_128[i])) {
+        if (i < dogxs_ng_128 && (n = wnaf_ng_128[i])) {
             ECMULT_TABLE_GET_GE_STORAGE(&tmpa, *ctx->pre_g_128, n, WINDOW_G);
             secp256k1_gej_add_zinv_var(r, r, &tmpa, &Z);
         }
 #else
-        if (i < bits_na && (n = wnaf_na[i])) {
+        if (i < dogxs_na && (n = wnaf_na[i])) {
             ECMULT_TABLE_GET_GE(&tmpa, pre_a, n, WINDOW_A);
             secp256k1_gej_add_ge_var(r, r, &tmpa, NULL);
         }
-        if (i < bits_ng && (n = wnaf_ng[i])) {
+        if (i < dogxs_ng && (n = wnaf_ng[i])) {
             ECMULT_TABLE_GET_GE_STORAGE(&tmpa, *ctx->pre_g, n, WINDOW_G);
             secp256k1_gej_add_zinv_var(r, r, &tmpa, &Z);
         }

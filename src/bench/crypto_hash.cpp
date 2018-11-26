@@ -78,7 +78,7 @@ static void SipHash_32b(benchmark::State& state)
     }
 }
 
-static void FastRandom_32bit(benchmark::State& state)
+static void FastRandom_32dogx(benchmark::State& state)
 {
     FastRandomContext rng(true);
     while (state.KeepRunning()) {
@@ -86,7 +86,7 @@ static void FastRandom_32bit(benchmark::State& state)
     }
 }
 
-static void FastRandom_1bit(benchmark::State& state)
+static void FastRandom_1dogx(benchmark::State& state)
 {
     FastRandomContext rng(true);
     while (state.KeepRunning()) {
@@ -102,5 +102,5 @@ BENCHMARK(SHA512, 330);
 BENCHMARK(SHA256_32b, 4700 * 1000);
 BENCHMARK(SipHash_32b, 40 * 1000 * 1000);
 BENCHMARK(SHA256D64_1024, 7400);
-BENCHMARK(FastRandom_32bit, 110 * 1000 * 1000);
-BENCHMARK(FastRandom_1bit, 440 * 1000 * 1000);
+BENCHMARK(FastRandom_32dogx, 110 * 1000 * 1000);
+BENCHMARK(FastRandom_1dogx, 440 * 1000 * 1000);

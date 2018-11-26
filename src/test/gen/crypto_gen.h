@@ -7,7 +7,7 @@
 #include <key.h>
 #include <random.h>
 #include <uint256.h>
-#include <rapidcheck/gen/Arbitrary.h>
+#include <rapidcheck/gen/Ardogxrary.h>
 #include <rapidcheck/Gen.h>
 #include <rapidcheck/gen/Create.h>
 #include <rapidcheck/gen/Numeric.h>
@@ -19,8 +19,8 @@ namespace rc
 {
 /** Generator for a new CKey */
 template <>
-struct Arbitrary<CKey> {
-    static Gen<CKey> arbitrary()
+struct Ardogxrary<CKey> {
+    static Gen<CKey> ardogxrary()
     {
         return rc::gen::map<int>([](int x) {
             CKey key;
@@ -32,10 +32,10 @@ struct Arbitrary<CKey> {
 
 /** Generator for a CPrivKey */
 template <>
-struct Arbitrary<CPrivKey> {
-    static Gen<CPrivKey> arbitrary()
+struct Ardogxrary<CPrivKey> {
+    static Gen<CPrivKey> ardogxrary()
     {
-        return gen::map(gen::arbitrary<CKey>(), [](const CKey& key) {
+        return gen::map(gen::ardogxrary<CKey>(), [](const CKey& key) {
             return key.GetPrivKey();
         });
     };
@@ -43,18 +43,18 @@ struct Arbitrary<CPrivKey> {
 
 /** Generator for a new CPubKey */
 template <>
-struct Arbitrary<CPubKey> {
-    static Gen<CPubKey> arbitrary()
+struct Ardogxrary<CPubKey> {
+    static Gen<CPubKey> ardogxrary()
     {
-        return gen::map(gen::arbitrary<CKey>(), [](const CKey& key) {
+        return gen::map(gen::ardogxrary<CKey>(), [](const CKey& key) {
             return key.GetPubKey();
         });
     };
 };
-/** Generates a arbitrary uint256 */
+/** Generates a ardogxrary uint256 */
 template <>
-struct Arbitrary<uint256> {
-    static Gen<uint256> arbitrary()
+struct Ardogxrary<uint256> {
+    static Gen<uint256> ardogxrary()
     {
         return rc::gen::just(GetRandHash());
     };

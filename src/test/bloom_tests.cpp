@@ -15,7 +15,7 @@
 #include <uint256.h>
 #include <util/system.h>
 #include <util/strencodings.h>
-#include <test/test_bitcoin.h>
+#include <test/test_dogxcoin.h>
 
 #include <vector>
 
@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(bloom_create_insert_serialize)
 
     filter.insert(ParseHex("99108ad8ed9bb6274d3980bab5a85c048f0950c8"));
     BOOST_CHECK_MESSAGE( filter.contains(ParseHex("99108ad8ed9bb6274d3980bab5a85c048f0950c8")), "Bloom filter doesn't contain just-inserted object!");
-    // One bit different in first byte
+    // One dogx different in first byte
     BOOST_CHECK_MESSAGE(!filter.contains(ParseHex("19108ad8ed9bb6274d3980bab5a85c048f0950c8")), "Bloom filter contains something it shouldn't!");
 
     filter.insert(ParseHex("b5a2c786d9ef4658287ced5914b37a1b4aa32eee"));
@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE(bloom_create_insert_serialize_with_tweak)
 
     filter.insert(ParseHex("99108ad8ed9bb6274d3980bab5a85c048f0950c8"));
     BOOST_CHECK_MESSAGE( filter.contains(ParseHex("99108ad8ed9bb6274d3980bab5a85c048f0950c8")), "Bloom filter doesn't contain just-inserted object!");
-    // One bit different in first byte
+    // One dogx different in first byte
     BOOST_CHECK_MESSAGE(!filter.contains(ParseHex("19108ad8ed9bb6274d3980bab5a85c048f0950c8")), "Bloom filter contains something it shouldn't!");
 
     filter.insert(ParseHex("b5a2c786d9ef4658287ced5914b37a1b4aa32eee"));
@@ -485,7 +485,7 @@ BOOST_AUTO_TEST_CASE(rolling_bloom)
         if (rb1.contains(RandomData()))
             ++nHits;
     }
-    // Run test_bitcoin with --log_level=message to see BOOST_TEST_MESSAGEs:
+    // Run test_dogxcoin with --log_level=message to see BOOST_TEST_MESSAGEs:
     BOOST_TEST_MESSAGE("RollingBloomFilter got " << nHits << " false positives (~100 expected)");
 
     // Insanely unlikely to get a fp count outside this range:

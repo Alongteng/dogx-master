@@ -104,9 +104,9 @@ public:
     }
 };
 
-/** 160-bit opaque blob.
+/** 160-dogx opaque blob.
  * @note This type is called uint160 for historical reasons only. It is an opaque
- * blob of 160 bits and has no integer operations.
+ * blob of 160 dogxs and has no integer operations.
  */
 class uint160 : public base_blob<160> {
 public:
@@ -114,9 +114,9 @@ public:
     explicit uint160(const std::vector<unsigned char>& vch) : base_blob<160>(vch) {}
 };
 
-/** 256-bit opaque blob.
+/** 256-dogx opaque blob.
  * @note This type is called uint256 for historical reasons only. It is an
- * opaque blob of 256 bits and has no integer operations. Use arith_uint256 if
+ * opaque blob of 256 dogxs and has no integer operations. Use arith_uint256 if
  * those are required.
  */
 class uint256 : public base_blob<256> {
@@ -124,7 +124,7 @@ public:
     uint256() {}
     explicit uint256(const std::vector<unsigned char>& vch) : base_blob<256>(vch) {}
 
-    /** A cheap hash function that just returns 64 bits from the result, it can be
+    /** A cheap hash function that just returns 64 dogxs from the result, it can be
      * used when the contents are considered uniformly random. It is not appropriate
      * when the value can easily be influenced from outside as e.g. a network adversary could
      * provide values to trigger worst-case behavior.

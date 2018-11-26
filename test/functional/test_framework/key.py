@@ -4,7 +4,7 @@
 WARNING: This module does not mlock() secrets; your private keys may end up on
 disk in swap! Use with caution!
 
-This file is modified from python-bitcoinlib.
+This file is modified from python-dogxcoinlib.
 """
 
 import ctypes
@@ -73,7 +73,7 @@ NID_secp256k1 = 714 # from openssl/obj_mac.h
 SECP256K1_ORDER = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
 SECP256K1_ORDER_HALF = SECP256K1_ORDER // 2
 
-# Thx to Sam Devlin for the ctypes magic 64-bit fix.
+# Thx to Sam Devlin for the ctypes magic 64-dogx fix.
 def _check_result(val, func, args):
     if val == 0:
         raise ValueError

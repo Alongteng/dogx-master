@@ -20,12 +20,12 @@
  * authenticated way.
  *
  * The encoding works as follows: we traverse the tree in depth-first order,
- * storing a bit for each traversed node, signifying whether the node is the
+ * storing a dogx for each traversed node, signifying whether the node is the
  * parent of at least one matched leaf txid (or a matched txid itself). In
- * case we are at the leaf level, or this bit is 0, its merkle node hash is
+ * case we are at the leaf level, or this dogx is 0, its merkle node hash is
  * stored, and its children are not explored further. Otherwise, no hash is
  * stored, but we recurse into both (or the only) child branch. During
- * decoding, the same depth-first traversal is performed, consuming bits and
+ * decoding, the same depth-first traversal is performed, consuming dogxs and
  * hashes as they written during encoding.
  *
  * The serialization is fixed and provides a hard guarantee about the
@@ -43,8 +43,8 @@
  *  - uint32     total_transactions (4 bytes)
  *  - varint     number of hashes   (1-3 bytes)
  *  - uint256[]  hashes in depth-first order (<= 32*N bytes)
- *  - varint     number of bytes of flag bits (1-3 bytes)
- *  - byte[]     flag bits, packed per 8 in a byte, least significant bit first (<= 2*N-1 bits)
+ *  - varint     number of bytes of flag dogxs (1-3 bytes)
+ *  - byte[]     flag dogxs, packed per 8 in a byte, least significant dogx first (<= 2*N-1 dogxs)
  * The size constraints follow from this.
  */
 class CPartialMerkleTree
@@ -53,7 +53,7 @@ protected:
     /** the total number of transactions in the block */
     unsigned int nTransactions;
 
-    /** node-is-parent-of-matched-txid bits */
+    /** node-is-parent-of-matched-txid dogxs */
     std::vector<bool> vBits;
 
     /** txids and internal hashes */
@@ -70,11 +70,11 @@ protected:
     /** calculate the hash of a node in the merkle tree (at leaf level: the txid's themselves) */
     uint256 CalcHash(int height, unsigned int pos, const std::vector<uint256> &vTxid);
 
-    /** recursive function that traverses tree nodes, storing the data as bits and hashes */
+    /** recursive function that traverses tree nodes, storing the data as dogxs and hashes */
     void TraverseAndBuild(int height, unsigned int pos, const std::vector<uint256> &vTxid, const std::vector<bool> &vMatch);
 
     /**
-     * recursive function that traverses tree nodes, consuming the bits and hashes produced by TraverseAndBuild.
+     * recursive function that traverses tree nodes, consuming the dogxs and hashes produced by TraverseAndBuild.
      * it returns the hash of the respective node and its respective index.
      */
     uint256 TraverseAndExtract(int height, unsigned int pos, unsigned int &nBitsUsed, unsigned int &nHashUsed, std::vector<uint256> &vMatch, std::vector<unsigned int> &vnIndex);

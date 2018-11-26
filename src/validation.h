@@ -7,7 +7,7 @@
 #define BITCOIN_VALIDATION_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/bitcoin-config.h>
+#include <config/dogxcoin-config.h>
 #endif
 
 #include <amount.h>
@@ -17,7 +17,7 @@
 #include <policy/feerate.h>
 #include <script/script_error.h>
 #include <sync.h>
-#include <versionbits.h>
+#include <versiondogxs.h>
 
 #include <algorithm>
 #include <exception>
@@ -470,7 +470,7 @@ extern std::unique_ptr<CBlockTreeDB> pblocktree;
  */
 int GetSpendHeight(const CCoinsViewCache& inputs);
 
-extern VersionBitsCache versionbitscache;
+extern VersionBitsCache versiondogxscache;
 
 /**
  * Determine what nVersion a new block should use.

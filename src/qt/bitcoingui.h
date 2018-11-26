@@ -6,7 +6,7 @@
 #define BITCOIN_QT_BITCOINGUI_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/bitcoin-config.h>
+#include <config/dogxcoin-config.h>
 #endif
 
 #include <qt/optionsdialog.h>
@@ -77,7 +77,7 @@ public:
 
 #ifdef ENABLE_WALLET
     /** Set the wallet model.
-        The wallet model represents a bitcoin wallet, and offers access to the list of transactions, address book and sending
+        The wallet model represents a dogxcoin wallet, and offers access to the list of transactions, address book and sending
         functionality.
     */
     bool addWallet(WalletModel *walletModel);
@@ -148,7 +148,7 @@ private:
     ModalOverlay* modalOverlay = nullptr;
 
 #ifdef Q_OS_MAC
-    CAppNapInhibitor* m_app_nap_inhibitor = nullptr;
+    CAppNapInhidogxor* m_app_nap_inhidogxor = nullptr;
 #endif
 
     /** Keep track of previous number of blocks, to detect progress */

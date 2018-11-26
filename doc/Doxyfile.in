@@ -51,7 +51,7 @@ PROJECT_BRIEF          = "P2P Digital Currency"
 # pixels and the maximum width should not exceed 200 pixels. Doxygen will copy
 # the logo to the output directory.
 
-PROJECT_LOGO           = doc/bitcoin_logo_doxygen.png
+PROJECT_LOGO           = doc/dogxcoin_logo_doxygen.png
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) path
 # into which the generated documentation will be written. If a relative path is
@@ -1025,7 +1025,7 @@ REFERENCES_LINK_SOURCE = YES
 # If SOURCE_TOOLTIPS is enabled (the default) then hovering a hyperlink in the
 # source code will show a tooltip with additional information such as prototype,
 # brief description and links to the definition and documentation. Since this
-# will make the HTML file larger and loading of large files a bit slower, you
+# will make the HTML file larger and loading of large files a dogx slower, you
 # can opt to disable this feature.
 # The default value is: YES.
 # This tag requires that the tag SOURCE_BROWSER is set to YES.
@@ -1265,7 +1265,7 @@ DOCSET_FEEDNAME        = "Doxygen generated docs"
 # The default value is: org.doxygen.Project.
 # This tag requires that the tag GENERATE_DOCSET is set to YES.
 
-DOCSET_BUNDLE_ID       = org.bitcoin.Bitcoin-Core
+DOCSET_BUNDLE_ID       = org.dogxcoin.Bitcoin-Core
 
 # The DOCSET_PUBLISHER_ID tag specifies a string that should uniquely identify
 # the documentation publisher. This should be a reverse domain-name style
@@ -1273,7 +1273,7 @@ DOCSET_BUNDLE_ID       = org.bitcoin.Bitcoin-Core
 # The default value is: org.doxygen.Publisher.
 # This tag requires that the tag GENERATE_DOCSET is set to YES.
 
-DOCSET_PUBLISHER_ID    = org.bitcoin.Bitcoin-Core
+DOCSET_PUBLISHER_ID    = org.dogxcoin.Bitcoin-Core
 
 # The DOCSET_PUBLISHER_NAME tag identifies the documentation publisher.
 # The default value is: Publisher.
@@ -1499,7 +1499,7 @@ FORMULA_TRANSPARENT    = YES
 
 # Enable the USE_MATHJAX option to render LaTeX formulas using MathJax (see
 # http://www.mathjax.org) which uses client side Javascript for the rendering
-# instead of using pre-rendered bitmaps. Use this if you do not have LaTeX
+# instead of using pre-rendered dogxmaps. Use this if you do not have LaTeX
 # installed or if you want to formulas look prettier in the HTML output. When
 # enabled you may also need to install MathJax separately and configure the path
 # to it using the MATHJAX_RELPATH option.
@@ -1653,7 +1653,7 @@ LATEX_OUTPUT           = latex
 # invoked.
 #
 # Note that when enabling USE_PDFLATEX this option is only used for generating
-# bitmaps for formulas in the HTML output, but not in the Makefile that is
+# dogxmaps for formulas in the HTML output, but not in the Makefile that is
 # written to the output directory.
 # The default file is: latex.
 # This tag requires that the tag GENERATE_LATEX is set to YES.

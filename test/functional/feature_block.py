@@ -306,7 +306,7 @@ class FullBlockTest(BitcoinTestFramework):
         b26 = self.update_block(26, [])
         self.sync_blocks([b26], success=False, reject_reason='bad-cb-length', reconnect=True)
 
-        # Extend the b26 chain to make sure bitcoind isn't accepting b26
+        # Extend the b26 chain to make sure dogxcoind isn't accepting b26
         b27 = self.next_block(27, spend=out[7])
         self.sync_blocks([b27], False)
 
@@ -318,7 +318,7 @@ class FullBlockTest(BitcoinTestFramework):
         b28 = self.update_block(28, [])
         self.sync_blocks([b28], success=False, reject_reason='bad-cb-length', reconnect=True)
 
-        # Extend the b28 chain to make sure bitcoind isn't accepting b28
+        # Extend the b28 chain to make sure dogxcoind isn't accepting b28
         b29 = self.next_block(29, spend=out[7])
         self.sync_blocks([b29], False)
 
@@ -600,7 +600,7 @@ class FullBlockTest(BitcoinTestFramework):
         b50 = self.next_block(50)
         b50.nBits = b50.nBits - 1
         b50.solve()
-        self.sync_blocks([b50], False, force_send=True, reject_reason='bad-diffbits', reconnect=True)
+        self.sync_blocks([b50], False, force_send=True, reject_reason='bad-diffdogxs', reconnect=True)
 
         self.log.info("Reject a block with two coinbase transactions")
         self.move_tip(44)
@@ -826,7 +826,7 @@ class FullBlockTest(BitcoinTestFramework):
         assert_equal(len(b64a.serialize()), MAX_BLOCK_BASE_SIZE + 8)
         self.sync_blocks([b64a], success=False, reject_reason='non-canonical ReadCompactSize()')
 
-        # bitcoind doesn't disconnect us for sending a bloated block, but if we subsequently
+        # dogxcoind doesn't disconnect us for sending a bloated block, but if we subsequently
         # resend the header message, it won't send us the getdata message again. Just
         # disconnect and reconnect and then call sync_blocks.
         # TODO: improve this test to be less dependent on P2P DOS behaviour.
@@ -1047,7 +1047,7 @@ class FullBlockTest(BitcoinTestFramework):
         #
         #    The tx'es must be unsigned and pass the node's mempool policy.  It is unsigned for the
         #    rather obscure reason that the Python signature code does not distinguish between
-        #    Low-S and High-S values (whereas the bitcoin code has custom code which does so);
+        #    Low-S and High-S values (whereas the dogxcoin code has custom code which does so);
         #    as a result of which, the odds are 50% that the python code will use the right
         #    value and the transaction will be accepted into the mempool. Until we modify the
         #    test framework to support low-S signing, we are out of luck.

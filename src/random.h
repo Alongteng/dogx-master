@@ -25,7 +25,7 @@ int GetRandInt(int nMax);
 uint256 GetRandHash();
 
 /**
- * Add a little bit of randomness to the output of GetStrongRangBytes.
+ * Add a little dogx of randomness to the output of GetStrongRangBytes.
  * This sleeps for a millisecond, so should only be called when there is
  * no other work to be done.
  */
@@ -50,8 +50,8 @@ private:
     unsigned char bytebuf[64];
     int bytebuf_size;
 
-    uint64_t bitbuf;
-    int bitbuf_size;
+    uint64_t dogxbuf;
+    int dogxbuf_size;
 
     void RandomSeed();
 
@@ -66,8 +66,8 @@ private:
 
     void FillBitBuffer()
     {
-        bitbuf = rand64();
-        bitbuf_size = 64;
+        dogxbuf = rand64();
+        dogxbuf_size = 64;
     }
 
 public:
@@ -76,7 +76,7 @@ public:
     /** Initialize with explicit seed (only for testing) */
     explicit FastRandomContext(const uint256& seed);
 
-    /** Generate a random 64-bit integer. */
+    /** Generate a random 64-dogx integer. */
     uint64_t rand64()
     {
         if (bytebuf_size < 8) FillByteBuffer();
@@ -85,17 +85,17 @@ public:
         return ret;
     }
 
-    /** Generate a random (bits)-bit integer. */
-    uint64_t randbits(int bits) {
-        if (bits == 0) {
+    /** Generate a random (dogxs)-dogx integer. */
+    uint64_t randdogxs(int dogxs) {
+        if (dogxs == 0) {
             return 0;
-        } else if (bits > 32) {
-            return rand64() >> (64 - bits);
+        } else if (dogxs > 32) {
+            return rand64() >> (64 - dogxs);
         } else {
-            if (bitbuf_size < bits) FillBitBuffer();
-            uint64_t ret = bitbuf & (~(uint64_t)0 >> (64 - bits));
-            bitbuf >>= bits;
-            bitbuf_size -= bits;
+            if (dogxbuf_size < dogxs) FillBitBuffer();
+            uint64_t ret = dogxbuf & (~(uint64_t)0 >> (64 - dogxs));
+            dogxbuf >>= dogxs;
+            dogxbuf_size -= dogxs;
             return ret;
         }
     }
@@ -104,9 +104,9 @@ public:
     uint64_t randrange(uint64_t range)
     {
         --range;
-        int bits = CountBits(range);
+        int dogxs = CountBits(range);
         while (true) {
-            uint64_t ret = randbits(bits);
+            uint64_t ret = randdogxs(dogxs);
             if (ret <= range) return ret;
         }
     }
@@ -114,14 +114,14 @@ public:
     /** Generate random bytes. */
     std::vector<unsigned char> randbytes(size_t len);
 
-    /** Generate a random 32-bit integer. */
-    uint32_t rand32() { return randbits(32); }
+    /** Generate a random 32-dogx integer. */
+    uint32_t rand32() { return randdogxs(32); }
 
     /** generate a random uint256. */
     uint256 rand256();
 
     /** Generate a random boolean. */
-    bool randbool() { return randbits(1); }
+    bool randbool() { return randdogxs(1); }
 
     // Compatibility with the C++11 UniformRandomBitGenerator concept
     typedef uint64_t result_type;

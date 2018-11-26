@@ -3,8 +3,8 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <chain.h>
-#include <versionbits.h>
-#include <test/test_bitcoin.h>
+#include <versiondogxs.h>
+#include <test/test_dogxcoin.h>
 #include <chainparams.h>
 #include <validation.h>
 #include <consensus/params.h>
@@ -45,7 +45,7 @@ class VersionBitsTester
     // A fake blockchain
     std::vector<CBlockIndex*> vpblock;
 
-    // 6 independent checkers for the same bit.
+    // 6 independent checkers for the same dogx.
     // The first one performs all checks, the second only 50%, the third only 25%, etc...
     // This is to test whether lack of cached information leads to the same results.
     TestConditionChecker checker[CHECKERS];
@@ -156,9 +156,9 @@ public:
     CBlockIndex * Tip() { return vpblock.size() ? vpblock.back() : nullptr; }
 };
 
-BOOST_FIXTURE_TEST_SUITE(versionbits_tests, TestingSetup)
+BOOST_FIXTURE_TEST_SUITE(versiondogxs_tests, TestingSetup)
 
-BOOST_AUTO_TEST_CASE(versionbits_test)
+BOOST_AUTO_TEST_CASE(versiondogxs_test)
 {
     for (int i = 0; i < 64; i++) {
         // DEFINED -> FAILED
@@ -222,23 +222,23 @@ BOOST_AUTO_TEST_CASE(versionbits_test)
                            .Mine(7000, TestTime(20000), 0x100).TestFailed().TestStateSinceHeight(6000);
     }
 
-    // Sanity checks of version bit deployments
+    // Sanity checks of version dogx deployments
     const auto chainParams = CreateChainParams(CBaseChainParams::MAIN);
     const Consensus::Params &mainnetParams = chainParams->GetConsensus();
     for (int i=0; i<(int) Consensus::MAX_VERSION_BITS_DEPLOYMENTS; i++) {
-        uint32_t bitmask = VersionBitsMask(mainnetParams, static_cast<Consensus::DeploymentPos>(i));
-        // Make sure that no deployment tries to set an invalid bit.
-        BOOST_CHECK_EQUAL(bitmask & ~(uint32_t)VERSIONBITS_TOP_MASK, bitmask);
+        uint32_t dogxmask = VersionBitsMask(mainnetParams, static_cast<Consensus::DeploymentPos>(i));
+        // Make sure that no deployment tries to set an invalid dogx.
+        BOOST_CHECK_EQUAL(dogxmask & ~(uint32_t)VERSIONBITS_TOP_MASK, dogxmask);
 
         // Verify that the deployment windows of different deployment using the
-        // same bit are disjoint.
+        // same dogx are disjoint.
         // This test may need modification at such time as a new deployment
-        // is proposed that reuses the bit of an activated soft fork, before the
+        // is proposed that reuses the dogx of an activated soft fork, before the
         // end time of that soft fork.  (Alternatively, the end time of that
         // activated soft fork could be later changed to be earlier to avoid
         // overlap.)
         for (int j=i+1; j<(int) Consensus::MAX_VERSION_BITS_DEPLOYMENTS; j++) {
-            if (VersionBitsMask(mainnetParams, static_cast<Consensus::DeploymentPos>(j)) == bitmask) {
+            if (VersionBitsMask(mainnetParams, static_cast<Consensus::DeploymentPos>(j)) == dogxmask) {
                 BOOST_CHECK(mainnetParams.vDeployments[j].nStartTime > mainnetParams.vDeployments[i].nTimeout ||
                         mainnetParams.vDeployments[i].nStartTime > mainnetParams.vDeployments[j].nTimeout);
             }
@@ -246,64 +246,64 @@ BOOST_AUTO_TEST_CASE(versionbits_test)
     }
 }
 
-BOOST_AUTO_TEST_CASE(versionbits_computeblockversion)
+BOOST_AUTO_TEST_CASE(versiondogxs_computeblockversion)
 {
-    // Check that ComputeBlockVersion will set the appropriate bit correctly
+    // Check that ComputeBlockVersion will set the appropriate dogx correctly
     // on mainnet.
     const auto chainParams = CreateChainParams(CBaseChainParams::MAIN);
     const Consensus::Params &mainnetParams = chainParams->GetConsensus();
 
     // Use the TESTDUMMY deployment for testing purposes.
-    int64_t bit = mainnetParams.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit;
+    int64_t dogx = mainnetParams.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].dogx;
     int64_t nStartTime = mainnetParams.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime;
     int64_t nTimeout = mainnetParams.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout;
 
     assert(nStartTime < nTimeout);
 
-    // In the first chain, test that the bit is set by CBV until it has failed.
-    // In the second chain, test the bit is set by CBV while STARTED and
+    // In the first chain, test that the dogx is set by CBV until it has failed.
+    // In the second chain, test the dogx is set by CBV while STARTED and
     // LOCKED-IN, and then no longer set while ACTIVE.
     VersionBitsTester firstChain, secondChain;
 
     // Start generating blocks before nStartTime
     int64_t nTime = nStartTime - 1;
 
-    // Before MedianTimePast of the chain has crossed nStartTime, the bit
+    // Before MedianTimePast of the chain has crossed nStartTime, the dogx
     // should not be set.
     CBlockIndex *lastBlock = nullptr;
     lastBlock = firstChain.Mine(2016, nTime, VERSIONBITS_LAST_OLD_BLOCK_VERSION).Tip();
-    BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit), 0);
+    BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & (1<<dogx), 0);
 
-    // Mine 2011 more blocks at the old time, and check that CBV isn't setting the bit yet.
+    // Mine 2011 more blocks at the old time, and check that CBV isn't setting the dogx yet.
     for (int i=1; i<2012; i++) {
         lastBlock = firstChain.Mine(2016+i, nTime, VERSIONBITS_LAST_OLD_BLOCK_VERSION).Tip();
         // This works because VERSIONBITS_LAST_OLD_BLOCK_VERSION happens
-        // to be 4, and the bit we're testing happens to be bit 28.
-        BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit), 0);
+        // to be 4, and the dogx we're testing happens to be dogx 28.
+        BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & (1<<dogx), 0);
     }
     // Now mine 5 more blocks at the start time -- MTP should not have passed yet, so
-    // CBV should still not yet set the bit.
+    // CBV should still not yet set the dogx.
     nTime = nStartTime;
     for (int i=2012; i<=2016; i++) {
         lastBlock = firstChain.Mine(2016+i, nTime, VERSIONBITS_LAST_OLD_BLOCK_VERSION).Tip();
-        BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit), 0);
+        BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & (1<<dogx), 0);
     }
 
     // Advance to the next period and transition to STARTED,
     lastBlock = firstChain.Mine(6048, nTime, VERSIONBITS_LAST_OLD_BLOCK_VERSION).Tip();
-    // so ComputeBlockVersion should now set the bit,
-    BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit)) != 0);
+    // so ComputeBlockVersion should now set the dogx,
+    BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<dogx)) != 0);
     // and should also be using the VERSIONBITS_TOP_BITS.
     BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & VERSIONBITS_TOP_MASK, VERSIONBITS_TOP_BITS);
 
-    // Check that ComputeBlockVersion will set the bit until nTimeout
+    // Check that ComputeBlockVersion will set the dogx until nTimeout
     nTime += 600;
     int blocksToMine = 4032; // test blocks for up to 2 time periods
     int nHeight = 6048;
     // These blocks are all before nTimeout is reached.
     while (nTime < nTimeout && blocksToMine > 0) {
         lastBlock = firstChain.Mine(nHeight+1, nTime, VERSIONBITS_LAST_OLD_BLOCK_VERSION).Tip();
-        BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit)) != 0);
+        BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<dogx)) != 0);
         BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & VERSIONBITS_TOP_MASK, VERSIONBITS_TOP_BITS);
         blocksToMine--;
         nTime += 600;
@@ -312,38 +312,38 @@ BOOST_AUTO_TEST_CASE(versionbits_computeblockversion)
 
     nTime = nTimeout;
     // FAILED is only triggered at the end of a period, so CBV should be setting
-    // the bit until the period transition.
+    // the dogx until the period transition.
     for (int i=0; i<2015; i++) {
         lastBlock = firstChain.Mine(nHeight+1, nTime, VERSIONBITS_LAST_OLD_BLOCK_VERSION).Tip();
-        BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit)) != 0);
+        BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<dogx)) != 0);
         nHeight += 1;
     }
-    // The next block should trigger no longer setting the bit.
+    // The next block should trigger no longer setting the dogx.
     lastBlock = firstChain.Mine(nHeight+1, nTime, VERSIONBITS_LAST_OLD_BLOCK_VERSION).Tip();
-    BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit), 0);
+    BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & (1<<dogx), 0);
 
     // On a new chain:
-    // verify that the bit will be set after lock-in, and then stop being set
+    // verify that the dogx will be set after lock-in, and then stop being set
     // after activation.
     nTime = nStartTime;
 
-    // Mine one period worth of blocks, and check that the bit will be on for the
+    // Mine one period worth of blocks, and check that the dogx will be on for the
     // next period.
     lastBlock = secondChain.Mine(2016, nTime, VERSIONBITS_LAST_OLD_BLOCK_VERSION).Tip();
-    BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit)) != 0);
+    BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<dogx)) != 0);
 
-    // Mine another period worth of blocks, signaling the new bit.
-    lastBlock = secondChain.Mine(4032, nTime, VERSIONBITS_TOP_BITS | (1<<bit)).Tip();
-    // After one period of setting the bit on each block, it should have locked in.
-    // We keep setting the bit for one more period though, until activation.
-    BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit)) != 0);
+    // Mine another period worth of blocks, signaling the new dogx.
+    lastBlock = secondChain.Mine(4032, nTime, VERSIONBITS_TOP_BITS | (1<<dogx)).Tip();
+    // After one period of setting the dogx on each block, it should have locked in.
+    // We keep setting the dogx for one more period though, until activation.
+    BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<dogx)) != 0);
 
     // Now check that we keep mining the block until the end of this period, and
     // then stop at the beginning of the next period.
     lastBlock = secondChain.Mine(6047, nTime, VERSIONBITS_LAST_OLD_BLOCK_VERSION).Tip();
-    BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit)) != 0);
+    BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<dogx)) != 0);
     lastBlock = secondChain.Mine(6048, nTime, VERSIONBITS_LAST_OLD_BLOCK_VERSION).Tip();
-    BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit), 0);
+    BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & (1<<dogx), 0);
 
     // Finally, verify that after a soft fork has activated, CBV no longer uses
     // VERSIONBITS_LAST_OLD_BLOCK_VERSION.

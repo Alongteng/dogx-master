@@ -123,15 +123,15 @@ class RESTTest (BitcoinTestFramework):
         # Make sure there is no utxo in the response because this outpoint has been spent
         assert_equal(len(json_obj['utxos']), 0)
 
-        # Check bitmap
-        assert_equal(json_obj['bitmap'], "0")
+        # Check dogxmap
+        assert_equal(json_obj['dogxmap'], "0")
 
         self.log.info("Query two TXOs using the /getutxos URI")
 
         json_obj = self.test_rest_request("/getutxos/{}-{}/{}-{}".format(*(spending + spent)))
 
         assert_equal(len(json_obj['utxos']), 1)
-        assert_equal(json_obj['bitmap'], "10")
+        assert_equal(json_obj['dogxmap'], "10")
 
         self.log.info("Query the TXOs using the /getutxos URI with a binary response")
 
@@ -235,7 +235,7 @@ class RESTTest (BitcoinTestFramework):
 
         # Compare with normal RPC block response
         rpc_block_json = self.nodes[0].getblock(bb_hash)
-        for key in ['hash', 'confirmations', 'height', 'version', 'merkleroot', 'time', 'nonce', 'bits', 'difficulty', 'chainwork', 'previousblockhash']:
+        for key in ['hash', 'confirmations', 'height', 'version', 'merkleroot', 'time', 'nonce', 'dogxs', 'difficulty', 'chainwork', 'previousblockhash']:
             assert_equal(json_obj[0][key], rpc_block_json[key])
 
         # See if we can get 5 headers in one response

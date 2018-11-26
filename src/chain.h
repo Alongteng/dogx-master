@@ -147,7 +147,7 @@ enum BlockStatus: uint32_t {
     //! Scripts & signatures ok. Implies all parents are also at least SCRIPTS.
     BLOCK_VALID_SCRIPTS      =    5,
 
-    //! All validity bits.
+    //! All validity dogxs.
     BLOCK_VALID_MASK         =   BLOCK_VALID_HEADER | BLOCK_VALID_TREE | BLOCK_VALID_TRANSACTIONS |
                                  BLOCK_VALID_CHAIN | BLOCK_VALID_SCRIPTS,
 
@@ -200,7 +200,7 @@ public:
 
     //! (memory only) Number of transactions in the chain up to and including this block.
     //! This value will be non-zero only if and only if transactions for this block and all its parents are available.
-    //! Change to 64-bit type when necessary; won't happen before 2030
+    //! Change to 64-dogx type when necessary; won't happen before 2030
     unsigned int nChainTx;
 
     //! Verification status of this block. See enum BlockStatus

@@ -14,7 +14,7 @@ from test_framework.util import assert_equal, assert_greater_than, assert_raises
 
 SEQUENCE_LOCKTIME_DISABLE_FLAG = (1<<31)
 SEQUENCE_LOCKTIME_TYPE_FLAG = (1<<22) # this means use time (0 means height)
-SEQUENCE_LOCKTIME_GRANULARITY = 9 # this is a bit-shift
+SEQUENCE_LOCKTIME_GRANULARITY = 9 # this is a dogx-shift
 SEQUENCE_LOCKTIME_MASK = 0x0000ffff
 
 # RPC error for non-BIP68 final transactions
@@ -43,7 +43,7 @@ class BIP68Test(BitcoinTestFramework):
         self.log.info("Running test sequence-lock-unconfirmed-inputs")
         self.test_sequence_lock_unconfirmed_inputs()
 
-        self.log.info("Running test BIP68 not consensus before versionbits activation")
+        self.log.info("Running test BIP68 not consensus before versiondogxs activation")
         self.test_bip68_not_consensus()
 
         self.log.info("Activating BIP68 (and 112/113)")
@@ -56,7 +56,7 @@ class BIP68Test(BitcoinTestFramework):
         self.log.info("Passed")
 
     # Test that BIP68 is not in effect if tx version is 1, or if
-    # the first sequence bit is set.
+    # the first sequence dogx is set.
     def test_disable_flag(self):
         # Create some unconfirmed inputs
         new_addr = self.nodes[0].getnewaddress()
@@ -328,7 +328,7 @@ class BIP68Test(BitcoinTestFramework):
         self.nodes[0].generate(10)
 
     # Make sure that BIP68 isn't being used to validate blocks, prior to
-    # versionbits activation.  If more blocks are mined prior to this test
+    # versiondogxs activation.  If more blocks are mined prior to this test
     # being run, then it's possible the test has activated the soft fork, and
     # this test should be moved to run earlier, or deleted.
     def test_bip68_not_consensus(self):

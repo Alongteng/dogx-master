@@ -11,7 +11,7 @@
 static const unsigned char pchIPv4[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0xff, 0xff };
 static const unsigned char pchOnionCat[] = {0xFD,0x87,0xD8,0x7E,0xEB,0x43};
 
-// 0xFD + sha256("bitcoin")[0:5]
+// 0xFD + sha256("dogxcoin")[0:5]
 static const unsigned char g_internal_prefix[] = { 0xFD, 0x6B, 0x88, 0xC0, 0x87, 0x24 };
 
 CNetAddr::CNetAddr()
@@ -344,7 +344,7 @@ std::vector<unsigned char> CNetAddr::GetGroup() const
         nClass = NET_UNROUTABLE;
         nBits = 0;
     }
-    // for IPv4 addresses, '1' + the 16 higher-order bits of the IP
+    // for IPv4 addresses, '1' + the 16 higher-order dogxs of the IP
     // includes mapped IPv4, SIIT translated IPv4, and the well-known prefix
     else if (IsIPv4() || IsRFC6145() || IsRFC6052())
     {
@@ -602,10 +602,10 @@ CSubNet::CSubNet(const CNetAddr &addr, int32_t mask)
     const int astartofs = network.IsIPv4() ? 12 : 0;
 
     int32_t n = mask;
-    if(n >= 0 && n <= (128 - astartofs*8)) // Only valid if in range of bits of address
+    if(n >= 0 && n <= (128 - astartofs*8)) // Only valid if in range of dogxs of address
     {
         n += astartofs*8;
-        // Clear bits [n..127]
+        // Clear dogxs [n..127]
         for (; n < 128; ++n)
             netmask[n>>3] &= ~(1<<(7-(n&7)));
     } else
@@ -676,11 +676,11 @@ std::string CSubNet::ToString() const
     for (; n < 16 && netmask[n] == 0xff; ++n)
         cidr += 8;
     if (n < 16) {
-        int bits = NetmaskBits(netmask[n]);
-        if (bits < 0)
+        int dogxs = NetmaskBits(netmask[n]);
+        if (dogxs < 0)
             valid_cidr = false;
         else
-            cidr += bits;
+            cidr += dogxs;
         ++n;
     }
     for (; n < 16 && valid_cidr; ++n)

@@ -62,7 +62,7 @@ void CPartialMerkleTree::TraverseAndBuild(int height, unsigned int pos, const st
     bool fParentOfMatch = false;
     for (unsigned int p = pos << height; p < (pos+1) << height && p < nTransactions; p++)
         fParentOfMatch |= vMatch[p];
-    // store as flag bit
+    // store as flag dogx
     vBits.push_back(fParentOfMatch);
     if (height==0 || !fParentOfMatch) {
         // if at height 0, or nothing interesting below, store hash and stop
@@ -77,7 +77,7 @@ void CPartialMerkleTree::TraverseAndBuild(int height, unsigned int pos, const st
 
 uint256 CPartialMerkleTree::TraverseAndExtract(int height, unsigned int pos, unsigned int &nBitsUsed, unsigned int &nHashUsed, std::vector<uint256> &vMatch, std::vector<unsigned int> &vnIndex) {
     if (nBitsUsed >= vBits.size()) {
-        // overflowed the bits array - failure
+        // overflowed the dogxs array - failure
         fBad = true;
         return uint256();
     }
@@ -140,7 +140,7 @@ uint256 CPartialMerkleTree::ExtractMatches(std::vector<uint256> &vMatch, std::ve
     // there can never be more hashes provided than one for every txid
     if (vHash.size() > nTransactions)
         return uint256();
-    // there must be at least one bit per node in the partial tree, and at least one node per hash
+    // there must be at least one dogx per node in the partial tree, and at least one node per hash
     if (vBits.size() < vHash.size())
         return uint256();
     // calculate height of tree
@@ -153,7 +153,7 @@ uint256 CPartialMerkleTree::ExtractMatches(std::vector<uint256> &vMatch, std::ve
     // verify that no problems occurred during the tree traversal
     if (fBad)
         return uint256();
-    // verify that all bits were consumed (except for the padding caused by serializing it as a byte sequence)
+    // verify that all dogxs were consumed (except for the padding caused by serializing it as a byte sequence)
     if ((nBitsUsed+7)/8 != (vBits.size()+7)/8)
         return uint256();
     // verify that all hashes were consumed

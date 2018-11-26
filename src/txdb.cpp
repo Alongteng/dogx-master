@@ -320,7 +320,7 @@ public:
         vAvail[0] = (nCode & 2) != 0;
         vAvail[1] = (nCode & 4) != 0;
         unsigned int nMaskCode = (nCode / 8) + ((nCode & 6) != 0 ? 0 : 1);
-        // spentness bitmask
+        // spentness dogxmask
         while (nMaskCode > 0) {
             unsigned char chAvail = 0;
             ::Unserialize(s, chAvail);

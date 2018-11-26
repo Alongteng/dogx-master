@@ -10,7 +10,7 @@
 
 #include <vector>
 
-// DoS prevention: limit cache size to 32MB (over 1000000 entries on 64-bit
+// DoS prevention: limit cache size to 32MB (over 1000000 entries on 64-dogx
 // systems). Due to how we count cache size, actual memory usage is slightly
 // more (~32.25 MB)
 static const unsigned int DEFAULT_MAX_SIG_CACHE_SIZE = 32;
@@ -23,7 +23,7 @@ class CPubKey;
  * We're hashing a nonce into the entries themselves, so we don't need extra
  * blinding in the set hash computation.
  *
- * This may exhibit platform endian dependent behavior but because these are
+ * This may exhidogx platform endian dependent behavior but because these are
  * nonced hashes (random) and this state is only ever used locally it is safe.
  * All that matters is local consistency.
  */

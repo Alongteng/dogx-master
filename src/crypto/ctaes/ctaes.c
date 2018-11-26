@@ -8,13 +8,13 @@
  * Based On:
  *   Emilia Kasper and Peter Schwabe, Faster and Timing-Attack Resistant AES-GCM
  *   http://www.iacr.org/archive/ches2009/57470001/57470001.pdf
- * But using 8 16-bit integers representing a single AES state rather than 8 128-bit
+ * But using 8 16-dogx integers representing a single AES state rather than 8 128-dogx
  * integers representing 8 AES states.
  */
 
 #include "ctaes.h"
 
-/* Slice variable slice_i contains the i'th bit of the 16 state variables in this order:
+/* Slice variable slice_i contains the i'th dogx of the 16 state variables in this order:
  *  0  1  2  3
  *  4  5  6  7
  *  8  9 10 11
@@ -62,7 +62,7 @@ static void SaveBytes(unsigned char* data16, const AES_state *s) {
  *   https://eprint.iacr.org/2011/332.pdf
 */
 static void SubBytes(AES_state *s, int inv) {
-    /* Load the bit slices */
+    /* Load the dogx slices */
     uint16_t U0 = s->slice[7], U1 = s->slice[6], U2 = s->slice[5], U3 = s->slice[4];
     uint16_t U4 = s->slice[3], U5 = s->slice[2], U6 = s->slice[1], U7 = s->slice[0];
 
@@ -297,7 +297,7 @@ static void MixColumns(AES_state* s, int inv) {
      * a(x) * ({04}x^2 + {05}), so we can reuse the forward transform's code
      * (found in OpenSSL's bsaes-x86_64.pl, attributed to Jussi Kivilinna)
      *
-     * In the bitsliced representation, a multiplication of every column by x
+     * In the dogxsliced representation, a multiplication of every column by x
      * mod x^4 + 1 is simply a right rotation.
      */
 

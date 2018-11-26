@@ -694,7 +694,7 @@ UniValue dumpprivkey(const JSONRPCRequest& request)
                 }}
                 .ToString() +
             "\nArguments:\n"
-            "1. \"address\"   (string, required) The bitcoin address for the private key\n"
+            "1. \"address\"   (string, required) The dogxcoin address for the private key\n"
             "\nResult:\n"
             "\"key\"                (string) The private key\n"
             "\nExamples:\n"
@@ -745,7 +745,7 @@ UniValue dumpwallet(const JSONRPCRequest& request)
                 }}
                 .ToString() +
             "\nArguments:\n"
-            "1. \"filename\"    (string, required) The filename with path (either absolute or relative to bitcoind)\n"
+            "1. \"filename\"    (string, required) The filename with path (either absolute or relative to dogxcoind)\n"
             "\nResult:\n"
             "{                           (json object)\n"
             "  \"filename\" : {        (string) The filename with full absolute path\n"
@@ -763,9 +763,9 @@ UniValue dumpwallet(const JSONRPCRequest& request)
     fs::path filepath = request.params[0].get_str();
     filepath = fs::absolute(filepath);
 
-    /* Prevent arbitrary files from being overwritten. There have been reports
+    /* Prevent ardogxrary files from being overwritten. There have been reports
      * that users have overwritten wallet files this way:
-     * https://github.com/bitcoin/bitcoin/issues/9934
+     * https://github.com/dogxcoin/dogxcoin/issues/9934
      * It may also avoid other security issues.
      */
     if (fs::exists(filepath)) {
@@ -1282,7 +1282,7 @@ UniValue importmulti(const JSONRPCRequest& mainRequest)
                                       "block from time %d, which is after or within %d seconds of key creation, and "
                                       "could contain transactions pertaining to the key. As a result, transactions "
                                       "and coins using this key may not appear in the wallet. This error could be "
-                                      "caused by pruning or data corruption (see bitcoind log for details) and could "
+                                      "caused by pruning or data corruption (see dogxcoind log for details) and could "
                                       "be dealt with by downloading and rescanning the relevant blocks (see -reindex "
                                       "and -rescan options).",
                                 GetImportTimestamp(request, now), scannedTime - TIMESTAMP_WINDOW - 1, TIMESTAMP_WINDOW)));

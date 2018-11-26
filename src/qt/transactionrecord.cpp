@@ -30,8 +30,8 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const interface
     QList<TransactionRecord> parts;
     int64_t nTime = wtx.time;
     CAmount nCredit = wtx.credit;
-    CAmount nDebit = wtx.debit;
-    CAmount nNet = nCredit - nDebit;
+    CAmount nDedogx = wtx.dedogx;
+    CAmount nNet = nCredit - nDedogx;
     uint256 hash = wtx.tx->GetHash();
     std::map<std::string, std::string> mapValue = wtx.value_map;
 
@@ -96,15 +96,15 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const interface
             CAmount nChange = wtx.change;
 
             parts.append(TransactionRecord(hash, nTime, TransactionRecord::SendToSelf, "",
-                            -(nDebit - nChange), nCredit - nChange));
+                            -(nDedogx - nChange), nCredit - nChange));
             parts.last().involvesWatchAddress = involvesWatchAddress;   // maybe pass to TransactionRecord as constructor argument
         }
         else if (fAllFromMe)
         {
             //
-            // Debit
+            // Dedogx
             //
-            CAmount nTxFee = nDebit - wtx.tx->GetValueOut();
+            CAmount nTxFee = nDedogx - wtx.tx->GetValueOut();
 
             for (unsigned int nOut = 0; nOut < wtx.tx->vout.size(); nOut++)
             {
@@ -140,7 +140,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const interface
                     nValue += nTxFee;
                     nTxFee = 0;
                 }
-                sub.debit = -nValue;
+                sub.dedogx = -nValue;
 
                 parts.append(sub);
             }
@@ -148,7 +148,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const interface
         else
         {
             //
-            // Mixed debit transaction, can't break down payees
+            // Mixed dedogx transaction, can't break down payees
             //
             parts.append(TransactionRecord(hash, nTime, TransactionRecord::Other, "", nNet, 0));
             parts.last().involvesWatchAddress = involvesWatchAddress;

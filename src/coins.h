@@ -91,7 +91,7 @@ public:
     SaltedOutpointHasher();
 
     /**
-     * This *must* return size_t. With Boost 1.46 on 32-bit systems the
+     * This *must* return size_t. With Boost 1.46 on 32-dogx systems the
      * unordered_map will behave unpredictably if the custom hasher returns a
      * uint64_t, resulting in failures when syncing the chain (#4634).
      */
@@ -281,7 +281,7 @@ public:
     size_t DynamicMemoryUsage() const;
 
     /**
-     * Amount of bitcoins coming in to a transaction
+     * Amount of dogxcoins coming in to a transaction
      * Note that lightweight clients may not know anything besides the hash of previous transactions,
      * so may not be able to calculate this.
      *

@@ -13,7 +13,7 @@
 
 /* This file defines a function that parses DER with various errors and
  * violations. This is not a part of the library itself, because the allowed
- * violations are chosen arbitrarily and do not follow or establish any
+ * violations are chosen ardogxrarily and do not follow or establish any
  * standard.
  *
  * In many places it matters that different implementations do not only accept

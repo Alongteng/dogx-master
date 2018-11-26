@@ -1358,7 +1358,7 @@ case $os in
 	     | nindy* | vxsim* | vxworks* | ebmon* | hms* | mvs* \
 	     | clix* | riscos* | uniplus* | iris* | rtu* | xenix* \
 	     | knetbsd* | mirbsd* | netbsd* \
-	     | bitrig* | openbsd* | solidbsd* | libertybsd* \
+	     | dogxrig* | openbsd* | solidbsd* | libertybsd* \
 	     | ekkobsd* | kfreebsd* | freebsd* | riscix* | lynxos* \
 	     | bosx* | nextstep* | cxux* | aout* | elf* | oabi* \
 	     | ptx* | coff* | ecoff* | winnt* | domain* | vsta* \

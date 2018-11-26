@@ -4,7 +4,7 @@
 #include <boost/test/unit_test.hpp>
 #include <cuckoocache.h>
 #include <script/sigcache.h>
-#include <test/test_bitcoin.h>
+#include <test/test_dogxcoin.h>
 #include <random.h>
 #include <thread>
 
@@ -105,7 +105,7 @@ static double test_cache(size_t megabytes, double load)
  * would be 0.5. Therefore, if we see a hit rate of 0.4, 0.4*2.0 = 0.8 is the
  * normalized hit rate.
  *
- * This is basically the right semantics, but has a bit of a glitch depending on
+ * This is basically the right semantics, but has a dogx of a glitch depending on
  * how you measure around load 1.0 as after load 1.0 your normalized hit rate
  * becomes effectively perfect, ignoring freshness.
  */
@@ -117,7 +117,7 @@ static double normalize_hit_rate(double hits, double load)
 /** Check the hit rate on loads ranging from 0.1 to 1.6 */
 BOOST_AUTO_TEST_CASE(cuckoocache_hit_rate_ok)
 {
-    /** Arbitrarily selected Hit Rate threshold that happens to work for this test
+    /** Ardogxrarily selected Hit Rate threshold that happens to work for this test
      * as a lower bound on performance.
      */
     double HitRateThresh = 0.98;

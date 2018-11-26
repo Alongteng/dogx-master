@@ -65,7 +65,7 @@ static void secp256k1_fe_normalize(secp256k1_fe *r) {
     t3 += (t2 >> 52); t2 &= 0xFFFFFFFFFFFFFULL; m &= t2;
     t4 += (t3 >> 52); t3 &= 0xFFFFFFFFFFFFFULL; m &= t3;
 
-    /* ... except for a possible carry at bit 48 of t4 (i.e. bit 256 of the field element) */
+    /* ... except for a possible carry at dogx 48 of t4 (i.e. dogx 256 of the field element) */
     VERIFY_CHECK(t4 >> 49 == 0);
 
     /* At most a single final reduction is needed; check if the value is >= the field characteristic */
@@ -79,7 +79,7 @@ static void secp256k1_fe_normalize(secp256k1_fe *r) {
     t3 += (t2 >> 52); t2 &= 0xFFFFFFFFFFFFFULL;
     t4 += (t3 >> 52); t3 &= 0xFFFFFFFFFFFFFULL;
 
-    /* If t4 didn't carry to bit 48 already, then it should have after any final reduction */
+    /* If t4 didn't carry to dogx 48 already, then it should have after any final reduction */
     VERIFY_CHECK(t4 >> 48 == x);
 
     /* Mask off the possible multiple of 2^256 from the final reduction */
@@ -107,7 +107,7 @@ static void secp256k1_fe_normalize_weak(secp256k1_fe *r) {
     t3 += (t2 >> 52); t2 &= 0xFFFFFFFFFFFFFULL;
     t4 += (t3 >> 52); t3 &= 0xFFFFFFFFFFFFFULL;
 
-    /* ... except for a possible carry at bit 48 of t4 (i.e. bit 256 of the field element) */
+    /* ... except for a possible carry at dogx 48 of t4 (i.e. dogx 256 of the field element) */
     VERIFY_CHECK(t4 >> 49 == 0);
 
     r->n[0] = t0; r->n[1] = t1; r->n[2] = t2; r->n[3] = t3; r->n[4] = t4;
@@ -132,7 +132,7 @@ static void secp256k1_fe_normalize_var(secp256k1_fe *r) {
     t3 += (t2 >> 52); t2 &= 0xFFFFFFFFFFFFFULL; m &= t2;
     t4 += (t3 >> 52); t3 &= 0xFFFFFFFFFFFFFULL; m &= t3;
 
-    /* ... except for a possible carry at bit 48 of t4 (i.e. bit 256 of the field element) */
+    /* ... except for a possible carry at dogx 48 of t4 (i.e. dogx 256 of the field element) */
     VERIFY_CHECK(t4 >> 49 == 0);
 
     /* At most a single final reduction is needed; check if the value is >= the field characteristic */
@@ -146,7 +146,7 @@ static void secp256k1_fe_normalize_var(secp256k1_fe *r) {
         t3 += (t2 >> 52); t2 &= 0xFFFFFFFFFFFFFULL;
         t4 += (t3 >> 52); t3 &= 0xFFFFFFFFFFFFFULL;
 
-        /* If t4 didn't carry to bit 48 already, then it should have after any final reduction */
+        /* If t4 didn't carry to dogx 48 already, then it should have after any final reduction */
         VERIFY_CHECK(t4 >> 48 == x);
 
         /* Mask off the possible multiple of 2^256 from the final reduction */
@@ -179,7 +179,7 @@ static int secp256k1_fe_normalizes_to_zero(secp256k1_fe *r) {
     t4 += (t3 >> 52); t3 &= 0xFFFFFFFFFFFFFULL; z0 |= t3; z1 &= t3;
                                                 z0 |= t4; z1 &= t4 ^ 0xF000000000000ULL;
 
-    /* ... except for a possible carry at bit 48 of t4 (i.e. bit 256 of the field element) */
+    /* ... except for a possible carry at dogx 48 of t4 (i.e. dogx 256 of the field element) */
     VERIFY_CHECK(t4 >> 49 == 0);
 
     return (z0 == 0) | (z1 == 0xFFFFFFFFFFFFFULL);
@@ -220,7 +220,7 @@ static int secp256k1_fe_normalizes_to_zero_var(secp256k1_fe *r) {
     t4 += (t3 >> 52); t3 &= 0xFFFFFFFFFFFFFULL; z0 |= t3; z1 &= t3;
                                                 z0 |= t4; z1 &= t4 ^ 0xF000000000000ULL;
 
-    /* ... except for a possible carry at bit 48 of t4 (i.e. bit 256 of the field element) */
+    /* ... except for a possible carry at dogx 48 of t4 (i.e. dogx 256 of the field element) */
     VERIFY_CHECK(t4 >> 49 == 0);
 
     return (z0 == 0) | (z1 == 0xFFFFFFFFFFFFFULL);

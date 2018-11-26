@@ -222,7 +222,7 @@ class BlockchainTest(BitcoinTestFramework):
         assert_is_hash_string(header['hash'])
         assert_is_hash_string(header['previousblockhash'])
         assert_is_hash_string(header['merkleroot'])
-        assert_is_hash_string(header['bits'], length=None)
+        assert_is_hash_string(header['dogxs'], length=None)
         assert isinstance(header['time'], int)
         assert isinstance(header['mediantime'], int)
         assert isinstance(header['nonce'], int)

@@ -7,11 +7,11 @@
 
 #include <memory>
 
-class CAppNapInhibitor final
+class CAppNapInhidogxor final
 {
 public:
-    explicit CAppNapInhibitor();
-    ~CAppNapInhibitor();
+    explicit CAppNapInhidogxor();
+    ~CAppNapInhidogxor();
 
     void disableAppNap();
     void enableAppNap();

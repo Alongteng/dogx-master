@@ -4,7 +4,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include <config/bitcoin-config.h>
+#include <config/dogxcoin-config.h>
 #endif
 
 #include <net.h>
@@ -1668,8 +1668,8 @@ void CConnman::ThreadDNSAddressSeed()
                 }
                 addrman.Add(vAdd, resolveSource);
             } else {
-                // We now avoid directly using results from DNS Seeds which do not support service bit filtering,
-                // instead using them as a oneshot to get nodes with our desired service bits.
+                // We now avoid directly using results from DNS Seeds which do not support service dogx filtering,
+                // instead using them as a oneshot to get nodes with our desired service dogxs.
                 AddOneShot(seed);
             }
         }

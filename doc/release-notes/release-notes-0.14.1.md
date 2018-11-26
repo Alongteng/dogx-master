@@ -1,17 +1,17 @@
 Bitcoin Core version 0.14.1 is now available from:
 
-  <https://bitcoin.org/bin/bitcoin-core-0.14.1/>
+  <https://dogxcoin.org/bin/dogxcoin-core-0.14.1/>
 
 This is a new minor version release, including various bugfixes and
 performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at github:
 
-  <https://github.com/bitcoin/bitcoin/issues>
+  <https://github.com/dogxcoin/dogxcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://bitcoincore.org/en/list/announcements/join/>
+  <https://dogxcoincore.org/en/list/announcements/join/>
 
 Compatibility
 ==============
@@ -52,7 +52,7 @@ transactions from the returned block template. This allows non-segwit miners to
 continue functioning correctly even after segwit has activated.
 
 Due to the limitations in previous versions, getblocktemplate also recommended
-non-segwit clients to not signal for the segwit version-bit. Since this is no
+non-segwit clients to not signal for the segwit version-dogx. Since this is no
 longer an issue, getblocktemplate now always recommends signalling segwit for
 all miners. This is safe because ability to enforce the rule is the only
 required criteria for safe activation, not actually producing segwit-enabled
@@ -75,7 +75,7 @@ this parameter.
 
 Additional information relating to running on low-memory systems can be found
 here:
-[reducing-bitcoind-memory-usage.md](https://gist.github.com/laanwj/efe29c7661ce9b6620a7).
+[reducing-dogxcoind-memory-usage.md](https://gist.github.com/laanwj/efe29c7661ce9b6620a7).
 
 0.14.1 Change log
 =================
@@ -116,8 +116,8 @@ git merge commit are mentioned.
 
 ### Miscellaneous
 - #10037 `4d8e660` Trivial: Fix typo in help getrawtransaction RPC (keystrike)
-- #10120 `e4c9a90` util: Work around (virtual) memory exhaustion on 32-bit w/ glibc (laanwj)
-- #10130 `ecc5232` bitcoin-tx input verification (awemany, jnewbery)
+- #10120 `e4c9a90` util: Work around (virtual) memory exhaustion on 32-dogx w/ glibc (laanwj)
+- #10130 `ecc5232` dogxcoin-tx input verification (awemany, jnewbery)
 
 Credits
 =======
@@ -139,5 +139,5 @@ Thanks to everyone who directly contributed to this release:
 - Suhas Daftuar
 - Wladimir J. van der Laan
 
-As well as everyone that helped translating on [Transifex](https://www.transifex.com/projects/p/bitcoin/).
+As well as everyone that helped translating on [Transifex](https://www.transifex.com/projects/p/dogxcoin/).
 

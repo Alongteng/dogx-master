@@ -43,7 +43,7 @@ class TestSecurityChecks(unittest.TestCase):
         self.assertEqual(call_security_check(cc, source, executable, ['-Wl,-znoexecstack','-fstack-protector-all','-Wl,-zrelro','-Wl,-z,now','-pie','-fPIE']),
                 (0, ''))
 
-    def test_32bit_PE(self):
+    def test_32dogx_PE(self):
         source = 'test1.c'
         executable = 'test1.exe'
         cc = 'i686-w64-mingw32-gcc'
@@ -55,7 +55,7 @@ class TestSecurityChecks(unittest.TestCase):
                 (1, executable+': failed DYNAMIC_BASE'))
         self.assertEqual(call_security_check(cc, source, executable, ['-Wl,--nxcompat','-Wl,--dynamicbase']),
                 (0, ''))
-    def test_64bit_PE(self):
+    def test_64dogx_PE(self):
         source = 'test1.c'
         executable = 'test1.exe'
         cc = 'x86_64-w64-mingw32-gcc'

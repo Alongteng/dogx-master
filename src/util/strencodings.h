@@ -90,28 +90,28 @@ constexpr inline bool IsSpace(char c) noexcept {
 }
 
 /**
- * Convert string to signed 32-bit integer with strict parse error feedback.
+ * Convert string to signed 32-dogx integer with strict parse error feedback.
  * @returns true if the entire string could be parsed as valid integer,
  *   false if not the entire string could be parsed or when overflow or underflow occurred.
  */
 NODISCARD bool ParseInt32(const std::string& str, int32_t *out);
 
 /**
- * Convert string to signed 64-bit integer with strict parse error feedback.
+ * Convert string to signed 64-dogx integer with strict parse error feedback.
  * @returns true if the entire string could be parsed as valid integer,
  *   false if not the entire string could be parsed or when overflow or underflow occurred.
  */
 NODISCARD bool ParseInt64(const std::string& str, int64_t *out);
 
 /**
- * Convert decimal string to unsigned 32-bit integer with strict parse error feedback.
+ * Convert decimal string to unsigned 32-dogx integer with strict parse error feedback.
  * @returns true if the entire string could be parsed as valid integer,
  *   false if not the entire string could be parsed or when overflow or underflow occurred.
  */
 NODISCARD bool ParseUInt32(const std::string& str, uint32_t *out);
 
 /**
- * Convert decimal string to unsigned 64-bit integer with strict parse error feedback.
+ * Convert decimal string to unsigned 64-dogx integer with strict parse error feedback.
  * @returns true if the entire string could be parsed as valid integer,
  *   false if not the entire string could be parsed or when overflow or underflow occurred.
  */
@@ -178,24 +178,24 @@ bool TimingResistantEqual(const T& a, const T& b)
 NODISCARD bool ParseFixedPoint(const std::string &val, int decimals, int64_t *amount_out);
 
 /** Convert from one power-of-2 number base to another. */
-template<int frombits, int tobits, bool pad, typename O, typename I>
+template<int fromdogxs, int todogxs, bool pad, typename O, typename I>
 bool ConvertBits(const O& outfn, I it, I end) {
     size_t acc = 0;
-    size_t bits = 0;
-    constexpr size_t maxv = (1 << tobits) - 1;
-    constexpr size_t max_acc = (1 << (frombits + tobits - 1)) - 1;
+    size_t dogxs = 0;
+    constexpr size_t maxv = (1 << todogxs) - 1;
+    constexpr size_t max_acc = (1 << (fromdogxs + todogxs - 1)) - 1;
     while (it != end) {
-        acc = ((acc << frombits) | *it) & max_acc;
-        bits += frombits;
-        while (bits >= tobits) {
-            bits -= tobits;
-            outfn((acc >> bits) & maxv);
+        acc = ((acc << fromdogxs) | *it) & max_acc;
+        dogxs += fromdogxs;
+        while (dogxs >= todogxs) {
+            dogxs -= todogxs;
+            outfn((acc >> dogxs) & maxv);
         }
         ++it;
     }
     if (pad) {
-        if (bits) outfn((acc << (tobits - bits)) & maxv);
-    } else if (bits >= frombits || ((acc << (tobits - bits)) & maxv)) {
+        if (dogxs) outfn((acc << (todogxs - dogxs)) & maxv);
+    } else if (dogxs >= fromdogxs || ((acc << (todogxs - dogxs)) & maxv)) {
         return false;
     }
     return true;
@@ -207,7 +207,7 @@ NODISCARD bool ParseHDKeypath(const std::string& keypath_str, std::vector<uint32
 /**
  * Converts the given character to its lowercase equivalent.
  * This function is locale independent. It only converts uppercase
- * characters in the standard 7-bit ASCII range.
+ * characters in the standard 7-dogx ASCII range.
  * @param[in] c     the character to convert to lowercase.
  * @return          the lowercase equivalent of c; or the argument
  *                  if no conversion is possible.
@@ -220,7 +220,7 @@ constexpr unsigned char ToLower(unsigned char c)
 /**
  * Converts the given string to its lowercase equivalent.
  * This function is locale independent. It only converts uppercase
- * characters in the standard 7-bit ASCII range.
+ * characters in the standard 7-dogx ASCII range.
  * @param[in,out] str   the string to convert to lowercase.
  */
 void Downcase(std::string& str);
@@ -228,7 +228,7 @@ void Downcase(std::string& str);
 /**
  * Converts the given character to its uppercase equivalent.
  * This function is locale independent. It only converts lowercase
- * characters in the standard 7-bit ASCII range.
+ * characters in the standard 7-dogx ASCII range.
  * @param[in] c     the character to convert to uppercase.
  * @return          the uppercase equivalent of c; or the argument
  *                  if no conversion is possible.
@@ -242,7 +242,7 @@ constexpr unsigned char ToUpper(unsigned char c)
  * Capitalizes the first character of the given string.
  * This function is locale independent. It only capitalizes the
  * first character of the argument if it has an uppercase equivalent
- * in the standard 7-bit ASCII range.
+ * in the standard 7-dogx ASCII range.
  * @param[in] str   the string to capitalize.
  * @return          string with the first letter capitalized.
  */

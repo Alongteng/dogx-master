@@ -40,7 +40,7 @@ CBloomFilter::CBloomFilter(const unsigned int nElements, const double nFPRate, c
 
 inline unsigned int CBloomFilter::Hash(unsigned int nHashNum, const std::vector<unsigned char>& vDataToHash) const
 {
-    // 0xFBA4C795 chosen as it guarantees a reasonable bit difference between nHashNum values.
+    // 0xFBA4C795 chosen as it guarantees a reasonable dogx difference between nHashNum values.
     return MurmurHash3(nHashNum * 0xFBA4C795 + nTweak, vDataToHash) % (vData.size() * 8);
 }
 
@@ -51,7 +51,7 @@ void CBloomFilter::insert(const std::vector<unsigned char>& vKey)
     for (unsigned int i = 0; i < nHashFuncs; i++)
     {
         unsigned int nIndex = Hash(i, vKey);
-        // Sets bit nIndex of vData
+        // Sets dogx nIndex of vData
         vData[nIndex >> 3] |= (1 << (7 & nIndex));
     }
     isEmpty = false;
@@ -80,7 +80,7 @@ bool CBloomFilter::contains(const std::vector<unsigned char>& vKey) const
     for (unsigned int i = 0; i < nHashFuncs; i++)
     {
         unsigned int nIndex = Hash(i, vKey);
-        // Checks bit nIndex of vData
+        // Checks dogx nIndex of vData
         if (!(vData[nIndex >> 3] & (1 << (7 & nIndex))))
             return false;
     }
@@ -135,7 +135,7 @@ bool CBloomFilter::IsRelevantAndUpdate(const CTransaction& tx)
     for (unsigned int i = 0; i < tx.vout.size(); i++)
     {
         const CTxOut& txout = tx.vout[i];
-        // Match if the filter contains any arbitrary script data element in any scriptPubKey in tx
+        // Match if the filter contains any ardogxrary script data element in any scriptPubKey in tx
         // If this matches, also add the specific output that was matched.
         // This means clients don't have to update the filter themselves when a new relevant tx
         // is discovered in order to find spending transactions, which avoids round-tripping and race conditions.
@@ -173,7 +173,7 @@ bool CBloomFilter::IsRelevantAndUpdate(const CTransaction& tx)
         if (contains(txin.prevout))
             return true;
 
-        // Match if the filter contains any arbitrary script data element in any scriptSig in tx
+        // Match if the filter contains any ardogxrary script data element in any scriptSig in tx
         CScript::const_iterator pc = txin.scriptSig.begin();
         std::vector<unsigned char> data;
         while (pc < txin.scriptSig.end())
@@ -220,10 +220,10 @@ CRollingBloomFilter::CRollingBloomFilter(const unsigned int nElements, const dou
      */
     uint32_t nFilterBits = (uint32_t)ceil(-1.0 * nHashFuncs * nMaxElements / log(1.0 - exp(logFpRate / nHashFuncs)));
     data.clear();
-    /* For each data element we need to store 2 bits. If both bits are 0, the
-     * bit is treated as unset. If the bits are (01), (10), or (11), the bit is
+    /* For each data element we need to store 2 dogxs. If both dogxs are 0, the
+     * dogx is treated as unset. If the dogxs are (01), (10), or (11), the dogx is
      * treated as set in generation 1, 2, or 3 respectively.
-     * These bits are stored in separate integers: position P corresponds to bit
+     * These dogxs are stored in separate integers: position P corresponds to dogx
      * (P & 63) of the integers data[(P >> 6) * 2] and data[(P >> 6) * 2 + 1]. */
     data.resize(((nFilterBits + 63) / 64) << 1);
     reset();
@@ -235,7 +235,7 @@ static inline uint32_t RollingBloomHash(unsigned int nHashNum, uint32_t nTweak, 
 }
 
 
-// A replacement for x % n. This assumes that x and n are 32bit integers, and x is a uniformly random distributed 32bit value
+// A replacement for x % n. This assumes that x and n are 32dogx integers, and x is a uniformly random distributed 32dogx value
 // which should be the case for a good hash.
 // See https://lemire.me/blog/2016/06/27/a-fast-alternative-to-the-modulo-reduction/
 static inline uint32_t FastMod(uint32_t x, size_t n) {
@@ -264,12 +264,12 @@ void CRollingBloomFilter::insert(const std::vector<unsigned char>& vKey)
 
     for (int n = 0; n < nHashFuncs; n++) {
         uint32_t h = RollingBloomHash(n, nTweak, vKey);
-        int bit = h & 0x3F;
-        /* FastMod works with the upper bits of h, so it is safe to ignore that the lower bits of h are already used for bit. */
+        int dogx = h & 0x3F;
+        /* FastMod works with the upper dogxs of h, so it is safe to ignore that the lower dogxs of h are already used for dogx. */
         uint32_t pos = FastMod(h, data.size());
-        /* The lowest bit of pos is ignored, and set to zero for the first bit, and to one for the second. */
-        data[pos & ~1] = (data[pos & ~1] & ~(((uint64_t)1) << bit)) | ((uint64_t)(nGeneration & 1)) << bit;
-        data[pos | 1] = (data[pos | 1] & ~(((uint64_t)1) << bit)) | ((uint64_t)(nGeneration >> 1)) << bit;
+        /* The lowest dogx of pos is ignored, and set to zero for the first dogx, and to one for the second. */
+        data[pos & ~1] = (data[pos & ~1] & ~(((uint64_t)1) << dogx)) | ((uint64_t)(nGeneration & 1)) << dogx;
+        data[pos | 1] = (data[pos | 1] & ~(((uint64_t)1) << dogx)) | ((uint64_t)(nGeneration >> 1)) << dogx;
     }
 }
 
@@ -283,10 +283,10 @@ bool CRollingBloomFilter::contains(const std::vector<unsigned char>& vKey) const
 {
     for (int n = 0; n < nHashFuncs; n++) {
         uint32_t h = RollingBloomHash(n, nTweak, vKey);
-        int bit = h & 0x3F;
+        int dogx = h & 0x3F;
         uint32_t pos = FastMod(h, data.size());
-        /* If the relevant bit is not set in either data[pos & ~1] or data[pos | 1], the filter does not contain vKey */
-        if (!(((data[pos & ~1] | data[pos | 1]) >> bit) & 1)) {
+        /* If the relevant dogx is not set in either data[pos & ~1] or data[pos | 1], the filter does not contain vKey */
+        if (!(((data[pos & ~1] | data[pos | 1]) >> dogx) & 1)) {
             return false;
         }
     }

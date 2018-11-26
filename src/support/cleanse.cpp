@@ -11,7 +11,7 @@
 #include <Windows.h> // For SecureZeroMemory.
 #endif
 
-/* Compilers have a bad habit of removing "superfluous" memset calls that
+/* Compilers have a bad hadogx of removing "superfluous" memset calls that
  * are trying to zero memory. For example, when memset()ing a buffer and
  * then free()ing it, the compiler might decide that the memset is
  * unobservable and thus can be removed.

@@ -8,13 +8,13 @@
 #include <chain.h>
 #include <map>
 
-/** What block version to use for new blocks (pre versionbits) */
+/** What block version to use for new blocks (pre versiondogxs) */
 static const int32_t VERSIONBITS_LAST_OLD_BLOCK_VERSION = 4;
-/** What bits to set in version for versionbits blocks */
+/** What dogxs to set in version for versiondogxs blocks */
 static const int32_t VERSIONBITS_TOP_BITS = 0x20000000UL;
-/** What bitmask determines whether versionbits is in use */
+/** What dogxmask determines whether versiondogxs is in use */
 static const int32_t VERSIONBITS_TOP_MASK = 0xE0000000UL;
-/** Total bits available for versionbits */
+/** Total dogxs available for versiondogxs */
 static const int32_t VERSIONBITS_NUM_BITS = 29;
 
 enum class ThresholdState {

@@ -16,7 +16,7 @@ from itertools import islice
 from base58 import b58encode_chk, b58decode_chk, b58chars
 import random
 from binascii import b2a_hex
-from segwit_addr import bech32_encode, decode, convertbits, CHARSET
+from segwit_addr import bech32_encode, decode, convertdogxs, CHARSET
 
 # key types
 PUBKEY_ADDRESS = 0
@@ -129,7 +129,7 @@ def gen_valid_bech32_vector(template):
     witver = template[1]
     witprog = bytearray(os.urandom(template[2]))
     dst_prefix = bytearray(template[4])
-    rv = bech32_encode(hrp, [witver] + convertbits(witprog, 8, 5))
+    rv = bech32_encode(hrp, [witver] + convertdogxs(witprog, 8, 5))
     return rv, dst_prefix + witprog
 
 def gen_valid_vectors():
@@ -193,7 +193,7 @@ def gen_invalid_bech32_vector(template):
     if no_data:
         rv = bech32_encode(hrp, [])
     else:
-        data = [witver] + convertbits(witprog, 8, 5)
+        data = [witver] + convertdogxs(witprog, 8, 5)
         if template[3] and not no_data:
             if template[2] % 5 in {2, 4}:
                 data[-1] |= 1

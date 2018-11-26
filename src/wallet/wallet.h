@@ -357,7 +357,7 @@ public:
     unsigned int nTimeSmart;
     /**
      * From me flag is set to 1 for transactions that were created by the wallet
-     * on this bitcoin node, and set to 0 for transactions that were created
+     * on this dogxcoin node, and set to 0 for transactions that were created
      * externally and came in through the network or sendrawtransaction RPC.
      */
     char fFromMe;
@@ -365,21 +365,21 @@ public:
     std::multimap<int64_t, CWalletTx*>::const_iterator m_it_wtxOrdered;
 
     // memory only
-    mutable bool fDebitCached;
+    mutable bool fDedogxCached;
     mutable bool fCreditCached;
     mutable bool fImmatureCreditCached;
     mutable bool fAvailableCreditCached;
-    mutable bool fWatchDebitCached;
+    mutable bool fWatchDedogxCached;
     mutable bool fWatchCreditCached;
     mutable bool fImmatureWatchCreditCached;
     mutable bool fAvailableWatchCreditCached;
     mutable bool fChangeCached;
     mutable bool fInMempool;
-    mutable CAmount nDebitCached;
+    mutable CAmount nDedogxCached;
     mutable CAmount nCreditCached;
     mutable CAmount nImmatureCreditCached;
     mutable CAmount nAvailableCreditCached;
-    mutable CAmount nWatchDebitCached;
+    mutable CAmount nWatchDedogxCached;
     mutable CAmount nWatchCreditCached;
     mutable CAmount nImmatureWatchCreditCached;
     mutable CAmount nAvailableWatchCreditCached;
@@ -399,21 +399,21 @@ public:
         nTimeReceived = 0;
         nTimeSmart = 0;
         fFromMe = false;
-        fDebitCached = false;
+        fDedogxCached = false;
         fCreditCached = false;
         fImmatureCreditCached = false;
         fAvailableCreditCached = false;
-        fWatchDebitCached = false;
+        fWatchDedogxCached = false;
         fWatchCreditCached = false;
         fImmatureWatchCreditCached = false;
         fAvailableWatchCreditCached = false;
         fChangeCached = false;
         fInMempool = false;
-        nDebitCached = 0;
+        nDedogxCached = 0;
         nCreditCached = 0;
         nImmatureCreditCached = 0;
         nAvailableCreditCached = 0;
-        nWatchDebitCached = 0;
+        nWatchDedogxCached = 0;
         nWatchCreditCached = 0;
         nAvailableWatchCreditCached = 0;
         nImmatureWatchCreditCached = 0;
@@ -463,11 +463,11 @@ public:
         fCreditCached = false;
         fAvailableCreditCached = false;
         fImmatureCreditCached = false;
-        fWatchDebitCached = false;
+        fWatchDedogxCached = false;
         fWatchCreditCached = false;
         fAvailableWatchCreditCached = false;
         fImmatureWatchCreditCached = false;
-        fDebitCached = false;
+        fDedogxCached = false;
         fChangeCached = false;
     }
 
@@ -477,8 +477,8 @@ public:
         MarkDirty();
     }
 
-    //! filter decides which addresses will count towards the debit
-    CAmount GetDebit(const isminefilter& filter) const;
+    //! filter decides which addresses will count towards the dedogx
+    CAmount GetDedogx(const isminefilter& filter) const;
     CAmount GetCredit(interfaces::Chain::Lock& locked_chain, const isminefilter& filter) const;
     CAmount GetImmatureCredit(interfaces::Chain::Lock& locked_chain, bool fUseCache=true) const;
     // TODO: Remove "NO_THREAD_SAFETY_ANALYSIS" and replace it with the correct
@@ -500,7 +500,7 @@ public:
 
     bool IsFromMe(const isminefilter& filter) const
     {
-        return (GetDebit(filter) > 0);
+        return (GetDedogx(filter) > 0);
     }
 
     // True if only scriptSigs are different
@@ -989,10 +989,10 @@ public:
 
     isminetype IsMine(const CTxIn& txin) const;
     /**
-     * Returns amount of debit if the input matches the
+     * Returns amount of dedogx if the input matches the
      * filter, otherwise returns 0
      */
-    CAmount GetDebit(const CTxIn& txin, const isminefilter& filter) const;
+    CAmount GetDedogx(const CTxIn& txin, const isminefilter& filter) const;
     isminetype IsMine(const CTxOut& txout) const;
     CAmount GetCredit(const CTxOut& txout, const isminefilter& filter) const;
     bool IsChange(const CTxOut& txout) const;
@@ -1001,7 +1001,7 @@ public:
     bool IsMine(const CTransaction& tx) const;
     /** should probably be renamed to IsRelevantToMe */
     bool IsFromMe(const CTransaction& tx) const;
-    CAmount GetDebit(const CTransaction& tx, const isminefilter& filter) const;
+    CAmount GetDedogx(const CTransaction& tx, const isminefilter& filter) const;
     /** Returns whether all of the inputs match the filter */
     bool IsAllFromMe(const CTransaction& tx, const isminefilter& filter) const;
     CAmount GetCredit(const CTransaction& tx, const isminefilter& filter) const;
@@ -1041,7 +1041,7 @@ public:
     //! Check if a given transaction has any of its outputs spent by another transaction in the wallet
     bool HasWalletSpend(const uint256& txid) const EXCLUSIVE_LOCKS_REQUIRED(cs_wallet);
 
-    //! Flush wallet (bitdb flush)
+    //! Flush wallet (dogxdb flush)
     void Flush(bool shutdown=false);
 
     /** Wallet is about to be unloaded */

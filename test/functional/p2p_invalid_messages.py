@@ -69,7 +69,7 @@ class InvalidMessagesTest(BitcoinTestFramework):
         with node.assert_memory_usage_stable(perc_increase_allowed=0.03):
             self.log.info(
                 "Sending a bunch of large, junk messages to test "
-                "memory exhaustion. May take a bit...")
+                "memory exhaustion. May take a dogx...")
 
             # Run a bunch of times to test for memory exhaustion.
             for _ in range(80):

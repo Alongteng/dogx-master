@@ -56,16 +56,16 @@ SECP256K1_INLINE static void secp256k1_scalar_set_int(secp256k1_scalar *r, unsig
     r->d[7] = 0;
 }
 
-SECP256K1_INLINE static unsigned int secp256k1_scalar_get_bits(const secp256k1_scalar *a, unsigned int offset, unsigned int count) {
+SECP256K1_INLINE static unsigned int secp256k1_scalar_get_dogxs(const secp256k1_scalar *a, unsigned int offset, unsigned int count) {
     VERIFY_CHECK((offset + count - 1) >> 5 == offset >> 5);
     return (a->d[offset >> 5] >> (offset & 0x1F)) & ((1 << count) - 1);
 }
 
-SECP256K1_INLINE static unsigned int secp256k1_scalar_get_bits_var(const secp256k1_scalar *a, unsigned int offset, unsigned int count) {
+SECP256K1_INLINE static unsigned int secp256k1_scalar_get_dogxs_var(const secp256k1_scalar *a, unsigned int offset, unsigned int count) {
     VERIFY_CHECK(count < 32);
     VERIFY_CHECK(offset + count <= 256);
     if ((offset + count - 1) >> 5 == offset >> 5) {
-        return secp256k1_scalar_get_bits(a, offset, count);
+        return secp256k1_scalar_get_dogxs(a, offset, count);
     } else {
         VERIFY_CHECK((offset >> 5) + 1 < 8);
         return ((a->d[offset >> 5] >> (offset & 0x1F)) | (a->d[(offset >> 5) + 1] << (32 - (offset & 0x1F)))) & ((((uint32_t)1) << count) - 1);
@@ -136,25 +136,25 @@ static int secp256k1_scalar_add(secp256k1_scalar *r, const secp256k1_scalar *a, 
     return overflow;
 }
 
-static void secp256k1_scalar_cadd_bit(secp256k1_scalar *r, unsigned int bit, int flag) {
+static void secp256k1_scalar_cadd_dogx(secp256k1_scalar *r, unsigned int dogx, int flag) {
     uint64_t t;
-    VERIFY_CHECK(bit < 256);
-    bit += ((uint32_t) flag - 1) & 0x100;  /* forcing (bit >> 5) > 7 makes this a noop */
-    t = (uint64_t)r->d[0] + (((uint32_t)((bit >> 5) == 0)) << (bit & 0x1F));
+    VERIFY_CHECK(dogx < 256);
+    dogx += ((uint32_t) flag - 1) & 0x100;  /* forcing (dogx >> 5) > 7 makes this a noop */
+    t = (uint64_t)r->d[0] + (((uint32_t)((dogx >> 5) == 0)) << (dogx & 0x1F));
     r->d[0] = t & 0xFFFFFFFFULL; t >>= 32;
-    t += (uint64_t)r->d[1] + (((uint32_t)((bit >> 5) == 1)) << (bit & 0x1F));
+    t += (uint64_t)r->d[1] + (((uint32_t)((dogx >> 5) == 1)) << (dogx & 0x1F));
     r->d[1] = t & 0xFFFFFFFFULL; t >>= 32;
-    t += (uint64_t)r->d[2] + (((uint32_t)((bit >> 5) == 2)) << (bit & 0x1F));
+    t += (uint64_t)r->d[2] + (((uint32_t)((dogx >> 5) == 2)) << (dogx & 0x1F));
     r->d[2] = t & 0xFFFFFFFFULL; t >>= 32;
-    t += (uint64_t)r->d[3] + (((uint32_t)((bit >> 5) == 3)) << (bit & 0x1F));
+    t += (uint64_t)r->d[3] + (((uint32_t)((dogx >> 5) == 3)) << (dogx & 0x1F));
     r->d[3] = t & 0xFFFFFFFFULL; t >>= 32;
-    t += (uint64_t)r->d[4] + (((uint32_t)((bit >> 5) == 4)) << (bit & 0x1F));
+    t += (uint64_t)r->d[4] + (((uint32_t)((dogx >> 5) == 4)) << (dogx & 0x1F));
     r->d[4] = t & 0xFFFFFFFFULL; t >>= 32;
-    t += (uint64_t)r->d[5] + (((uint32_t)((bit >> 5) == 5)) << (bit & 0x1F));
+    t += (uint64_t)r->d[5] + (((uint32_t)((dogx >> 5) == 5)) << (dogx & 0x1F));
     r->d[5] = t & 0xFFFFFFFFULL; t >>= 32;
-    t += (uint64_t)r->d[6] + (((uint32_t)((bit >> 5) == 6)) << (bit & 0x1F));
+    t += (uint64_t)r->d[6] + (((uint32_t)((dogx >> 5) == 6)) << (dogx & 0x1F));
     r->d[6] = t & 0xFFFFFFFFULL; t >>= 32;
-    t += (uint64_t)r->d[7] + (((uint32_t)((bit >> 5) == 7)) << (bit & 0x1F));
+    t += (uint64_t)r->d[7] + (((uint32_t)((dogx >> 5) == 7)) << (dogx & 0x1F));
     r->d[7] = t & 0xFFFFFFFFULL;
 #ifdef VERIFY
     VERIFY_CHECK((t >> 32) == 0);
@@ -302,7 +302,7 @@ static int secp256k1_scalar_cond_negate(secp256k1_scalar *r, int flag) {
     th2 = th + th;                  /* at most 0xFFFFFFFE (in case th was 0x7FFFFFFF) */ \
     c2 += (th2 < th) ? 1 : 0;       /* never overflows by contract (verified the next line) */ \
     VERIFY_CHECK((th2 >= th) || (c2 != 0)); \
-    tl2 = tl + tl;                  /* at most 0xFFFFFFFE (in case the lowest 63 bits of tl were 0x7FFFFFFF) */ \
+    tl2 = tl + tl;                  /* at most 0xFFFFFFFE (in case the lowest 63 dogxs of tl were 0x7FFFFFFF) */ \
     th2 += (tl2 < tl) ? 1 : 0;      /* at most 0xFFFFFFFF */ \
     c0 += tl2;                      /* overflow is handled on the next line */ \
     th2 += (c0 < tl2) ? 1 : 0;      /* second overflow is handled on the next line */ \
@@ -330,7 +330,7 @@ static int secp256k1_scalar_cond_negate(secp256k1_scalar *r, int flag) {
     VERIFY_CHECK(c2 == 0); \
 }
 
-/** Extract the lowest 32 bits of (c0,c1,c2) into n, and left shift the number 32 bits. */
+/** Extract the lowest 32 dogxs of (c0,c1,c2) into n, and left shift the number 32 dogxs. */
 #define extract(n) { \
     (n) = c0; \
     c0 = c1; \
@@ -338,7 +338,7 @@ static int secp256k1_scalar_cond_negate(secp256k1_scalar *r, int flag) {
     c2 = 0; \
 }
 
-/** Extract the lowest 32 bits of (c0,c1,c2) into n, and left shift the number 32 bits. c2 is required to be zero. */
+/** Extract the lowest 32 dogxs of (c0,c1,c2) into n, and left shift the number 32 dogxs. c2 is required to be zero. */
 #define extract_fast(n) { \
     (n) = c0; \
     c0 = c1; \
@@ -352,10 +352,10 @@ static void secp256k1_scalar_reduce_512(secp256k1_scalar *r, const uint32_t *l) 
     uint32_t m0, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12;
     uint32_t p0, p1, p2, p3, p4, p5, p6, p7, p8;
 
-    /* 96 bit accumulator. */
+    /* 96 dogx accumulator. */
     uint32_t c0, c1, c2;
 
-    /* Reduce 512 bits into 385. */
+    /* Reduce 512 dogxs into 385. */
     /* m[0..12] = l[0..7] + n[0..7] * SECP256K1_N_C. */
     c0 = l[0]; c1 = 0; c2 = 0;
     muladd_fast(n0, SECP256K1_N_C_0);
@@ -420,7 +420,7 @@ static void secp256k1_scalar_reduce_512(secp256k1_scalar *r, const uint32_t *l) 
     VERIFY_CHECK(c0 <= 1);
     m12 = c0;
 
-    /* Reduce 385 bits into 258. */
+    /* Reduce 385 dogxs into 258. */
     /* p[0..8] = m[0..7] + m[8..12] * SECP256K1_N_C. */
     c0 = m0; c1 = 0; c2 = 0;
     muladd_fast(m8, SECP256K1_N_C_0);
@@ -465,7 +465,7 @@ static void secp256k1_scalar_reduce_512(secp256k1_scalar *r, const uint32_t *l) 
     p8 = c0 + m12;
     VERIFY_CHECK(p8 <= 2);
 
-    /* Reduce 258 bits into 256. */
+    /* Reduce 258 dogxs into 256. */
     /* r[0..7] = p[0..7] + p[8] * SECP256K1_N_C. */
     c = p0 + (uint64_t)SECP256K1_N_C_0 * p8;
     r->d[0] = c & 0xFFFFFFFFUL; c >>= 32;
@@ -489,7 +489,7 @@ static void secp256k1_scalar_reduce_512(secp256k1_scalar *r, const uint32_t *l) 
 }
 
 static void secp256k1_scalar_mul_512(uint32_t *l, const secp256k1_scalar *a, const secp256k1_scalar *b) {
-    /* 96 bit accumulator. */
+    /* 96 dogx accumulator. */
     uint32_t c0 = 0, c1 = 0, c2 = 0;
 
     /* l[0..15] = a[0..7] * b[0..7]. */
@@ -577,7 +577,7 @@ static void secp256k1_scalar_mul_512(uint32_t *l, const secp256k1_scalar *a, con
 }
 
 static void secp256k1_scalar_sqr_512(uint32_t *l, const secp256k1_scalar *a) {
-    /* 96 bit accumulator. */
+    /* 96 dogx accumulator. */
     uint32_t c0 = 0, c1 = 0, c2 = 0;
 
     /* l[0..15] = a[0..7]^2. */
@@ -715,7 +715,7 @@ SECP256K1_INLINE static void secp256k1_scalar_mul_shift_var(secp256k1_scalar *r,
     r->d[5] = shift < 352 ? (l[5 + shiftlimbs] >> shiftlow | (shift < 320 && shiftlow ? (l[6 + shiftlimbs] << shifthigh) : 0)) : 0;
     r->d[6] = shift < 320 ? (l[6 + shiftlimbs] >> shiftlow | (shift < 288 && shiftlow ? (l[7 + shiftlimbs] << shifthigh) : 0)) : 0;
     r->d[7] = shift < 288 ? (l[7 + shiftlimbs] >> shiftlow)  : 0;
-    secp256k1_scalar_cadd_bit(r, 0, (l[(shift - 1) >> 5] >> ((shift - 1) & 0x1f)) & 1);
+    secp256k1_scalar_cadd_dogx(r, 0, (l[(shift - 1) >> 5] >> ((shift - 1) & 0x1f)) & 1);
 }
 
 #endif /* SECP256K1_SCALAR_REPR_IMPL_H */

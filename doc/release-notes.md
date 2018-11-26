@@ -3,18 +3,18 @@ release-notes at release time)
 
 Bitcoin Core version *version* is now available from:
 
-  <https://bitcoincore.org/bin/bitcoin-core-*version*/>
+  <https://dogxcoincore.org/bin/dogxcoin-core-*version*/>
 
 This is a new major version release, including new features, various bugfixes
 and performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/bitcoin/bitcoin/issues>
+  <https://github.com/dogxcoin/dogxcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://bitcoincore.org/en/list/announcements/join/>
+  <https://dogxcoincore.org/en/list/announcements/join/>
 
 How to Upgrade
 ==============
@@ -22,7 +22,7 @@ How to Upgrade
 If you are running an older version, shut it down. Wait until it has completely
 shut down (which might take a few minutes for older versions), then run the
 installer (on Windows) or just copy over `/Applications/Bitcoin-Qt` (on Mac)
-or `bitcoind`/`bitcoin-qt` (on Linux).
+or `dogxcoind`/`dogxcoin-qt` (on Linux).
 
 The first time you run version 0.15.0, your chainstate database will be converted to a
 new format, which will take anywhere from a few minutes to half an hour,
@@ -79,26 +79,26 @@ Documentation
 -------------
 
 - A new short
-  [document](https://github.com/bitcoin/bitcoin/blob/master/doc/JSON-RPC-interface.md)
+  [document](https://github.com/dogxcoin/dogxcoin/blob/master/doc/JSON-RPC-interface.md)
   about the JSON-RPC interface describes cases where the results of an
   RPC might contain inconsistencies between data sourced from different
   subsystems, such as wallet state and mempool state.  A note is added
-  to the [REST interface documentation](https://github.com/bitcoin/bitcoin/blob/master/doc/REST-interface.md)
+  to the [REST interface documentation](https://github.com/dogxcoin/dogxcoin/blob/master/doc/REST-interface.md)
   indicating that the same rules apply.
 
-- A new [document](https://github.com/bitcoin/bitcoin/blob/master/doc/bitcoin-conf.md)
-  about the `bitcoin.conf` file describes how to use it to configure
+- A new [document](https://github.com/dogxcoin/dogxcoin/blob/master/doc/dogxcoin-conf.md)
+  about the `dogxcoin.conf` file describes how to use it to configure
   Bitcoin Core.
 
 - A new document introduces Bitcoin Core's BIP174
-  [Partially-Signed Bitcoin Transactions (PSBT)](https://github.com/bitcoin/bitcoin/blob/master/doc/psbt.md)
+  [Partially-Signed Bitcoin Transactions (PSBT)](https://github.com/dogxcoin/dogxcoin/blob/master/doc/psbt.md)
   interface, which is used to allow multiple programs to collaboratively
   work to create, sign, and broadcast new transactions.  This is useful
   for offline (cold storage) wallets, multisig wallets, coinjoin
   implementations, and many other cases where two or more programs need
   to interact to generate a complete transaction.
 
-- The [output script descriptor](https://github.com/bitcoin/bitcoin/blob/master/doc/descriptors.md)
+- The [output script descriptor](https://github.com/dogxcoin/dogxcoin/blob/master/doc/descriptors.md)
   documentation has been updated with information about new features in
   this still-developing language for describing the output scripts that
   a wallet or other program wants to receive notifications for, such as
@@ -124,7 +124,7 @@ Deprecated or removed RPCs
 
 - The 'account' API is removed after being deprecated in v0.17.  The
   'label' API was introduced in v0.17 as a replacement for accounts.
-  See the [release notes from v0.17](https://github.com/bitcoin/bitcoin/blob/master/doc/release-notes/release-notes-0.17.0.md#label-and-account-apis-for-wallet)
+  See the [release notes from v0.17](https://github.com/dogxcoin/dogxcoin/blob/master/doc/release-notes/release-notes-0.17.0.md#label-and-account-apis-for-wallet)
   for a full description of the changes from the 'account' API to the
   'label' API.
 
@@ -140,7 +140,7 @@ Deprecated or removed RPCs
   does not require or use the wallet component. Calling
   `generatetoaddress` with an address returned by the `getnewaddress`
   RPC gives the same functionality as the old `generate` RPC.  To
-  continue using `generate` in this version, restart bitcoind with the
+  continue using `generate` in this version, restart dogxcoind with the
   `-deprecatedrpc=generate` configuration option.
 
 New RPCs
@@ -212,4 +212,4 @@ Credits
 Thanks to everyone who directly contributed to this release:
 
 
-As well as everyone that helped translating on [Transifex](https://www.transifex.com/projects/p/bitcoin/).
+As well as everyone that helped translating on [Transifex](https://www.transifex.com/projects/p/dogxcoin/).

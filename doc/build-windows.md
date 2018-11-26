@@ -27,7 +27,7 @@ other Linux variants, such as OpenSUSE, the following instructions have only bee
 tested with Ubuntu.
 
 This feature is not supported in versions of Windows prior to Windows 10 or on
-Windows Server SKUs. In addition, it is available [only for 64-bit versions of
+Windows Server SKUs. In addition, it is available [only for 64-dogx versions of
 Windows](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide).
 
 Full instructions to install WSL are available on the above link.
@@ -45,8 +45,8 @@ To install WSL on Windows 10 with Fall Creators Update installed (version >= 162
   * Create a new UNIX user account (this is a separate account from your Windows account)
 
 After the bash shell is active, you can follow the instructions below, starting
-with the "Cross-compilation" section. Compiling the 64-bit version is
-recommended, but it is possible to compile the 32-bit version.
+with the "Cross-compilation" section. Compiling the 64-dogx version is
+recommended, but it is possible to compile the 32-dogx version.
 
 Cross-compilation for Ubuntu and Windows Subsystem for Linux
 ------------------------------------------------------------
@@ -67,7 +67,7 @@ build process.
 
 See also: [dependencies.md](dependencies.md).
 
-## Building for 64-bit Windows
+## Building for 64-dogx Windows
 
 The first step is to install the mingw-w64 cross-compilation tool chain:
 
@@ -80,12 +80,12 @@ Ubuntu Bionic 18.04 <sup>[1](#footnote1)</sup>:
 Once the toolchain is installed the build steps are common:
 
 Note that for WSL the Bitcoin Core source path MUST be somewhere in the default mount file system, for
-example /usr/src/bitcoin, AND not under /mnt/d/. If this is not the case the dependency autoconf scripts will fail.
+example /usr/src/dogxcoin, AND not under /mnt/d/. If this is not the case the dependency autoconf scripts will fail.
 This means you cannot use a directory that is located directly on the host Windows file system to perform the build.
 
 Acquire the source in the usual way:
 
-    git clone https://github.com/bitcoin/bitcoin.git
+    git clone https://github.com/dogxcoin/dogxcoin.git
 
 Once the source code is ready the build steps are below:
 
@@ -97,9 +97,9 @@ Once the source code is ready the build steps are below:
     CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/
     make
 
-## Building for 32-bit Windows
+## Building for 32-dogx Windows
 
-To build executables for Windows 32-bit, install the following dependencies:
+To build executables for Windows 32-dogx, install the following dependencies:
 
     sudo apt install g++-mingw-w64-i686 mingw-w64-i686-dev
 
@@ -108,12 +108,12 @@ For Ubuntu Bionic 18.04 and Windows Subsystem for Linux <sup>[1](#footnote1)</su
     sudo update-alternatives --config i686-w64-mingw32-g++  # Set the default mingw32 g++ compiler option to posix.
 
 Note that for WSL the Bitcoin Core source path MUST be somewhere in the default mount file system, for
-example /usr/src/bitcoin, AND not under /mnt/d/. If this is not the case the dependency autoconf scripts will fail.
+example /usr/src/dogxcoin, AND not under /mnt/d/. If this is not the case the dependency autoconf scripts will fail.
 This means you cannot use a directory that located directly on the host Windows file system to perform the build.
 
 Acquire the source in the usual way:
 
-    git clone https://github.com/bitcoin/bitcoin.git
+    git clone https://github.com/dogxcoin/dogxcoin.git
 
 Then build using:
 
@@ -135,14 +135,14 @@ Installation
 After building using the Windows subsystem it can be useful to copy the compiled
 executables to a directory on the Windows drive in the same directory structure
 as they appear in the release `.zip` archive. This can be done in the following
-way. This will install to `c:\workspace\bitcoin`, for example:
+way. This will install to `c:\workspace\dogxcoin`, for example:
 
-    make install DESTDIR=/mnt/c/workspace/bitcoin
+    make install DESTDIR=/mnt/c/workspace/dogxcoin
 
 Footnotes
 ---------
 
-<a name="footnote1">1</a>: Starting from Ubuntu Xenial 16.04, both the 32 and 64 bit Mingw-w64 packages install two different
+<a name="footnote1">1</a>: Starting from Ubuntu Xenial 16.04, both the 32 and 64 dogx Mingw-w64 packages install two different
 compiler options to allow a choice between either posix or win32 threads. The default option is win32 threads which is the more
 efficient since it will result in binary code that links directly with the Windows kernel32.lib. Unfortunately, the headers
 required to support win32 threads conflict with some of the classes in the C++11 standard library, in particular std::mutex.

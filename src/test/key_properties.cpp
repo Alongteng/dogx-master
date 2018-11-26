@@ -8,13 +8,13 @@
 #include <uint256.h>
 #include <util/system.h>
 #include <util/strencodings.h>
-#include <test/test_bitcoin.h>
+#include <test/test_dogxcoin.h>
 #include <string>
 #include <vector>
 
 #include <boost/test/unit_test.hpp>
 #include <rapidcheck/boost_test.h>
-#include <rapidcheck/gen/Arbitrary.h>
+#include <rapidcheck/gen/Ardogxrary.h>
 #include <rapidcheck/Gen.h>
 
 #include <test/gen/crypto_gen.h>

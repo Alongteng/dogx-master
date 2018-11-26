@@ -56,7 +56,7 @@ UniValue JSONRPCError(int code, const std::string& message)
     return error;
 }
 
-/** Username used when cookie authentication is in use (arbitrary, only for
+/** Username used when cookie authentication is in use (ardogxrary, only for
  * recognizability in debugging/logging purposes)
  */
 static const std::string COOKIEAUTH_USER = "__cookie__";

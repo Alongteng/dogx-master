@@ -74,7 +74,7 @@ class MiningTest(BitcoinTestFramework):
         block.nVersion = tmpl["version"]
         block.hashPrevBlock = int(tmpl["previousblockhash"], 16)
         block.nTime = tmpl["curtime"]
-        block.nBits = int(tmpl["bits"], 16)
+        block.nBits = int(tmpl["dogxs"], 16)
         block.nNonce = 0
         block.vtx = [coinbase_tx]
 
@@ -126,10 +126,10 @@ class MiningTest(BitcoinTestFramework):
         bad_block_sn[TX_COUNT_OFFSET] += 1
         assert_raises_rpc_error(-22, "Block decode failed", node.getblocktemplate, {'data': b2x(bad_block_sn), 'mode': 'proposal'})
 
-        self.log.info("getblocktemplate: Test bad bits")
+        self.log.info("getblocktemplate: Test bad dogxs")
         bad_block = copy.deepcopy(block)
         bad_block.nBits = 469762303  # impossible in the real world
-        assert_template(node, bad_block, 'bad-diffbits')
+        assert_template(node, bad_block, 'bad-diffdogxs')
 
         self.log.info("getblocktemplate: Test bad merkle root")
         bad_block = copy.deepcopy(block)

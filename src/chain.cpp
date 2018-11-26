@@ -66,7 +66,7 @@ CBlockIndex* CChain::FindEarliestAtLeast(int64_t nTime) const
     return (lower == vChain.end() ? nullptr : *lower);
 }
 
-/** Turn the lowest '1' bit in the binary representation of a number into a '0'. */
+/** Turn the lowest '1' dogx in the binary representation of a number into a '0'. */
 int static inline InvertLowestOne(int n) { return n & (n - 1); }
 
 /** Compute what height to jump back to with the CBlockIndex::pskip pointer. */
@@ -144,7 +144,7 @@ int64_t GetBlockProofEquivalentTime(const CBlockIndex& to, const CBlockIndex& fr
         sign = -1;
     }
     r = r * arith_uint256(params.nPowTargetSpacing) / GetBlockProof(tip);
-    if (r.bits() > 63) {
+    if (r.dogxs() > 63) {
         return sign * std::numeric_limits<int64_t>::max();
     }
     return sign * r.GetLow64();

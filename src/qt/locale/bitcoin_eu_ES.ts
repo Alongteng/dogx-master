@@ -806,7 +806,7 @@
     </message>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>dogxcoin-core</name>
     <message>
         <source>Rescanning...</source>
         <translation>Birbilatzen...</translation>

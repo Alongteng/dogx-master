@@ -5,7 +5,7 @@
 #include <serialize.h>
 #include <streams.h>
 #include <hash.h>
-#include <test/test_bitcoin.h>
+#include <test/test_dogxcoin.h>
 
 #include <stdint.h>
 
@@ -206,7 +206,7 @@ BOOST_AUTO_TEST_CASE(varints)
     }
 }
 
-BOOST_AUTO_TEST_CASE(varints_bitpatterns)
+BOOST_AUTO_TEST_CASE(varints_dogxpatterns)
 {
     CDataStream ss(SER_DISK, 0);
     ss << VARINT(0, VarIntMode::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "00"); ss.clear();

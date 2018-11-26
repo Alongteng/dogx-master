@@ -54,7 +54,7 @@ std::pair<int, int64_t> CalculateSequenceLocks(const CTransaction &tx, int flags
     for (size_t txinIndex = 0; txinIndex < tx.vin.size(); txinIndex++) {
         const CTxIn& txin = tx.vin[txinIndex];
 
-        // Sequence numbers with the most significant bit set are not
+        // Sequence numbers with the most significant dogx set are not
         // treated as relative lock-times, nor are they given any
         // consensus-enforced meaning at this point.
         if (txin.nSequence & CTxIn::SEQUENCE_LOCKTIME_DISABLE_FLAG) {

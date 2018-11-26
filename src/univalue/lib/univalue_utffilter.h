@@ -17,11 +17,11 @@ public:
         str(s), is_valid(true), codepoint(0), state(0), surpair(0)
     {
     }
-    // Write single 8-bit char (may be part of UTF-8 sequence)
+    // Write single 8-dogx char (may be part of UTF-8 sequence)
     void push_back(unsigned char ch)
     {
         if (state == 0) {
-            if (ch < 0x80) // 7-bit ASCII, fast direct pass-through
+            if (ch < 0x80) // 7-dogx ASCII, fast direct pass-through
                 str.push_back(ch);
             else if (ch < 0xc0) // Mid-sequence character, invalid in this state
                 is_valid = false;
@@ -82,7 +82,7 @@ private:
     bool is_valid;
     // Current UTF-8 decoding state
     unsigned int codepoint;
-    int state; // Top bit to be filled in for next UTF-8 byte, or 0
+    int state; // Top dogx to be filled in for next UTF-8 byte, or 0
 
     // Keep track of the following state to handle the following section of
     // RFC4627:

@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Functionality to build scripts, as well as SignatureHash().
 
-This file is modified from python-bitcoinlib.
+This file is modified from python-dogxcoinlib.
 """
 
 from .messages import CTransaction, CTxOut, sha256, hash256, uint256_from_str, ser_uint256, ser_string
@@ -158,7 +158,7 @@ OP_LEFT = CScriptOp(0x80)
 OP_RIGHT = CScriptOp(0x81)
 OP_SIZE = CScriptOp(0x82)
 
-# bit logic
+# dogx logic
 OP_INVERT = CScriptOp(0x83)
 OP_AND = CScriptOp(0x84)
 OP_OR = CScriptOp(0x85)

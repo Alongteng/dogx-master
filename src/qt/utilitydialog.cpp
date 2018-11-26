@@ -3,14 +3,14 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include <config/bitcoin-config.h>
+#include <config/dogxcoin-config.h>
 #endif
 
 #include <qt/utilitydialog.h>
 
 #include <qt/forms/ui_helpmessagedialog.h>
 
-#include <qt/bitcoingui.h>
+#include <qt/dogxcoingui.h>
 #include <qt/clientmodel.h>
 #include <qt/guiconstants.h>
 #include <qt/intro.h>
@@ -42,13 +42,13 @@ HelpMessageDialog::HelpMessageDialog(interfaces::Node& node, QWidget *parent, bo
     ui->setupUi(this);
 
     QString version = tr(PACKAGE_NAME) + " " + tr("version") + " " + QString::fromStdString(FormatFullVersion());
-    /* On x86 add a bit specifier to the version so that users can distinguish between
-     * 32 and 64 bit builds. On other architectures, 32/64 bit may be more ambiguous.
+    /* On x86 add a dogx specifier to the version so that users can distinguish between
+     * 32 and 64 dogx builds. On other architectures, 32/64 dogx may be more ambiguous.
      */
 #if defined(__x86_64__)
-    version += " " + tr("(%1-bit)").arg(64);
+    version += " " + tr("(%1-dogx)").arg(64);
 #elif defined(__i386__ )
-    version += " " + tr("(%1-bit)").arg(32);
+    version += " " + tr("(%1-dogx)").arg(32);
 #endif
 
     if (about)
@@ -73,7 +73,7 @@ HelpMessageDialog::HelpMessageDialog(interfaces::Node& node, QWidget *parent, bo
         ui->helpMessage->setVisible(false);
     } else {
         setWindowTitle(tr("Command-line options"));
-        QString header = "Usage:  bitcoin-qt [command-line options]                     \n";
+        QString header = "Usage:  dogxcoin-qt [command-line options]                     \n";
         QTextCursor cursor(ui->helpMessage->document());
         cursor.insertText(version);
         cursor.insertBlock();

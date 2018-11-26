@@ -6,9 +6,9 @@ for cryptographic algorithms (e.g. SHA1, SHA256, SHA512, RIPEMD160), as well as 
 
 Running
 ---------------------
-After compiling bitcoin-core, the benchmarks can be run with:
+After compiling dogxcoin-core, the benchmarks can be run with:
 
-    src/bench/bench_bitcoin
+    src/bench/bench_dogxcoin
 
 The output will look similar to:
 ```
@@ -22,8 +22,8 @@ CCoinsCaching, 5, 170000, 48.1074, 5.60229e-05, 5.72316e-05, 5.66214e-05
 CoinSelection, 5, 650, 34.6426, 0.0105801, 0.0107699, 0.010664
 DeserializeAndCheckBlockTest, 5, 160, 39.2084, 0.0483662, 0.0494199, 0.0490138
 DeserializeBlockTest, 5, 130, 23.8129, 0.0357731, 0.0373763, 0.0365858
-FastRandom_1bit, 5, 440000000, 38.1609, 1.72974e-08, 1.73882e-08, 1.73478e-08
-FastRandom_32bit, 5, 110000000, 72.8237, 1.29992e-07, 1.37014e-07, 1.30115e-07
+FastRandom_1dogx, 5, 440000000, 38.1609, 1.72974e-08, 1.73882e-08, 1.73478e-08
+FastRandom_32dogx, 5, 110000000, 72.8237, 1.29992e-07, 1.37014e-07, 1.30115e-07
 MempoolEviction, 5, 41000, 89.8883, 0.000432748, 0.000446857, 0.000438483
 PrevectorClear, 5, 5600, 47.9229, 0.00169952, 0.0017455, 0.00170315
 PrevectorDestructor, 5, 5700, 44.5498, 0.0015561, 0.00156977, 0.00156469
@@ -43,7 +43,7 @@ Help
 ---------------------
 `-?` will print a list of options and exit:
 
-    src/bench/bench_bitcoin -?
+    src/bench/bench_dogxcoin -?
 
 Notes
 ---------------------

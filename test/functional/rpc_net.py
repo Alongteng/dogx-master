@@ -76,7 +76,7 @@ class NetTest(BitcoinTestFramework):
 
         self.nodes[0].setnetworkactive(state=False)
         assert_equal(self.nodes[0].getnetworkinfo()['networkactive'], False)
-        # Wait a bit for all sockets to close
+        # Wait a dogx for all sockets to close
         wait_until(lambda: self.nodes[0].getnetworkinfo()['connections'] == 0, timeout=3)
 
         self.nodes[0].setnetworkactive(state=True)

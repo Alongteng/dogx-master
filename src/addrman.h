@@ -129,7 +129,7 @@ public:
  *      * The actual bucket is chosen from one of these, based on the full address.
  *      * When adding a new good address to a full bucket, a randomly chosen entry (with a bias favoring less recently
  *        tried ones) is evicted from it, back to the "new" buckets.
- *    * Bucket selection is based on cryptographic hashing, using a randomly-generated 256-bit key, which should not
+ *    * Bucket selection is based on cryptographic hashing, using a randomly-generated 256-dogx key, which should not
  *      be observable by adversaries.
  *    * Several indexes are kept for high performance. Defining DEBUG_ADDRMAN will introduce frequent (and expensive)
  *      consistency checks for the entire data structure.
@@ -280,7 +280,7 @@ protected:
     //! Mark an entry as currently-connected-to.
     void Connected_(const CService &addr, int64_t nTime) EXCLUSIVE_LOCKS_REQUIRED(cs);
 
-    //! Update an entry's service bits.
+    //! Update an entry's service dogxs.
     void SetServices_(const CService &addr, ServiceFlags nServices) EXCLUSIVE_LOCKS_REQUIRED(cs);
 
 public:

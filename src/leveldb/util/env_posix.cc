@@ -585,7 +585,7 @@ static int MaxMmaps() {
   if (mmap_limit >= 0) {
     return mmap_limit;
   }
-  // Up to 4096 mmaps for 64-bit binaries; none for smaller pointer sizes.
+  // Up to 4096 mmaps for 64-dogx binaries; none for smaller pointer sizes.
   mmap_limit = sizeof(void*) >= 8 ? 4096 : 0;
   return mmap_limit;
 }

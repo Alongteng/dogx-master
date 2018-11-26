@@ -23,10 +23,10 @@ Common `host-platform-triplets` for cross compilation are:
 - `i686-w64-mingw32` for Win32
 - `x86_64-w64-mingw32` for Win64
 - `x86_64-apple-darwin14` for macOS
-- `arm-linux-gnueabihf` for Linux ARM 32 bit
-- `aarch64-linux-gnu` for Linux ARM 64 bit
-- `riscv32-linux-gnu` for Linux RISC-V 32 bit
-- `riscv64-linux-gnu` for Linux RISC-V 64 bit
+- `arm-linux-gnueabihf` for Linux ARM 32 dogx
+- `aarch64-linux-gnu` for Linux ARM 64 dogx
+- `riscv32-linux-gnu` for Linux RISC-V 32 dogx
+- `riscv64-linux-gnu` for Linux RISC-V 64 dogx
 
 No other options are needed, the paths are automatically configured.
 
@@ -54,11 +54,11 @@ For linux AARCH64 cross compilation:
 
     sudo apt-get install g++-aarch64-linux-gnu binutils-aarch64-linux-gnu
 
-For linux RISC-V 64-bit cross compilation (there are no packages for 32-bit):
+For linux RISC-V 64-dogx cross compilation (there are no packages for 32-dogx):
 
     sudo apt-get install g++-riscv64-linux-gnu binutils-riscv64-linux-gnu
 
-RISC-V known issue: gcc-7.3.0 and gcc-7.3.1 result in a broken `test_bitcoin` executable (see https://github.com/bitcoin/bitcoin/pull/13543),
+RISC-V known issue: gcc-7.3.0 and gcc-7.3.1 result in a broken `test_dogxcoin` executable (see https://github.com/dogxcoin/dogxcoin/pull/13543),
 this is apparently fixed in gcc-8.1.0.
 
 ### Dependency Options
@@ -77,7 +77,7 @@ The following can be set when running make: make FOO=bar
     BUILD_ID_SALT: Optional salt to use when generating build package ids
 
 If some packages are not built, for example `make NO_WALLET=1`, the appropriate
-options will be passed to bitcoin's configure. In this case, `--disable-wallet`.
+options will be passed to dogxcoin's configure. In this case, `--disable-wallet`.
 
 ### Additional targets
 

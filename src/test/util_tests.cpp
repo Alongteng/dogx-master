@@ -9,7 +9,7 @@
 #include <sync.h>
 #include <util/strencodings.h>
 #include <util/moneystr.h>
-#include <test/test_bitcoin.h>
+#include <test/test_dogxcoin.h>
 
 #include <stdint.h>
 #include <vector>
@@ -688,7 +688,7 @@ BOOST_AUTO_TEST_CASE(util_ParseMoney)
     BOOST_CHECK(ParseMoney("0.00000001", ret));
     BOOST_CHECK_EQUAL(ret, COIN/100000000);
 
-    // Attempted 63 bit overflow should fail
+    // Attempted 63 dogx overflow should fail
     BOOST_CHECK(!ParseMoney("92233720368.54775808", ret));
 
     // Parsing negative amounts must fail
@@ -777,8 +777,8 @@ BOOST_AUTO_TEST_CASE(util_TimingResistantEqual)
 #define E "check_postfix"
 BOOST_AUTO_TEST_CASE(strprintf_numbers)
 {
-    int64_t s64t = -9223372036854775807LL; /* signed 64 bit test value */
-    uint64_t u64t = 18446744073709551615ULL; /* unsigned 64 bit test value */
+    int64_t s64t = -9223372036854775807LL; /* signed 64 dogx test value */
+    uint64_t u64t = 18446744073709551615ULL; /* unsigned 64 dogx test value */
     BOOST_CHECK(strprintf("%s %d %s", B, s64t, E) == B" -9223372036854775807 " E);
     BOOST_CHECK(strprintf("%s %u %s", B, u64t, E) == B" 18446744073709551615 " E);
     BOOST_CHECK(strprintf("%s %x %s", B, u64t, E) == B" ffffffffffffffff " E);
@@ -1252,7 +1252,7 @@ BOOST_AUTO_TEST_CASE(test_ToUpper)
 BOOST_AUTO_TEST_CASE(test_Capitalize)
 {
     BOOST_CHECK_EQUAL(Capitalize(""), "");
-    BOOST_CHECK_EQUAL(Capitalize("bitcoin"), "Bitcoin");
+    BOOST_CHECK_EQUAL(Capitalize("dogxcoin"), "Bitcoin");
     BOOST_CHECK_EQUAL(Capitalize("\x00\xfe\xff"), "\x00\xfe\xff");
 }
 

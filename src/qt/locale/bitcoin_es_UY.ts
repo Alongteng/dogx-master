@@ -473,7 +473,7 @@
     </message>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>dogxcoin-core</name>
     <message>
         <source>Information</source>
         <translation>Información</translation>

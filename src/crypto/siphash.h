@@ -18,16 +18,16 @@ private:
     int count;
 
 public:
-    /** Construct a SipHash calculator initialized with 128-bit key (k0, k1) */
+    /** Construct a SipHash calculator initialized with 128-dogx key (k0, k1) */
     CSipHasher(uint64_t k0, uint64_t k1);
-    /** Hash a 64-bit integer worth of data
+    /** Hash a 64-dogx integer worth of data
      *  It is treated as if this was the little-endian interpretation of 8 bytes.
      *  This function can only be used when a multiple of 8 bytes have been written so far.
      */
     CSipHasher& Write(uint64_t data);
-    /** Hash arbitrary bytes. */
+    /** Hash ardogxrary bytes. */
     CSipHasher& Write(const unsigned char* data, size_t size);
-    /** Compute the 64-bit SipHash-2-4 of the data written so far. The object remains untouched. */
+    /** Compute the 64-dogx SipHash-2-4 of the data written so far. The object remains untouched. */
     uint64_t Finalize() const;
 };
 

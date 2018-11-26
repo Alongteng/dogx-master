@@ -5,7 +5,7 @@ dogxcoin Core integration/staging tree
 
 https://dogxcoin.org
 
-What is Bitcoin?
+What is Dogxcoin?
 ----------------
 
 dogxcoin is an experimental digital currency that enables instant payments to
